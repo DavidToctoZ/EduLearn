@@ -1,5 +1,6 @@
 package com.app.edulearn.controller;
 
+import com.app.edulearn.model.User;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,5 +13,8 @@ public class WebController {
         return "login";
      }
 
-     
+    @RequestMapping(value= "/Registro")
+    public String registro(){
+        return "Registro";
+    }
 }
