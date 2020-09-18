@@ -1,29 +1,61 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset = "ISO-8859-1" />
-      <link href = "css/styles.css" rel = "stylesheet"/>
-      <title>EduLearn</title>
-   </head>
-   <body>
-      <h1>Bienvenido a EduLearn</h1>
-      <div th:if="${#request.getParameter('error') == 'true'}"style="color:red;margin:10px 0px;">Login Failed!!!<br /> Reason :
-      <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-      th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
-          Static summary
-      </span></div>
+<head>
+	<title>INICIO SESION</title>
+	<link rel="stylesheet" type="text/css" href="./css/inicioSesion.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div th:if="${#request.getParameter('error') == 'true'}"style="color:red;margin:10px 0px;">Login Failed!!!<br /> Reason :
+		<span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+		th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+			Static summary
+		</span></div>
 
-      <form name='f' th:action="@{/j_spring_security_check}" method='POST'>
-        <label for="id_user">Usuario:</label>
-        <input type="text" id="v_user" name="username"><br><br>
-        <label for="id_password">Contrase&ntilde;a:</label>
-        <input type="password" id="=v_password" name="password" ><br><br>
-        <input type="submit" name="submit" value="Iniciar">
-        <label for="remenbe">Remenber me?</label>
-        <input type="checkbox" name="remember-me" />
-      </form>
-      
-      <p>Registrarme</p>
-   </body>
-  
+	<img class="wave" src="./images/wave.png">
+	<div class="container">
+		<div class="img">
+			<img src="./images/bg.svg">
+		</div>
+		<div class="login-content">
+			<form name='f' th:action="@{/j_spring_security_check}" method='POST'>
+				<img src="./images/usuario.svg">
+				<h2 class="title">BIENVENIDO A EDULEARN</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Nombre de usuario</h5>
+           		   		<input type="text" class="input" name="username">
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Contraseña</h5>
+           		    	<input type="password" class="input" name="password">
+				   </div>
+				</div>
+				<div class="i">
+					
+				</div>
+				<div class="i">
+					
+				</div>
+				<label for="remenber">Remenber me?</label>
+				<input type="checkbox" name="remember-me" />
+            	<a href="Registro.html">Registrarme</a>
+            	<input type="submit" class="btn" value="Login">
+			</form>
+			
+			
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/InicioSesion.js"></script>
+</body>
 </html>

@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
          http.authorizeRequests().antMatchers("/grados").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
 
         //Solo para ADMIN
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        //http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
 
         //Cuando un usuario trata de ingresar a una pagina no autorizada
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
