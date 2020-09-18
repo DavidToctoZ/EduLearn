@@ -23,12 +23,12 @@ public class WebController {
      }
 
 
-    @RequestMapping(value= "/registro")
+    @RequestMapping(value= "/registro", method = RequestMethod.GET)
     public String registro(){
         return "Registro";
     }
 
-    @RequestMapping(value = "/grados")
+    @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados() {
         return "ListaGrados";
      }

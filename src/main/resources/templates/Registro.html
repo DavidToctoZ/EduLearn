@@ -14,7 +14,7 @@
 			<img id="regi" src="./images/regi.svg">
 		</div>
 		<div class="login-content">
-			<form th:object="${userForm}" method="POST" >
+			<form action="index.html">
 				<img src="./images/usuario.svg">
 				<h2 class="title">REGISTRO DE USUARIO</h2>
            		<div class="input-div one">
@@ -23,7 +23,7 @@
            		   </div>
            		   <div class="div">
            		   		<h5>Nombres</h5>
-           		   		<input type="text" class="input" th:field="${userForm.name}">
+           		   		<input type="text" class="input">
            		   </div>
 				</div>
 
@@ -33,7 +33,7 @@
 					</div>
 					<div class="div">
 							<h5>Apellidos</h5>
-							<input type="text" class="input" th:field="${userForm.fullname}">
+							<input type="text" class="input">
 					</div>
 				</div>
 				
@@ -43,7 +43,7 @@
 					</div>
 					<div class="div">
 							<h5>E-Mail</h5>
-							<input type="email" class="input" th:field="${userForm.email}">
+							<input type="text" class="input">
 					</div>
 				</div>
 				
@@ -53,10 +53,10 @@
            		   </div>
            		   <div class="div">
            		    	<h5>Contraseña</h5>
-           		    	<input type="password" class="input" th:field="${userForm.encrypt_password}">
+           		    	<input type="password" class="input">
             	   </div>
             	</div>
-            	<a href="#">Ya tengo una cuenta</a>
+            	<a href="/">Ya tengo una cuenta</a>
             	<input type="submit" class="btn" value="Registrarse">
 			</form>
         </div>
