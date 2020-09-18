@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         if (roleNames != null) {
             for (String role : roleNames) {
-                System.out.println(role);
+                
                 GrantedAuthority authority = new SimpleGrantedAuthority(role);
                 grantList.add(authority);
             }
