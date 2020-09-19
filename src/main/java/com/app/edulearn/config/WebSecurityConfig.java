@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
                 .defaultSuccessUrl("/grados")
-                .failureUrl("/login?error=true")
+                .failureUrl("/?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 //Configuracion de la pagina de cerrar sesion

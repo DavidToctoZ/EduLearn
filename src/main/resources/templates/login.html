@@ -8,11 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-	<div th:if="${#request.getParameter('error') == 'true'}"style="color:red;margin:10px 0px;">Login Failed!!!<br /> Reason :
-		<span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-		th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
-			Static summary
-		</span></div>
+	<!-- /?error=true -->
+	
 
 	<img class="wave" src="./images/wave.png">
 	<div class="container">
@@ -23,7 +20,11 @@
 			<form name='f' th:action="@{/j_spring_security_check}" method='POST'>
 				<img src="./images/usuario.svg">
 				<h2 class="title">BIENVENIDO A EDULEARN</h2>
-           		<div class="input-div one">
+				<div class="i"></div>
+				<div th:if="${#request.getParameter('error') == 'true'}"style="color:red;margin:10px 0px;">Fallo de inicio de sesión!!!
+				</span></div>
+				<div class="i"></div>
+		 		<div class="input-div one">
            		   <div class="i">
            		   		<i class="fas fa-user"></i>
            		   </div>
@@ -47,7 +48,7 @@
 				<div class="i">
 					
 				</div>
-				<label for="remenber">Remenber me?</label>
+				<label for="remenber">Recuerdame?</label>
 				<input type="checkbox" name="remember-me" />
             	<a href="/registro">Registrarme</a>
             	<input type="submit" class="btn" value="Login">
