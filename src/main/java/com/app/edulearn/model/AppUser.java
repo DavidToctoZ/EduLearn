@@ -33,7 +33,7 @@ public class AppUser {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-	public AppUser(String userName2, String encryptedPassword2, List<GrantedAuthority> grantList) {
+	public AppUser(String userName, String encryptedPassword2, List<GrantedAuthority> grantList) {
 	}
 
 	public Long getUserId() {

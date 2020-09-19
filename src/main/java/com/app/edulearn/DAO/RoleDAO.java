@@ -23,7 +23,6 @@ public class RoleDAO {
         Query query = this.entityManager.createQuery(sql, String.class);
         
         query.setParameter("userId", userId);
-        
         return query.getResultList();
     }
 }

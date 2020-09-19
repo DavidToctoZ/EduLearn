@@ -16,13 +16,13 @@ public class UserDAO {
     @Autowired
     private EntityManager entityManager;
 
-    public AppUser findUserAccount(String userName){
+    public AppUser findEmailAccount(String email){
         try{
             
             String sql = "Select e from " + AppUser.class.getName() + " e " //
-                    + " Where e.userName = :userName";
+                    + " Where e.email = :email";
             Query query = entityManager.createQuery(sql, AppUser.class);
-            query.setParameter("userName", userName);
+            query.setParameter("email", email);
 
             
 

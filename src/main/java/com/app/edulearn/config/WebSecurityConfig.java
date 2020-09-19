@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .loginPage("/login")
                 .defaultSuccessUrl("/grados")
                 .failureUrl("/?error=true")
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 //Configuracion de la pagina de cerrar sesion
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessUrl");

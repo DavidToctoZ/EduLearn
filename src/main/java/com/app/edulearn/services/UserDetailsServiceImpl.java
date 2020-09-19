@@ -26,12 +26,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     private RoleDAO roleDAO;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        AppUser appUser = this.userDAO.findUserAccount(userName);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AppUser appUser = this.userDAO.findEmailAccount(email);
         
         if (appUser == null) {
-            System.out.println("User not found! " + userName);
-            throw new UsernameNotFoundException("User " + userName + " was not found in the database");
+            System.out.println("Email not found! " + email);
+            throw new UsernameNotFoundException("Email " + email + " was not found in the database");
         }
         
         System.out.println("Found User: " + appUser);
