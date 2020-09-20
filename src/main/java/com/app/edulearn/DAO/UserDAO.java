@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public class UserDAO {
+public class UserDAO{
     @Autowired
     private EntityManager entityManager;
 
@@ -32,6 +32,15 @@ public class UserDAO {
             return null;
         }
 
+    }
+
+    public boolean existsEmail(String email){
+        boolean existsEmail = false;
+        String sql = "Select e from " + AppUser.class.getName() + " e " + " Where e.email = :email";
+            Query query = entityManager.createQuery(sql, AppUser.class);
+
+            query.setParameter("email", email);
+        return existsEmail; 
     }
 
 }
