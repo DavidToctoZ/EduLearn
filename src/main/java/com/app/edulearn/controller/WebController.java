@@ -3,8 +3,6 @@ package com.app.edulearn.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-
 import java.security.Principal;
 
 import com.app.edulearn.model.AppUser;
@@ -19,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,11 +37,12 @@ public class WebController {
     @RequestMapping(value= "/registro", method = RequestMethod.GET)
     public String registro(Model model){
         model.addAttribute("userForm", new AppUser());
+        
         return "Registro";
     }
 
     @RequestMapping(value="/registro", method = RequestMethod.POST)
-    public String registrarUsuario(@ModelAttribute AppUser user, BindingResult result, ModelMap model) {
+    public String registrarUsuario(@ModelAttribute AppUser user, ModelMap model) throws Exception {
         model.addAttribute("userForm", user);
         
         System.out.println(user.getEmail());
@@ -50,9 +50,17 @@ public class WebController {
 
         user.setEncryptedPassword(EncryptedPasswordUtils.encryptePassword(user.getEncryptedPassword()));
         
-        userService.add(user);
+        boolean isCreated = userService.addUser(user);
+        if(isCreated)
+        { 
+            return "ListaGrados"; 
+        }
+        else{
+            model.addAttribute("userForm", new AppUser());
+            model.addAttribute("error", "Error de creacion");
+            return "Registro";
+        }
         
-        return "ListaGrados"; 
     }
 
     @RequestMapping(value = "/grados", method = RequestMethod.GET)

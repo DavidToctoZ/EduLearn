@@ -8,22 +8,30 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+
 	<img class="wave" src="./images/wave.png">
+	
 	<div class="container">
 		<div class="img">
 			<img id="regi" src="./images/regi.svg">
 		</div>
+
+		
+		
 		<div class="login-content">
 			<form th:action="@{/registro}" th:object="${userForm}" method="POST">
 				<img src="./images/usuario.svg">
+				
 				<h2 class="title">REGISTRO DE USUARIO</h2>
+				<p th:text="${error}"style="color:red;margin:10px 0px;"></p>
            		<div class="input-div one">
+					
            		   <div class="i">
            		   		<i class="fas fa-user"></i>
-           		   </div>
+					  </div>
            		   <div class="div">
            		   		<h5>Nombres</h5>
-           		   		<input type="text" class="input" th:field="*{userName}">
+           		   		<input type="text" class="input" th:field="*{userName}" required>
            		   </div>
 				</div>
 
@@ -43,7 +51,7 @@
 					</div>
 					<div class="div">
 							<h5>E-Mail</h5>
-							<input type="text" class="input" th:field="*{email}">
+							<input type="email" class="input" th:field="*{email}" required>
 					</div>
 				</div>
 				
@@ -53,7 +61,7 @@
            		   </div>
            		   <div class="div">
            		    	<h5>Contraseña</h5>
-           		    	<input type="password" class="input" th:field="*{encryptedPassword}">
+           		    	<input type="password" class="input" th:field="*{encryptedPassword}" required>
             	   </div>
             	</div>
             	<a href="/">Ya tengo una cuenta</a>
