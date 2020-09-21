@@ -33,14 +33,14 @@ public class AppUser {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-	public AppUser(String userName, String encryptedPassword2, List<GrantedAuthority> grantList) {
+	public AppUser(final String userName, final String encryptedPassword, final List<GrantedAuthority> grantList) {
 	}
 
 	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(final Long userId) {
 		this.userId = userId;
 	}
 
@@ -48,7 +48,7 @@ public class AppUser {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
+	public void setUserName(final String userName) {
 		this.userName = userName;
 	}
 
@@ -56,7 +56,7 @@ public class AppUser {
 		return fullname;
 	}
 
-	public void setFullname(String fullname) {
+	public void setFullname(final String fullname) {
 		this.fullname = fullname;
 	}
 
@@ -64,7 +64,7 @@ public class AppUser {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
@@ -72,7 +72,7 @@ public class AppUser {
 		return encryptedPassword;
 	}
 
-	public void setEncryptedPassword(String encryptedPassword) {
+	public void setEncryptedPassword(final String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
 	}
 
@@ -80,12 +80,12 @@ public class AppUser {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(final boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public AppUser(Long userId, String userName, String fullname, String email, String encryptedPassword,
-			boolean enabled) {
+	public AppUser(final Long userId, final String userName, final String fullname, final String email,
+			final String encryptedPassword, final boolean enabled) {
 		this.userId = userId;
 		this.userName = userName;
 		this.fullname = fullname;

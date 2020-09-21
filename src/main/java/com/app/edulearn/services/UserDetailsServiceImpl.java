@@ -3,8 +3,7 @@ package com.app.edulearn.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.app.edulearn.DAO.RoleDAO;
-import com.app.edulearn.DAO.UserDAO;
+import com.app.edulearn.repository.UserRepo;
 import com.app.edulearn.model.AppUser;
 
 
@@ -21,22 +20,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private RoleDAO roleDAO;
+    private UserRepo userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        AppUser appUser = this.userDAO.findEmailAccount(email);
         
+        AppUser appUser = userRepo.findByEmail(email);
         if (appUser == null) {
             System.out.println("Email not found! " + email);
             throw new UsernameNotFoundException("Email " + email + " was not found in the database");
         }
         
         System.out.println("Found User: " + appUser);
-        /*//Usandooo roles
+ 
         // [ROLE_USER, ROLE_ADMIN,..]
+        /*
         List<String> roleNames = this.roleDAO.getRoleNames(appUser.getUserId());
        
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
@@ -47,9 +45,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
                 grantList.add(authority);
             }
         }*/
-        //Sin usar roles
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+
         grantList.add(authority);
         UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), appUser.getEncryptedPassword(), grantList);
         

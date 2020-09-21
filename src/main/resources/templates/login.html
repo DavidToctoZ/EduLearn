@@ -47,7 +47,8 @@
 				<label for="remenber">Recuerdame?</label>
 				<input type="checkbox" name="remember-me" />
             	<a href="/registro">Registrarme</a>
-            	<input type="submit" class="btn" value="Login">
+				<input type="submit" class="btn" value="Login">
+				<div th:if="${FormErrorMessage}" the:text="${FormErrorMessage}">Mensaje de error</div>
 			</form>
 			
 			
