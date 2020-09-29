@@ -19,6 +19,7 @@ h3 { text-align: center}
 #menu li {
 	float: left;
 	display: inline;
+	
 	position: relative;
 }
 #menu a {
