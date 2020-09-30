@@ -68,10 +68,15 @@ public class WebController {
         return "ListaGrados";
      }
 
-     @RequestMapping(value = "/cursos", method = RequestMethod.GET)
+    @RequestMapping(value = "/cursos", method = RequestMethod.GET)
      public String listaCursos() {
          return "lista_de_cursos";
       }
+
+    @RequestMapping(value = "/contacto", method = RequestMethod.GET)
+      public String contacto() {
+          return "contacto";
+    }    
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
