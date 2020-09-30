@@ -76,7 +76,27 @@ public class WebController {
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
       public String contacto() {
           return "contacto";
-    }    
+    }
+    @RequestMapping(value = "/aritmetica5", method = RequestMethod.GET)
+      public String aritmetica5() {
+          return "aritmetica5";
+    } 
+    @RequestMapping(value = "/algebra5", method = RequestMethod.GET)
+      public String algebra5() {
+          return "algebra5";
+    } 
+    @RequestMapping(value = "/comunicacion5", method = RequestMethod.GET)
+      public String comunicacion5() {
+          return "comunicacion5";
+    } 
+    @RequestMapping(value = "/ingles5", method = RequestMethod.GET)
+      public String ingles5() {
+          return "ingles5";
+    } 
+    @RequestMapping(value = "/geometria5", method = RequestMethod.GET)
+      public String geometria5() {
+          return "geometria5";
+    }     
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
