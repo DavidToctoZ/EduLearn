@@ -93,10 +93,27 @@ public class WebController {
       public String ingles5() {
           return "ingles5";
     } 
-    @RequestMapping(value = "/geometria5", method = RequestMethod.GET)
-      public String geometria5() {
-          return "geometria5";
-    }     
+    @RequestMapping(value = "/ari_numdecimal5", method = RequestMethod.GET)
+      public String ari_numdecimal5() {
+          return "ari_numdecimal5";
+    }
+    
+    @RequestMapping(value = "/ari_adiccion5", method = RequestMethod.GET)
+      public String ari_adiccion5() {
+          return "ari_adiccion5";
+    }
+    @RequestMapping(value = "/ari_sustraccion5", method = RequestMethod.GET)
+      public String ari_sustraccion5() {
+          return "ari_sustraccion5";
+    }
+    @RequestMapping(value = "/ari_multiplicacion5", method = RequestMethod.GET)
+      public String ari_multiplicacion5() {
+          return "ari_multiplicacion5";
+    }
+    @RequestMapping(value = "/ari_numprimcomp5", method = RequestMethod.GET)
+      public String ari_numprimcomp5() {
+          return "ari_numprimcomp5";
+    }    
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
