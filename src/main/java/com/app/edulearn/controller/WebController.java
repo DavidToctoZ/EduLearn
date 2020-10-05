@@ -82,10 +82,7 @@ public class WebController {
       public String algebra5() {
           return "algebra5";
     } 
-    @RequestMapping(value = "/comunicacion5", method = RequestMethod.GET)
-      public String comunicacion5() {
-          return "comunicacion5";
-    } 
+  
     @RequestMapping(value = "/ingles5", method = RequestMethod.GET)
       public String ingles5() {
           return "ingles5";
@@ -148,7 +145,7 @@ public class WebController {
     } 
 
     @RequestMapping(value = "/geo_angulo5", method = RequestMethod.GET)
-      public String geo_angulos5() {
+      public String geo_angulo5() {
           return "geo_angulo5";
     } 
     // Fin Geometria --------------------------------------------------
