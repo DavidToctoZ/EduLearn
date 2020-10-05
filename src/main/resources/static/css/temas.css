@@ -108,7 +108,7 @@
 	#menu input:checked ~ ul {display:block}
 }
 
-.contenido{
+.contenido_ari{
 	width: 800px;
     margin: auto;
 
