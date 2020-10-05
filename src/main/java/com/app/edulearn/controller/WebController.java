@@ -77,10 +77,7 @@ public class WebController {
       public String contacto() {
           return "contacto";
     }
-    @RequestMapping(value = "/aritmetica5", method = RequestMethod.GET)
-      public String aritmetica5() {
-          return "aritmetica5";
-    } 
+     
     @RequestMapping(value = "/algebra5", method = RequestMethod.GET)
       public String algebra5() {
           return "algebra5";
@@ -93,6 +90,14 @@ public class WebController {
       public String ingles5() {
           return "ingles5";
     } 
+
+    //Aritmetica ---------------------------------------------------------------
+
+    @RequestMapping(value = "/aritmetica5", method = RequestMethod.GET)
+      public String aritmetica5() {
+          return "aritmetica5";
+    }
+
     @RequestMapping(value = "/ari_numdecimal5", method = RequestMethod.GET)
       public String ari_numdecimal5() {
           return "ari_numdecimal5";
@@ -114,7 +119,41 @@ public class WebController {
       public String ari_numprimcomp5() {
           return "ari_numprimcomp5";
     }    
+    //Fin Aritmetica ---------------------------------------------------------------
 
+    // Geometria --------------------------------------------------
+    @RequestMapping(value = "/geometria5", method = RequestMethod.GET)
+      public String geometria5() {
+          return "geometria5";
+    } 
+
+    @RequestMapping(value = "/geo_elementos5", method = RequestMethod.GET)
+      public String geo_elementos5() {
+          return "geo_elementos5";
+    } 
+
+    @RequestMapping(value = "/geo_segmentos5", method = RequestMethod.GET)
+      public String geo_segmentos5() {
+          return "geo_segmentos5";
+    } 
+
+    
+    @RequestMapping(value = "/geo_punto5", method = RequestMethod.GET)
+      public String geo_punto5() {
+          return "geo_punto5";
+    } 
+    @RequestMapping(value = "/geo_plano5", method = RequestMethod.GET)
+      public String geo_plano5() {
+          return "geo_plano5";
+    } 
+
+    @RequestMapping(value = "/geo_angulo5", method = RequestMethod.GET)
+      public String geo_angulos5() {
+          return "geo_angulo5";
+    } 
+    // Fin Geometria --------------------------------------------------
+
+    
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
  
