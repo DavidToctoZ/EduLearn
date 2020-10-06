@@ -53,7 +53,7 @@ public class WebController {
         boolean isCreated = userService.addUser(user);
         if(isCreated)
         { 
-            return "ListaGrados"; 
+            return "PaginaGrados"; 
         }
         else{
             model.addAttribute("userForm", new AppUser());
@@ -65,23 +65,25 @@ public class WebController {
 
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados() {
-        return "ListaGrados";
+        return "PaginaGrados";
      }
 
     @RequestMapping(value = "/cursos", method = RequestMethod.GET)
      public String listaCursos() {
-         return "lista_de_cursos";
+         return "PaginaCursos5to";
       }
 
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
       public String contacto() {
-          return "contacto";
+          return "contacto1";
     }
      
     @RequestMapping(value = "/algebra5", method = RequestMethod.GET)
       public String algebra5() {
           return "algebra5";
     } 
+
+    //Inglés ------------------------------------------------------------------
   
     @RequestMapping(value = "/ingles5", method = RequestMethod.GET)
       public String ingles5() {
