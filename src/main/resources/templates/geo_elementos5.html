@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="./js/jsGradosYCursos/sweet-alert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="./css/GradosYCursos/sweet-alert.css">
     <link rel="stylesheet" href="./css/GradosYCursos/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="./css/GradosYCursos/normalize.css">
@@ -51,6 +52,17 @@
                             <li><a href="#"><i class="zmdi zmdi-collection-item-6 zmdi-hc-fw"></i>&nbsp;&nbsp; Sexto grado</a></li>
                         </ul>
                     </li>
+                    <li>
+                      <div class="dropdown-menu-button"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Cursos de 5to grado <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
+                      <ul class="list-unstyled">
+                          <li><a href="/aritmetica5"><i class="fa fa-calculator"></i>&nbsp;&nbsp; Aritm&eacute;tica </a></li>
+                          <li><a href="/geometria5"><i class='fas fa-infinity'></i>&nbsp;&nbsp; Geometr&iacute;a </a></li>
+                          <li style="text-transform: capitalize;"><a href="#"><i class='fas fa-square-root-alt'></i>&nbsp;&nbsp; &aacute;lgebra </a></li>
+                          <li><a href="/ingles5"><i class='fas fa-user-friends'></i>&nbsp;&nbsp; Ingl&eacute;s </a></li>
+                          <li><a href="#"><i class='fas fa-globe-americas'></i>&nbsp;&nbsp; Historia </a></li>
+                          <li><a href="#"><i class='fas fa-bullhorn'></i>&nbsp;&nbsp; Comunicaci&oacute;n </a></li>
+                      </ul>
+                    </li>
                     <li><a href="#"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Sobre nosotros </a></li>
                     <li><a href="/contacto"><i class="zmdi zmdi-phone zmdi-hc-fw"></i>&nbsp;&nbsp; Cont&aacute;ctenos </a></li>
 
@@ -78,19 +90,22 @@
 
         <section id="main-content">
             <section class="wrapper mejora" >
-              <h3><i class="fa fa-angle-right"></i>Tema: Elementos de la geometr&iacutea</h3>
+              <h3>Tema: Elementos de la geometr&iacutea</h3>
               <!-- page start-->
               <div class="tab-pane" >
 
                 <div class="row mt">
                   <div class="col-lg-6" style="width: 100%;">
-                    <div class="content-panel" >
-                      <h4><i class="fa fa-angle-right"></i> > Punto</h4>
-                      <div class="panel-body text-center" >
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Punto </h4>
+                      <div class="panel-body text-center">
                         <div class="contenidotema" style="text-align:justify">
-                          <p>La marca de un lápiz, lapicero o una tiza nos dan la idea de punto. Se nombra con una letra mayúscula.</p>
-                          <img src="./images/punto.jpg" align="center" width="300" height="200">
-                        </div>
+                          <p>La marca de un l&aacute;piz, lapicero o una tiza nos dan la idea de punto. Se nombra con una letra may&uacute;scula.</p>
+
+                          <div class="contenidotema1">
+                            <img src="./images/punto.jpg" align="center" width="300" height="200">
+                          </div>                          
+                        </div>       
                       </div>
                     </div>
                   </div>
@@ -98,14 +113,21 @@
 
                 <div class="row mt">
                   <div class="col-lg-6" style="width: 100%;">
-                    <div class="content-panel" >
-                      <h4><i class="fa fa-angle-right"></i> > Recta y Semirrecta</h4>
-                      <div class="panel-body text-center" >
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Recta y Semirrecta </h4>
+                      <div class="panel-body text-center">
                         <div class="contenidotema" style="text-align:justify">
-                          <p>Recta: Es una sucesión de infinitos puntos en una misma dirección. Se nombra con una letra minúscula o dos letras mayúsculas.</p>
-                          <p>Semirrecta: Sobre una recta se toma un punto A, este punto divide a la recta en dos partes, cada parte se llama semirrecta y no se considera al punto A, el punto A se llama origen o frontera.</p>
-                          <img src="./images/semirrectas.png" align="center" width="300" height="200">
-                        </div>
+                          <li>
+                            Recta: Es una sucesi&oacute;n de infinitos puntos en una misma direcci&oacute;n. Se nombra con una letra min&uacute;scula o dos letras may&uacute;sculas.
+                          </li>
+                          <li>
+                            Semirrecta: Sobre una recta se toma un punto A, este punto divide a la recta en dos partes, cada parte se llama semirrecta y no se considera al punto A. Este se llama origen o frontera.
+                          </li>
+
+                          <div class="contenidotema1">
+                            <img src="./images/semirrectas.png" align="center" width="300" height="200">
+                          </div>                          
+                        </div>       
                       </div>
                     </div>
                   </div>
@@ -113,13 +135,16 @@
 
                 <div class="row mt">
                   <div class="col-lg-6" style="width: 100%;">
-                    <div class="content-panel" >
-                      <h4><i class="fa fa-angle-right"></i> > Segmento</h4>
-                      <div class="panel-body text-center" >
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Segmento </h4>
+                      <div class="panel-body text-center">
                         <div class="contenidotema" style="text-align:justify">
                           <p>Es una parte de la recta que tiene por extremos a dos puntos. Su medida se expresa en unidades de longitud.</p>
-                          <img src="./images/segmentos.png" align="center" width="300" height="200">
-                        </div>
+
+                          <div class="contenidotema1">
+                            <img src="./images/segmentos.png" align="center" width="300" height="200">
+                          </div>                          
+                        </div>       
                       </div>
                     </div>
                   </div>
@@ -127,13 +152,16 @@
 
                 <div class="row mt">
                   <div class="col-lg-6" style="width: 100%;">
-                    <div class="content-panel" >
-                      <h4><i class="fa fa-angle-right"></i> > Plano</h4>
-                      <div class="panel-body text-center" >
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Plano </h4>
+                      <div class="panel-body text-center">
                         <div class="contenidotema" style="text-align:justify">
-                          <p>La superficie de una pizarra, del piso, de una mesa, estas superficies nos dan la idea de un plano. Un plano no tiene límites ni espesor. Se le nombra con una letra mayúscula.</p>
-                          <img src="./images/plano.png" align="center" width="300" height="200">
-                        </div>
+                          <p>La superficie de una pizarra, del piso, de una mesa, estas superficies nos dan la idea de un plano. Un plano no tiene l&iacute;mites ni espesor. Se le nombra con una letra may&uacute;scula.</p>
+
+                          <div class="contenidotema1">
+                            <img src="./images/plano.png" align="center" width="300" height="200">
+                          </div>                          
+                        </div>       
                       </div>
                     </div>
                   </div>
@@ -141,27 +169,24 @@
 
                 <div class="row mt">
                   <div class="col-lg-6" style="width: 100%;">
-                    <div class="content-panel" >
-                      <h4><i class="fa fa-angle-right"></i> > Rayo</h4>
-                      <div class="panel-body text-center" >
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Rayo </h4>
+                      <div class="panel-body text-center">
                         <div class="contenidotema" style="text-align:justify">
-                          <p>Sobre una recta se toma un punto A, este punto divide a la recta en dos partes, cada parte se le llama rayo y se considera el punto A. El punto A se llama origen.</p>
-                          <img src="./images/rayo.png" align="center" width="300" height="200">
+                          <p>Sobre una recta se toma un punto A, este divide a la recta en dos partes, cada parte se le llama rayo y se considera el punto A. El punto A se llama origen.</p>
 
-                        </div>
+                          <div class="contenidotema1">
+                            <img src="./images/rayo.png" align="center" width="300" height="200">
+                          </div>                          
+                        </div>       
                       </div>
                     </div>
                   </div>
                 </div>
 
-
-               
-
-                
               </div>
             </section>
           </section>
-
 
         <footer class="footer full-reset">
             <div class="footer-copyright full-reset all-tittles">© 2020 Aplicativo web EduLearn</div>
