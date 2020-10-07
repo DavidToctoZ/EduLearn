@@ -78,10 +78,7 @@ public class WebController {
           return "contacto1";
     }
      
-    @RequestMapping(value = "/algebra5", method = RequestMethod.GET)
-      public String algebra5() {
-          return "algebra5";
-    } 
+   
 
     //Inglés ------------------------------------------------------------------
   
@@ -90,7 +87,7 @@ public class WebController {
           return "ingles5";
     } 
 
-    //Aritmetica ---------------------------------------------------------------
+    //Aritmetica ----------------------------------------------------------------
 
     @RequestMapping(value = "/aritmetica5", method = RequestMethod.GET)
       public String aritmetica5() {
@@ -151,7 +148,38 @@ public class WebController {
           return "geo_angulo5";
     } 
     // Fin Geometria --------------------------------------------------
+     
+    //Inicio Algebra --------------------------------------------------
+    @RequestMapping(value = "/algebra5", method = RequestMethod.GET)
+    public String algebra5() {
+        return "algebra5";
+    } 
 
+    @RequestMapping(value = "/alg_expcerouno5", method = RequestMethod.GET)
+    public String alg_expcerouno5() {
+        return "alg_expcerouno5";
+    }
+    
+    @RequestMapping(value = "/alg_expnatural5", method = RequestMethod.GET)
+    public String alg_expnatural5() {
+        return "alg_expnatural5";
+    }
+    
+    @RequestMapping(value = "/alg_expoperaciones5", method = RequestMethod.GET)
+    public String alg_expoperaciones5() {
+        return "alg_expoperaciones5";
+    }
+    
+    @RequestMapping(value = "/alg_multiydivexp5", method = RequestMethod.GET)
+    public String alg_multiydivexp5() {
+        return "alg_multiydivexp5";
+    }
+    
+    @RequestMapping(value = "/alg_valornum5", method = RequestMethod.GET)
+    public String alg_valornum5() {
+        return "alg_valornum5";
+    }
+    //Fin Algebra -----------------------------------------------------
     
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
