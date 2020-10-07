@@ -1,0 +1,47 @@
+#main-content {
+    margin-left: 65px;
+    margin-right: 30px;
+}
+
+.wrapper {
+    display: inline-block;
+    margin-top: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 0px;
+    width: 100%;
+}
+
+.mt {
+	margin-top: 25px;
+}
+
+.content-panel {
+	background: #f3eeee;
+	box-shadow: 1px 4px 3px #aab2bd;
+	padding-top: 15px;
+	padding-bottom: 5px;
+}
+.content-panel h4 {
+	margin-left: 10px;
+}
+
+.contenidotema {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-bottom: 25px;
+    padding-right: 15px;
+    overflow-x: scroll;
+}
+
+.mejora h3{
+    font-family: 'Noto Serif', serif;
+    font-size: 32px;
+    text-align: center;
+}
+
+.content-panel h4 {
+    font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+}

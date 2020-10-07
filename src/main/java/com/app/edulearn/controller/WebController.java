@@ -102,9 +102,9 @@ public class WebController {
           return "ari_numdecimal5";
     }
     
-    @RequestMapping(value = "/ari_adiccion5", method = RequestMethod.GET)
+    @RequestMapping(value = "/ari_adicion5", method = RequestMethod.GET)
       public String ari_adiccion5() {
-          return "ari_adiccion5";
+          return "ari_adicion5";
     }
     @RequestMapping(value = "/ari_sustraccion5", method = RequestMethod.GET)
       public String ari_sustraccion5() {
