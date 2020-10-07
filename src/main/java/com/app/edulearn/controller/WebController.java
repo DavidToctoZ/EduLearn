@@ -90,7 +90,7 @@ public class WebController {
           return "ingles5";
     } 
 
-    //Aritmetica ---------------------------------------------------------------
+    //Aritmetica ----------------------------------------------------------------
 
     @RequestMapping(value = "/aritmetica5", method = RequestMethod.GET)
       public String aritmetica5() {
