@@ -1,52 +1,176 @@
+
 <!DOCTYPE html>
-<html>
-   <head>
-      <meta charset = "ISO-8859-1" />
-      <link rel="stylesheet" type="text/css" href="./css/temas.css">
-      <script src="./js/lista_de_cursos.js"></script>
-      <title>Aritm&eacutetica para 5to Grado</title>
-   </head>
+<html lang="es">
+<head>
+    <title>Contenido de Ingl&eacute;s</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./js/jsGradosYCursos/sweet-alert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="./css/GradosYCursos/sweet-alert.css">
+    <link rel="stylesheet" href="./css/GradosYCursos/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="./css/GradosYCursos/normalize.css">
+    <link rel="stylesheet" href="./css/GradosYCursos/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/GradosYCursos/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="./css/GradosYCursos/style.css">
+    <link rel="stylesheet" href="css/ari_temas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <script>window.jQuery || document.write('<script src="./js/jsGradosYCursos/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="./js/jsGradosYCursos/modernizr.js"></script>
+    <script src="./js/jsGradosYCursos/bootstrap.min.js"></script>
+    <script src="./js/jsGradosYCursos/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="./js/jsGradosYCursos/main.js"></script>
+</head>
+<body>
+    <div class="navbar-lateral full-reset">
+        <div class="visible-xs font-movile-menu mobile-menu-button"></div>
+        <div class="full-reset container-menu-movile custom-scroll-containers">
+            <div class="logo full-reset edu all-tittles">
+                <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" style="line-height: 60px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
+                EduLearn
+            </div>
+            <div class="full-reset" style="background-color:#2B3D51; padding: 10px 0; color:#fff;">
+                <figure>
+                    <img src="./images/buhologo.png" alt="EduLearn" class="img-responsive center-box" style="width:55%;">
+                </figure>
+                <p class="text-center" style="padding-top: 15px; font-size: 18px;">Sistema de aprendizaje en l&iacute;nea</p>
+            </div>
+            <div class="full-reset nav-lateral-list-menu">
+                <ul class="list-unstyled">
+                    <li><a href="/grados"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
+                    <li>
+                        <div class="dropdown-menu-button"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Lista de grados <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
+                        <ul class="list-unstyled">
+                            <li><a href="#"><i class="zmdi zmdi-collection-item-1 zmdi-hc-fw"></i>&nbsp;&nbsp; Primer grado</a></li>
+                            <li><a href="#"><i class="zmdi zmdi-collection-item-2 zmdi-hc-fw"></i>&nbsp;&nbsp; Segundo grado</a></li>
+                            <li><a href="#"><i class="zmdi zmdi-collection-item-3 zmdi-hc-fw"></i>&nbsp;&nbsp; Tercer grado</a></li>
+                            <li><a href="#"><i class="zmdi zmdi-collection-item-4 zmdi-hc-fw"></i>&nbsp;&nbsp; Cuarto grado</a></li>
+                            <li><a href="/cursos"><i class="zmdi zmdi-collection-item-5 zmdi-hc-fw"></i>&nbsp;&nbsp; Quinto grado</a></li>
+                            <li><a href="#"><i class="zmdi zmdi-collection-item-6 zmdi-hc-fw"></i>&nbsp;&nbsp; Sexto grado</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                      <div class="dropdown-menu-button"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Cursos de 5to grado <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
+                      <ul class="list-unstyled">
+                          <li><a href="/aritmetica5"><i class="fa fa-calculator"></i>&nbsp;&nbsp; Aritm&eacute;tica </a></li>
+                          <li><a href="/geometria5"><i class='fas fa-infinity'></i>&nbsp;&nbsp; Geometr&iacute;a </a></li>
+                          <li style="text-transform: capitalize;"><a href="#"><i class='fas fa-square-root-alt'></i>&nbsp;&nbsp; &aacute;lgebra </a></li>
+                          <li><a href="/ingles5"><i class='fas fa-user-friends'></i>&nbsp;&nbsp; Ingl&eacute;s </a></li>
+                          <li><a href="#"><i class='fas fa-globe-americas'></i>&nbsp;&nbsp; Historia </a></li>
+                          <li><a href="#"><i class='fas fa-bullhorn'></i>&nbsp;&nbsp; Comunicaci&oacute;n </a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Sobre nosotros </a></li>
+                    <li><a href="/contactos"><i class="zmdi zmdi-phone zmdi-hc-fw"></i>&nbsp;&nbsp; Cont&aacute;ctenos </a></li>
 
-   <body>
-     <div class="logotitulo">
-       <h1>EduLearn<img src="./images/buhologo.png" align="right" width="75" height="75"></h1>
-     </div>
-      <nav id='menu'>
-        <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
-        <ul>
-          <li><a href='http://'>Inicio</a></li>
-          <li><a href='/grados'>Grados</a></li>
-          <li><a href='http://'>Sobre Nosotros</a></li>
-          <li><a href='/contacto'>Cont&aacutectanos</a></li>
-        </ul>
-      </nav>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-page-container full-reset custom-scroll-containers">
+        <nav class="navbar-user-top full-reset">
+            <ul class="list-unstyled full-reset">
+                <li  class="tooltips-general exit-system-button" data-href="#" data-placement="bottom" title="Salir del sistema">
+                    <i class="zmdi zmdi-power"></i>
+                </li>
+                <figure>
+                   <img src="./images/usuario.png" alt="usuario" class="img-responsive img-circle center-box">
+                </figure>
+                <li style="color:#fff; cursor:default;">
+                    <span class="all-tittles">Usuario</span>
+                </li>
+                <li class="mobile-menu-button visible-xs" style="float: left !important;">
+                    <i class="zmdi zmdi-menu"></i>
+                </li>
+            </ul>
+        </nav>
 
-      <h1 align="center">N&uacutemeros primos y compuestos</h1>
+        <section id="main-content">
+            <section class="wrapper mejora" >
+              <h3><i class="fa fa-angle-right"></i>Tema: N&uacute;meros primos y compuestos</h3>
+              <!-- page start-->
+              <div class="tab-pane" >
 
-      <!-- -->
+                <div class="row mt">
+                  <div class="col-lg-6" style="width: 100%;">
+                    <div class="content-panel" >
+                      <h4><i class="fa fa-angle-right"></i> > N&uacute;meros Primos </h4>
+                      <div class="panel-body text-center" >
+                        <div class="contenidotema" style="text-align:justify">
 
-      <div class="contenido_ari">
-      <h3>Números Primos</h3>
-      <p>Un número <strong>a</strong> es <strong>primo</strong> si solo tiene como divisores el <strong>1</strong> y <strong>él mismo</strong>. Para saber si un número es primo hallamos sus divisores y si únicamente tiene dos divisores, el 1 y él mismo, entonces dicho número es primo.</p>
-      <p>Los primeros números primos son: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 y 97.</p>
-      <img src="./images/primos5_1.png" align="center" width="400" height="100">
-      <br>
-      <h3>Números Compuestos</h3>
-      <p>Un número es compuesto cuando no es primo, es decir, cuando tiene más de dos divisores.  </p>
-      <img src="./images/primos5_2.png" align="center" width="500" height="350">
-      <br>
-      <h3>Cómo averiguar si un número es primo </h3>
-      <p>Para averiguar si un número es primo o compuesto, se divide por la serie de números primos 2, 3, 5, 7, 11, ... hasta llegar a una división cuyo cociente sea igual o menor que el divisor. Si todas las divisiones tienen el resto distinto de cero, el número propuesto es un número primo.</p>
-      <p>Ejemplo: Vamos a ver si el número 101 es un número primo.</p>
-      <ul>
-        <li>101 no es divisible por 2.</li>
-        <li>101 no es divisible por 3.</li>
-        <li>101 no es divisible por 5.</li>
-        <li><strong>Si dividimos el número 101 por 7:</strong></li>
-      </ul>
-      <img src="./images/primos5_3.png" align="center" width="200" height="150">
+                            <li>Un n&uacute;mero <strong>A</strong> es <strong>primo</strong> si solo tiene como divisores el <strong>1</strong> y <strong>a &eacute;l mismo</strong>.</li>
+                            <li>Para saber si un n&uacute;mero es primo, hallamos sus divisores y si &uacute;nicamente tiene dos divisores, el 1 y a s&iacute; mismo, entonces dicho n&uacute;mero es primo.</li>
+                            <li>Los primeros n&uacute;meros primos son: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 y 97.</li>
 
-      </div>
+                            <div class="contenidotema1">
+                                <img src="./images/primos5_1.png" align="center" width="400" height="100">
+                            </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-    </body>
+                <div class="row mt">
+                  <div class="col-lg-6" style="width: 100%;">
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i>> N&uacute;meros Compuestos</h4>
+                      <div class="panel-body text-center">
+                        <div class="contenidotema" style="text-align:justify">
+                            <li>
+                                Un n&uacute;mero es compuesto cuando no es primo, es decir, cuando tiene m&uacute;s de dos divisores.
+                            </li>
+
+                            <div class="contenidotema1">
+                                <img src="./images/primos5_2.png" align="center" width="500" height="350">
+                            </div>                          
+                        </div>       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt">
+                  <div class="col-lg-6" style="width: 100%;">
+                    <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i>> ¿C&oacute;mo averiguar si un n&uacute;mero es primo? </h4>
+                      <div class="panel-body text-center">
+                        <div class="contenidotema" style="text-align:justify">
+                            <li>
+                                Para averiguar si un n&uacute;mero es primo o compuesto, se divide por la serie de n&uacute;meros primos 2, 3, 5, 7, 11, ... hasta llegar a una divisi&oacute;n cuyo cociente sea igual o menor que el divisor. 
+                            </li>
+                            <li>
+                                Si todas las divisiones tienen el resto distinto de cero, el n&uacute;mero propuesto es un n&uacute;mero primo.
+                            </li>
+
+                                Ejemplo: Vamos a ver si el n&uacute;mero 101 es un n&uacute;mero primo.
+                                <ul>
+                                    <li>101 no es divisible por 2.</li>
+                                    <li>101 no es divisible por 3.</li>
+                                    <li>101 no es divisible por 5.</li>
+                                    <li><strong>Si dividimos el n&uacute;mero 101 por 7:</strong></li>
+                                </ul>
+                            <div class="contenidotema1">
+                                <img src="./images/primos5_3.png" align="center" width="310" height="180">
+                            </div>  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </section>
+
+
+        <footer class="footer full-reset">
+            <div class="footer-copyright full-reset all-tittles">© 2020 Aplicativo web EduLearn</div>
+        </footer>
+    </div>
+</body>
 </html>

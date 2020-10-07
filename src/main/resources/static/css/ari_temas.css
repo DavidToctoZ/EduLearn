@@ -35,6 +35,12 @@
     overflow-x: scroll;
 }
 
+.contenidotema1 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+
 .mejora h3{
     font-family: 'Noto Serif', serif;
     font-size: 32px;
