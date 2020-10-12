@@ -84,100 +84,100 @@ public class WebController {
   
     @RequestMapping(value = "/ingles5", method = RequestMethod.GET)
       public String ingles5() {
-          return "ingles5";
+          return "Ingles/ingles5";
     } 
 
     //Aritmetica ----------------------------------------------------------------
 
     @RequestMapping(value = "/aritmetica5", method = RequestMethod.GET)
       public String aritmetica5() {
-          return "aritmetica5";
+          return "Aritmetica/aritmetica5";
     }
 
     @RequestMapping(value = "/ari_numdecimal5", method = RequestMethod.GET)
       public String ari_numdecimal5() {
-          return "ari_numdecimal5";
+          return "Aritmetica/ari_numdecimal5";
     }
     
     @RequestMapping(value = "/ari_adicion5", method = RequestMethod.GET)
       public String ari_adiccion5() {
-          return "ari_adicion5";
+          return "Aritmetica/ari_adicion5";
     }
     @RequestMapping(value = "/ari_sustraccion5", method = RequestMethod.GET)
       public String ari_sustraccion5() {
-          return "ari_sustraccion5";
+          return "Aritmetica/ari_sustraccion5";
     }
     @RequestMapping(value = "/ari_multiplicacion5", method = RequestMethod.GET)
       public String ari_multiplicacion5() {
-          return "ari_multiplicacion5";
+          return "Aritmetica/ari_multiplicacion5";
     }
     @RequestMapping(value = "/ari_numprimcomp5", method = RequestMethod.GET)
       public String ari_numprimcomp5() {
-          return "ari_numprimcomp5";
+          return "Aritmetica/ari_numprimcomp5";
     }    
     //Fin Aritmetica ---------------------------------------------------------------
 
     // Geometria --------------------------------------------------
     @RequestMapping(value = "/geometria5", method = RequestMethod.GET)
       public String geometria5() {
-          return "geometria5";
+          return "Geometria/geometria5";
     } 
 
     @RequestMapping(value = "/geo_elementos5", method = RequestMethod.GET)
       public String geo_elementos5() {
-          return "geo_elementos5";
+          return "Geometria/geo_elementos5";
     } 
 
     @RequestMapping(value = "/geo_segmentos5", method = RequestMethod.GET)
       public String geo_segmentos5() {
-          return "geo_segmentos5";
+          return "Geometria/geo_segmentos5";
     } 
 
     
     @RequestMapping(value = "/geo_punto5", method = RequestMethod.GET)
       public String geo_punto5() {
-          return "geo_punto5";
+          return "Geometria/geo_punto5";
     } 
     @RequestMapping(value = "/geo_plano5", method = RequestMethod.GET)
       public String geo_plano5() {
-          return "geo_plano5";
+          return "Geometria/geo_plano5";
     } 
 
     @RequestMapping(value = "/geo_angulo5", method = RequestMethod.GET)
       public String geo_angulo5() {
-          return "geo_angulo5";
+          return "Geometria/geo_angulo5";
     } 
     // Fin Geometria --------------------------------------------------
      
     //Inicio Algebra --------------------------------------------------
     @RequestMapping(value = "/algebra5", method = RequestMethod.GET)
     public String algebra5() {
-        return "algebra5";
+        return "Algebra/algebra5";
     } 
 
     @RequestMapping(value = "/alg_expcerouno5", method = RequestMethod.GET)
     public String alg_expcerouno5() {
-        return "alg_expcerouno5";
+        return "Algebra/alg_expcerouno5";
     }
     
     @RequestMapping(value = "/alg_expnatural5", method = RequestMethod.GET)
     public String alg_expnatural5() {
-        return "alg_expnatural5";
+        return "Algebra/alg_expnatural5";
     }
     
     @RequestMapping(value = "/alg_expoperaciones5", method = RequestMethod.GET)
     public String alg_expoperaciones5() {
-        return "alg_expoperaciones5";
+        return "Algebra/alg_expoperaciones5";
     }
     
     @RequestMapping(value = "/alg_multiydivexp5", method = RequestMethod.GET)
     public String alg_multiydivexp5() {
-        return "alg_multiydivexp5";
+        return "Algebra/alg_multiydivexp5";
     }
     
     @RequestMapping(value = "/alg_valornum5", method = RequestMethod.GET)
     public String alg_valornum5() {
-        return "alg_valornum5";
+        return "Algebra/alg_valornum5";
     }
     //Fin Algebra -----------------------------------------------------
     
