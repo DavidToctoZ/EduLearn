@@ -27,7 +27,7 @@ public class AppUser {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "encypt_password", nullable = false)
+    @Column(name = "encrypt_password", nullable = false)
     private String encryptedPassword;
 
     @Column(name = "enabled", nullable = false)
