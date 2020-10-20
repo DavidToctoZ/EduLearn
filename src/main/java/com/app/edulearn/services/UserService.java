@@ -1,10 +1,14 @@
 package com.app.edulearn.services;
 
+
 import com.app.edulearn.repository.UserRepo;
 
 
 
+
+
 import com.app.edulearn.model.AppUser;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +20,7 @@ public class UserService {
 
     public boolean addUser(AppUser user)
     {
+
         boolean isCreated = false;
         if (user == null) { 
             System.out.println("Configuration is ok?");
@@ -23,7 +28,10 @@ public class UserService {
         }
         
         if(verifyEmail(user)==false) {
+           
             userRepo.save(user);
+            
+
             return isCreated = true;
         }else{
             System.out.println("Ya existe usuario con el correo ingresado");
@@ -43,8 +51,7 @@ public class UserService {
         else
         {
             return true;
-        }
-        
+        }   
     }
 
     

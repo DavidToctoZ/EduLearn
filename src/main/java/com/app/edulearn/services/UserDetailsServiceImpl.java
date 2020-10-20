@@ -3,7 +3,9 @@ package com.app.edulearn.services;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.app.edulearn.repository.UserRepo;
+import com.app.edulearn.dao.AppRoleDAO;
 import com.app.edulearn.model.AppUser;
 
 
@@ -21,6 +23,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private AppRoleDAO roleDAO;
+
+   
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -34,21 +40,18 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         System.out.println("Found User: " + appUser);
  
         // [ROLE_USER, ROLE_ADMIN,..]
-        /*
+        
         List<String> roleNames = this.roleDAO.getRoleNames(appUser.getUserId());
        
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         if (roleNames != null) {
             for (String role : roleNames) {
-                
+                System.out.println(role);
                 GrantedAuthority authority = new SimpleGrantedAuthority(role);
                 grantList.add(authority);
             }
-        }*/
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-
-        grantList.add(authority);
+        }
+        
         UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), appUser.getEncryptedPassword(), grantList);
         
         return userDetails;

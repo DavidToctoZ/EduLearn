@@ -48,17 +48,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
          http.authorizeRequests().antMatchers("/grados").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
 
         //Solo para ADMIN
-        //http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/prueba").access("hasRole('ROLE_ADMIN')");
 
         //Cuando un usuario trata de ingresar a una pagina no autorizada
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-
+        
         //Configuracion para el login
         http.authorizeRequests().and().formLogin()//
                 //URL de la pagina login
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
-                .defaultSuccessUrl("/grados")
+                .defaultSuccessUrl("/default")
                 .failureUrl("/?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")

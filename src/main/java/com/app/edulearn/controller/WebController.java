@@ -1,11 +1,13 @@
 package com.app.edulearn.controller;
 
-
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.app.edulearn.model.AppUser;
+import com.app.edulearn.services.UserRoleService;
 import com.app.edulearn.services.UserService;
 import com.app.edulearn.utils.EncryptedPasswordUtils;
 import com.app.edulearn.utils.WebUtils;
@@ -25,14 +27,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class WebController {
     @Autowired
     UserService userService;
-    
+
+    @Autowired
+    UserRoleService userRoleService;
     
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String login() {
+    public String login(/*@ModelAttribute String email, ModelMap model*/) {
+        //model.addAttribute("getEmail", email);
+        //System.out.println(email);
         return "login";
      }
-
+     
+     @RequestMapping("/default")
+    public String defaultAfterLogin(HttpServletRequest request) {
+        if (request.isUserInRole("ROLE_ADMIN")) {
+            //TOMAR EN CUENTA - PARA NOMBRE DE USUARIO
+            System.out.println(request.getUserPrincipal().getName());
+            return "redirect:/prueba";
+        }
+        return "redirect:/grados";
+    }
 
     @RequestMapping(value= "/registro", method = RequestMethod.GET)
     public String registro(Model model){
@@ -51,8 +66,10 @@ public class WebController {
         user.setEncryptedPassword(EncryptedPasswordUtils.encryptePassword(user.getEncryptedPassword()));
         
         boolean isCreated = userService.addUser(user);
+        
         if(isCreated)
-        { 
+        {
+            userRoleService.addUserRole(user); 
             return "PaginaGrados"; 
         }
         else{
@@ -66,6 +83,10 @@ public class WebController {
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados() {
         return "PaginaGrados";
+     }
+     @RequestMapping(value = "/prueba", method = RequestMethod.GET)
+    public String prueba() {
+        return "PaginaAdmin";
      }
 
     @RequestMapping(value = "/cursos", method = RequestMethod.GET)
