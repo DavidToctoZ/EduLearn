@@ -26,23 +26,26 @@ public class CursoService {
         
         Grado g = gradoRepo.findByName(buscar);     
         List<GradoCurso> gc = gradoCursoRepo.findByGrado(g);
-        
-        return gc;
-        
+        if(gc.isEmpty()){
+            
+            return null;
+        }else{
+            return gc;
+        }
+   
     }
 
     public List<Curso> encontrarCursosHabilitados(String grado){
 
         List<GradoCurso> gc = encontrarListaDeGrados(grado);
-        if(gc.isEmpty()){
-            System.out.println("No hay nada");
+        if(gc == null){
+            
             return null;
         }else{
             List<Curso> c = new ArrayList<>();
             for(GradoCurso temp : gc){
                 if(temp.isHabilitado()){
-                    System.out.println("Se agrega?");
-                    System.out.println(temp.getCurso().getName());
+                    
                     c.add(temp.getCurso());
                 }
             }
@@ -52,7 +55,8 @@ public class CursoService {
 
     public List<Curso> encontrarCursosDeshabilitados(String grado){
         List<GradoCurso> gc = encontrarListaDeGrados(grado);
-        if(gc.isEmpty()){
+        if(gc == null){
+            
             return null;
         }else{
             List<Curso> c = new ArrayList<>();

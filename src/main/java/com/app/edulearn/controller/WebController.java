@@ -53,12 +53,12 @@ public class WebController {
     @Autowired
     GradoCursoRepo gradoCursoRepo;
     //ACTIVAR 
-    
+    /*
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login() {
         
         return "login";
-     }
+     }*/
      
      @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
@@ -103,7 +103,7 @@ public class WebController {
 
 
     //CAMBIAR A /grados
-    @RequestMapping(value = "/grados", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listaGrados(Model model) {
         model.addAttribute("grados", gradoRepo.findAll());
         return "PaginaGrados";
@@ -114,42 +114,35 @@ public class WebController {
         return "PaginaAdmin";
      }
 
-    @RequestMapping(value = "/cursos", method = RequestMethod.GET)
+    @RequestMapping(value = "/cursos")
      public String listaCursos(@RequestParam String buscar, Model model) {
         
         List<Curso> cursos = cursoService.encontrarCursosHabilitados(buscar);
         List<Curso> cursosProx = cursoService.encontrarCursosDeshabilitados(buscar);
-        for(Curso c:cursos){
-            System.out.println(c.getName());
+
+        
+        
+        if(cursos == null && cursosProx == null){
+
+            return "CursosGradoVacio";
         }
-
-        if(cursos == null)
-        {
-            if(cursosProx == null){
-                
-                return "CursosGradoVacio";
-            }else{
-                model.addAttribute("cursosProximos", cursosProx);
-                return "CursosGradoParcialProx";
-            }
-        }else{
-
-            if(cursosProx == null){
-                System.out.println("Parcial");
-                model.addAttribute("cursos", cursos);
-                return "CursosGradoParcialProx";
-
-            }else{
-                System.out.println("Todo");
-                model.addAttribute("cursos", cursos);
-                model.addAttribute("cursosProximos", cursosProx);
-                return "CursosGradoTodo";
-            }
-               
+        
+        if(cursos.isEmpty() && !cursosProx.isEmpty()){
             
+            model.addAttribute("cursosProximos", cursosProx);
+            return "CursosGradoParciaProx";
         }
-        
-        
+        if(!cursos.isEmpty() && cursosProx.isEmpty()){
+            model.addAttribute("cursos", cursos);
+            return "CursosGradoParciaDisp";
+        }
+        System.out.println(cursos.size());
+        System.out.println(cursos.isEmpty());
+        System.out.println(cursosProx.size());
+        System.out.println(cursosProx.isEmpty());
+        model.addAttribute("cursosProximos", cursosProx);
+        model.addAttribute("cursos", cursos);
+        return "CursosGradoTodo";
       }
 
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
