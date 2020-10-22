@@ -119,30 +119,31 @@ public class WebController {
         
         List<Curso> cursos = cursoService.encontrarCursosHabilitados(buscar);
         List<Curso> cursosProx = cursoService.encontrarCursosDeshabilitados(buscar);
-
-        
-        
-        if(cursos == null && cursosProx == null){
-
-            return "CursosGradoVacio";
-        }
-        
-        if(cursos.isEmpty() && !cursosProx.isEmpty()){
-            
-            model.addAttribute("cursosProximos", cursosProx);
-            return "CursosGradoParciaProx";
-        }
-        if(!cursos.isEmpty() && cursosProx.isEmpty()){
-            model.addAttribute("cursos", cursos);
-            return "CursosGradoParciaDisp";
-        }
-        System.out.println(cursos.size());
-        System.out.println(cursos.isEmpty());
-        System.out.println(cursosProx.size());
-        System.out.println(cursosProx.isEmpty());
+        String titulo = "Cursos de " + buscar;
+        String grado = "> Cursos de " +buscar +  " disponibles:";
+        boolean menuCurso = true;
+        model.addAttribute("titulo", titulo);
+        model.addAttribute("grado", grado);
         model.addAttribute("cursosProximos", cursosProx);
         model.addAttribute("cursos", cursos);
-        return "CursosGradoTodo";
+        model.addAttribute("menuCurso", menuCurso);
+        if(cursos == null && cursosProx == null){
+            return "cursos/CursosGradoVacio";
+        }
+ 
+        if(cursos.isEmpty() && !cursosProx.isEmpty()){
+            
+           
+            return "cursos/CursosGradoParciaProx";
+        }
+        if(!cursos.isEmpty() && cursosProx.isEmpty()){
+            
+            
+            return "cursos/CursosGradoParciaDisp";
+        }
+       
+        
+        return "cursos/CursosGradoTodo";
       }
 
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)

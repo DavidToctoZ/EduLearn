@@ -3,29 +3,39 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Cursos de DB</title>
+    <title th:text="${titulo}"></title>
 </head>
 <body>
 
 <div layout:fragment="content">
 
-    
-
-    <div class="container" th:if="${vacio==false}">
+    <div class="container">
         <div class="page-header">
-          <h1 class="all-tittles" style="font-size: 30px;">> Cursos de DB disponibles: </h1>
+          <h1 class="all-tittles" style="font-size: 30px;"  th:text="${grado}"></h1>
         </div>
     </div>
     
     <section class="full-reset text-center" style="padding: 40px 0;">
         <article class="tile" th:each="curso : ${cursos}">
+            <div class="tile-icon full-reset"><i th:class="${curso.imagen}" style='font-size:43px'></i></div>
+            <div class="tile-name all-tittles" th:text="${curso.area}"></div>
+            <div class="tile-num full-reset" style="text-transform: capitalize;" th:text="${curso.name}"></div>
+        </article>
+    </section>
+
+    <div class="container">
+        <div class="page-header">
+          <h1 class="all-tittles" style="font-size: 30px;">> Pr&oacute;ximos cursos disponibles: </h1>
+        </div>
+    </div>
+
+    <section class="full-reset text-center" style="padding: 40px 0;">
+        <article class="tile" th:each="curso : ${cursosProximos}">
             <div class="tile-icon full-reset"><a href="#"><i th:class="${curso.imagen}" style='font-size:43px'></i></div></a>
             <a href="/aritmetica5" style="color:#333333;"><div class="tile-name all-tittles" th:text="${curso.area}"></div>
             <div class="tile-num full-reset" style="text-transform: capitalize;" th:text="${curso.name}"></div></a>
         </article>
     </section>
-
-   
 </div>
 </body>
 </html>
