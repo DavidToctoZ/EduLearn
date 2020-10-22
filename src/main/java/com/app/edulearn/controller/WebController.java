@@ -53,12 +53,12 @@ public class WebController {
     @Autowired
     GradoCursoRepo gradoCursoRepo;
     //ACTIVAR 
-    /*
+    
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login() {
         
         return "login";
-     }*/
+     }
      
      @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
@@ -91,7 +91,7 @@ public class WebController {
         if(isCreated)
         {
             userRoleService.addUserRole(user); 
-            return "PaginaGrados"; 
+            return "redirect:/default";  
         }
         else{
             model.addAttribute("userForm", new AppUser());
@@ -103,7 +103,7 @@ public class WebController {
 
 
     //CAMBIAR A /grados
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados(Model model) {
         model.addAttribute("grados", gradoRepo.findAll());
         return "PaginaGrados";

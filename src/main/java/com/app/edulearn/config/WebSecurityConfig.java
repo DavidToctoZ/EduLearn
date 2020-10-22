@@ -47,10 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
          //Si no estan logeados se redirigira a login
 
          //ACTIVAR
-         //http.authorizeRequests().antMatchers("/grados").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
+         http.authorizeRequests().antMatchers("/grados").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
           //ACTIVAR
         //Solo para ADMIN
-        //http.authorizeRequests().antMatchers("/prueba").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/prueba").access("hasRole('ROLE_ADMIN')");
 
         //Cuando un usuario trata de ingresar a una pagina no autorizada
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
@@ -60,13 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 //URL de la pagina login
 
                 .loginProcessingUrl("/j_spring_security_check")
-                .loginPage("/login")
+                .loginPage("/")
                 .defaultSuccessUrl("/default")
                 .failureUrl("/?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 //Configuracion de la pagina de cerrar sesion
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessUrl");
+                .and().logout().logoutSuccessUrl("/");
 
         //Configurar Recuerdame
         http.authorizeRequests().and()
