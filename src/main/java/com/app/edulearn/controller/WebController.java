@@ -7,6 +7,8 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
+import com.app.edulearn.model.Grado;
+import com.app.edulearn.repository.GradoRepo;
 import com.app.edulearn.services.UserRoleService;
 import com.app.edulearn.services.UserService;
 import com.app.edulearn.utils.EncryptedPasswordUtils;
@@ -16,12 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 
-
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class WebController {
@@ -31,13 +34,17 @@ public class WebController {
     @Autowired
     UserRoleService userRoleService;
     
+    @Autowired
+    GradoRepo gradoRepo;
 
+    //ACTIVAR 
+    /*
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String login(/*@ModelAttribute String email, ModelMap model*/) {
+    public String login(/*@ModelAttribute String email, ModelMap model*//*) {
         //model.addAttribute("getEmail", email);
         //System.out.println(email);
         return "login";
-     }
+     }*/
      
      @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
@@ -80,10 +87,14 @@ public class WebController {
         
     }
 
-    @RequestMapping(value = "/grados", method = RequestMethod.GET)
-    public String listaGrados() {
+
+    //CAMBIAR A /grados
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String listaGrados(Model model) {
+        model.addAttribute("grados", gradoRepo.findAll());
         return "PaginaGrados";
      }
+
      @RequestMapping(value = "/prueba", method = RequestMethod.GET)
     public String prueba() {
         return "PaginaAdmin";
@@ -91,7 +102,7 @@ public class WebController {
 
     @RequestMapping(value = "/cursos", method = RequestMethod.GET)
      public String listaCursos() {
-         return "PaginaCursos5to";
+         return "/repoHTML/PaginaCursos5to";
       }
 
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
