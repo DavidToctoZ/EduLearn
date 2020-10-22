@@ -23,6 +23,7 @@ public class CursoService {
    
     public List<GradoCurso> encontrarListaDeGrados(String buscar)
     {
+        
         Grado g = gradoRepo.findByName(buscar);     
         List<GradoCurso> gc = gradoCursoRepo.findByGrado(g);
         
@@ -34,11 +35,13 @@ public class CursoService {
 
         List<GradoCurso> gc = encontrarListaDeGrados(grado);
         if(gc.isEmpty()){
+            System.out.println("No hay nada");
             return null;
         }else{
             List<Curso> c = new ArrayList<>();
             for(GradoCurso temp : gc){
                 if(temp.isHabilitado()){
+                    System.out.println("Se agrega?");
                     System.out.println(temp.getCurso().getName());
                     c.add(temp.getCurso());
                 }

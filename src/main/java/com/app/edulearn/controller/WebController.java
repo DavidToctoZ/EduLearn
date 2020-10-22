@@ -53,12 +53,12 @@ public class WebController {
     @Autowired
     GradoCursoRepo gradoCursoRepo;
     //ACTIVAR 
-    /*
+    
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login() {
         
         return "login";
-     }*/
+     }
      
      @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
@@ -91,7 +91,7 @@ public class WebController {
         if(isCreated)
         {
             userRoleService.addUserRole(user); 
-            return "PaginaGrados"; 
+            return "redirect:/default"; 
         }
         else{
             model.addAttribute("userForm", new AppUser());
@@ -103,7 +103,7 @@ public class WebController {
 
 
     //CAMBIAR A /grados
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados(Model model) {
         model.addAttribute("grados", gradoRepo.findAll());
         return "PaginaGrados";
@@ -119,37 +119,34 @@ public class WebController {
         
         List<Curso> cursos = cursoService.encontrarCursosHabilitados(buscar);
         List<Curso> cursosProx = cursoService.encontrarCursosDeshabilitados(buscar);
-        
-        boolean mostrarBloqueCursosDeshabilitados = true;
+        for(Curso c:cursos){
+            System.out.println(c.getName());
+        }
+
         if(cursos == null)
         {
-            
             if(cursosProx == null){
-
-                mostrarBloqueCursosDeshabilitados = false;
-                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
-
-            }else{
-
-                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
-                model.addAttribute("cursosProximos", cursosProx);
-            }
-            return "proximamente";
-        }else{
-            if(cursosProx == null){
-
-                mostrarBloqueCursosDeshabilitados = false;
-                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
-
-            }else{
-
-                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
-                model.addAttribute("cursosProximos", cursosProx);
-            }
                 
-            model.addAttribute("cursos", cursos);
+                return "CursosGradoVacio";
+            }else{
+                model.addAttribute("cursosProximos", cursosProx);
+                return "CursosGradoParcialProx";
+            }
+        }else{
+
+            if(cursosProx == null){
+                System.out.println("Parcial");
+                model.addAttribute("cursos", cursos);
+                return "CursosGradoParcialProx";
+
+            }else{
+                System.out.println("Todo");
+                model.addAttribute("cursos", cursos);
+                model.addAttribute("cursosProximos", cursosProx);
+                return "CursosGradoTodo";
+            }
+               
             
-            return "PaginaCursosGrado";
         }
         
         
