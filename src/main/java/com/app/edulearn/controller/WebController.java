@@ -91,7 +91,7 @@ public class WebController {
         if(isCreated)
         {
             userRoleService.addUserRole(user); 
-            return "redirect:/default"; 
+            return "redirect:/default";  
         }
         else{
             model.addAttribute("userForm", new AppUser());

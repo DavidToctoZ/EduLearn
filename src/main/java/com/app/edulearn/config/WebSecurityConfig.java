@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .usernameParameter("email")
                 .passwordParameter("password")
                 //Configuracion de la pagina de cerrar sesion
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessUrl");
+                .and().logout().logoutSuccessUrl("/");
 
         //Configurar Recuerdame
         http.authorizeRequests().and()
