@@ -121,11 +121,13 @@ public class WebController {
         List<Curso> cursosProx = cursoService.encontrarCursosDeshabilitados(buscar);
         String titulo = "Cursos de " + buscar;
         String grado = "> Cursos de " +buscar +  " disponibles:";
+        //String listaCurso = "<i class="+"zmdi zmdi-view-list-alt zmdi-hc-fw"+"></i> "+titulo +" <i class="+"zmdi zmdi-chevron-down pull-right zmdi-hc-fw"+"></i>";
         boolean menuCurso = true;
         model.addAttribute("titulo", titulo);
         model.addAttribute("grado", grado);
         model.addAttribute("cursosProximos", cursosProx);
         model.addAttribute("cursos", cursos);
+        //model.addAttribute("listaCursos", listaCurso);
         model.addAttribute("menuCurso", menuCurso);
         if(cursos == null && cursosProx == null){
             return "cursos/CursosGradoVacio";

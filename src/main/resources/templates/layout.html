@@ -54,19 +54,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                     <li><a href="#"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Sobre nosotros </a></li>
                     <li><a href="/contacto"><i class='zmdi zmdi-phone zmdi-hc-fw'></i>&nbsp;&nbsp; Cont&aacute;ctenos </a></li>
                     <li th:if="${menuCurso == true}">
-                        <div class="dropdown-menu-button"th:text="${titulo}" id="anexar"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw"></i><i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
-                        <script>
-                            var x = document.getElementById("anexar");
-                            
-                            var iBefore = document.createElement("i");
-                            var iAfter = document.createElement("i");
-
-                            x.innerHTML('<i class="zmdi zmdi-view-list-alt zmdi-hc-fw"></i>')
-                            
-                            console.log(iBefore);
-                            
-
-                        </script>
+                        <div class="dropdown-menu-button"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw" ></i> <span th:text="${titulo}"></span> <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
+                        
                         <ul class="list-unstyled">
                             <li th:each="curso : ${cursos}"><a href="/#" th:text="${curso.name}"><i th:class="${curso.imagen}"></i></a></li>
                             
