@@ -3,12 +3,18 @@ package com.app.edulearn.controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import com.app.edulearn.model.AppUser;
-import com.app.edulearn.model.Grado;
+import com.app.edulearn.model.Curso;
+
+import com.app.edulearn.repository.CursoRepo;
+import com.app.edulearn.repository.GradoCursoRepo;
 import com.app.edulearn.repository.GradoRepo;
+import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.UserRoleService;
 import com.app.edulearn.services.UserService;
 import com.app.edulearn.utils.EncryptedPasswordUtils;
@@ -24,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -37,12 +44,19 @@ public class WebController {
     @Autowired
     GradoRepo gradoRepo;
 
+    @Autowired
+    CursoRepo cursoRepo;
+
+    @Autowired
+    CursoService cursoService;
+    
+    @Autowired
+    GradoCursoRepo gradoCursoRepo;
     //ACTIVAR 
     /*
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String login(/*@ModelAttribute String email, ModelMap model*//*) {
-        //model.addAttribute("getEmail", email);
-        //System.out.println(email);
+    public String login() {
+        
         return "login";
      }*/
      
@@ -101,8 +115,44 @@ public class WebController {
      }
 
     @RequestMapping(value = "/cursos", method = RequestMethod.GET)
-     public String listaCursos() {
-         return "/repoHTML/PaginaCursos5to";
+     public String listaCursos(@RequestParam String buscar, Model model) {
+        
+        List<Curso> cursos = cursoService.encontrarCursosHabilitados(buscar);
+        List<Curso> cursosProx = cursoService.encontrarCursosDeshabilitados(buscar);
+        
+        boolean mostrarBloqueCursosDeshabilitados = true;
+        if(cursos == null)
+        {
+            
+            if(cursosProx == null){
+
+                mostrarBloqueCursosDeshabilitados = false;
+                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
+
+            }else{
+
+                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
+                model.addAttribute("cursosProximos", cursosProx);
+            }
+            return "proximamente";
+        }else{
+            if(cursosProx == null){
+
+                mostrarBloqueCursosDeshabilitados = false;
+                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
+
+            }else{
+
+                model.addAttribute("h", mostrarBloqueCursosDeshabilitados);
+                model.addAttribute("cursosProximos", cursosProx);
+            }
+                
+            model.addAttribute("cursos", cursos);
+            
+            return "PaginaCursosGrado";
+        }
+        
+        
       }
 
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)

@@ -1,5 +1,4 @@
 package com.app.edulearn.model;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,12 +6,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "grado")
-public class Grado {
+@Table(name = "curso")
+public class Curso {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private Long gradoId;
+    private Long cursoId;
 
     @Column(name = "nombre", nullable = false)
     private String name;
@@ -20,12 +19,15 @@ public class Grado {
     @Column(name = "imagen", nullable = false)
     private String imagen;
 
-    public Long getGradoId() {
-        return gradoId;
+    @Column(name = "area", nullable = false)
+    private String area;
+
+    public Long getCursoId() {
+        return cursoId;
     }
 
-    public void setGradoId(Long gradoId) {
-        this.gradoId = gradoId;
+    public void setCursoId(Long cursoId) {
+        this.cursoId = cursoId;
     }
 
     public String getName() {
@@ -44,4 +46,13 @@ public class Grado {
         this.imagen = imagen;
     }
 
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    
 }

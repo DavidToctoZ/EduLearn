@@ -15,7 +15,7 @@
     </div>
     <section class="full-reset text-center" style="padding: 40px 0;">
         <article th:each="grado : ${grados}" class="tile">
-            <div class="tile-icon full-reset"><a href="#"><i th:class="${grado.imagen}"></i></a></div>
+            <div class="tile-icon full-reset"><a th:href="@{/cursos(buscar=${grado.name})}"><i th:class="${grado.imagen}"></i></a></div>
             <div class="tile-name all-tittles">Seleccione:</div>
             <div class="tile-num full-reset" th:text="${grado.name}"></div>
         </article>
