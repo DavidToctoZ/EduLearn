@@ -19,7 +19,7 @@ public class Contenido {
     private Long contenidoId;
 
     @Column(name = "orden_mostrar")
-    private int orden_mostrar;
+    private int ordenMostrar;
 
     @Column(name = "subtitulo")
     private String subtitulo;
@@ -43,11 +43,11 @@ public class Contenido {
     }
 
     public int getOrden_mostrar() {
-        return orden_mostrar;
+        return ordenMostrar;
     }
 
-    public void setOrden_mostrar(int orden_mostrar) {
-        this.orden_mostrar = orden_mostrar;
+    public void setOrden_mostrar(int ordenMostrar) {
+        this.ordenMostrar = ordenMostrar;
     }
 
     public String getSubtitulo() {

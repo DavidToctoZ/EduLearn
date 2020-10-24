@@ -135,8 +135,11 @@ public class WebController {
         String titulo = "Cursos de " + buscarGrado;
         String gradoSub = "> Cursos de " +buscarGrado +  " disponibles:";
         String nomGrado = buscarGrado;
-        boolean menuCurso = true;
 
+        boolean menuCurso = true;
+        String tituloMenu = "Curso de " + buscarGrado;
+
+        model.addAttribute("tituloMenu", tituloMenu);
         model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
         model.addAttribute("menuCurso", menuCurso);
         model.addAttribute("titulo", titulo);
@@ -174,10 +177,10 @@ public class WebController {
 
         String tituloMenu = "Curso de " + g.getName();
         model.addAttribute("tituloMenu", tituloMenu);
-
+        model.addAttribute("nombreGrado", g.getName());
         model.addAttribute("menuCurso", menuCurso);
         model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-        model.addAttribute("cursos", cursoService.encontrarCursosHabilitados(buscarGrado));
+        model.addAttribute("cursos", cursoService.encontrarCursosHabilitados(g.getName()));
         model.addAttribute("buscarGrado", buscarGrado);
         model.addAttribute("titulo", titulo);
         model.addAttribute("nombreCurso", c.getName());
@@ -196,11 +199,11 @@ public class WebController {
        
         model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
         model.addAttribute("cursos", cursoService.encontrarCursosHabilitados(buscarGrado));
-
+        model.addAttribute("nombreGrado", g.getName());
         Tema t = temaRepo.findByTemaId(buscarTema);
         System.out.println(t.getNombre());
          
-        List<Contenido> c = contenidoRepo.findByTema(t);
+        List<Contenido> c = contenidoRepo.findByTemaOrderByOrdenMostrar(t);
         boolean menuCurso = true;
         model.addAttribute("menuCurso", menuCurso);
         model.addAttribute("listaContenido", c);

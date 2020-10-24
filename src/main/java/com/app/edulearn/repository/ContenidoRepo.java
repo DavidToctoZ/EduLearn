@@ -8,5 +8,5 @@ import com.app.edulearn.model.Tema;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface  ContenidoRepo extends JpaRepository<Contenido, Long>{
-    List<Contenido> findByTema(Tema tema);
+    List<Contenido> findByTemaOrderByOrdenMostrar(Tema tema);
 }

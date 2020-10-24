@@ -54,7 +54,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                         <div class="dropdown-menu-button"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw" ></i> <span th:text="${tituloMenu}"></span> <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
                         
                         <ul class="list-unstyled">
-                            <li th:each="curso : ${cursos}"><a href="/#" th:text="${curso.name}"><i th:class="${curso.imagen}"></i></a></li>
+                            <li th:each="curso : ${cursos}"><a th:href="@{/tema(buscarGrado=${nombreGrado}, buscarCurso=${curso.cursoId})}" th:text="${curso.name}"><i th:class="${curso.imagen}"></i></a></li>
                             
                         </ul>
                     </li>
