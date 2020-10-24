@@ -2,6 +2,7 @@ package com.app.edulearn.repository;
 
 import java.util.List;
 
+import com.app.edulearn.model.Curso;
 import com.app.edulearn.model.Grado;
 import com.app.edulearn.model.GradoCurso;
 
@@ -11,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GradoCursoRepo extends JpaRepository<GradoCurso, Long> {
     List<GradoCurso> findByGrado(Grado grado);
+    GradoCurso findByCursoAndGrado(Curso curso, Grado grado);
 }

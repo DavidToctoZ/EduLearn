@@ -14,10 +14,10 @@ public class Grado {
     @Column(name = "id")
     private Long gradoId;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre")
     private String name;
 
-    @Column(name = "imagen", nullable = false)
+    @Column(name = "imagen")
     private String imagen;
 
     public Long getGradoId() {

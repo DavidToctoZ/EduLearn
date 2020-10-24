@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layoutTemas}">
 <head>
-    <title>Welcome to Our Site</title>
+    <title  th:text="${titulo}"></title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <section class="my-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Welcome to Our Site</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur [....]</p>
-                </div>
-            </div>
-        </div>
+
+
+    <section id="main-content">
+        <section class="wrapper mejora" >
+             <h3>Tema: <span th:text="${temaNombre}">Nombre Tema</span></h3>
+             <div class="tab-pane" >
+                 <!-- Se itera-->
+                <div class="row mt" th:each="contenido : ${listaContenido}">
+                    <div class="col-lg-6" style="width: 100%;">
+                      <div class="content-panel" >
+                        <h4><i class="fa fa-angle-right"></i> <span th:text="${contenido.subtitulo}"></span> </h4>
+                        <div class="panel-body text-center" >
+
+                          <div class="contenidotema" style="text-align:justify" th:utext="${contenido.texto}">
+                              Contenido
+                          </div>
+
+                          <div class="contenidotema">
+                            <img th:src="${contenido.imagen}" align="center" width="400" height="200">
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+             </div>
+
+
+
+        </section>
     </section>
 </div>
 </body>
