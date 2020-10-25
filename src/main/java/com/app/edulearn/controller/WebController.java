@@ -143,10 +143,12 @@ public class WebController {
 
         model.addAttribute("curso", curso);
         model.addAttribute("iconos", icono);
+        model.addAttribute("iconos", iconoRepo.findAll());
 
+        model.addAttribute("mensaje", "Curso creado exitosamente!");
         cursoRepo.save(curso);
 
-        return "redirect:/prueba";
+        return "PaginaAdmin";
     }
 
     //PAGINA DE ADMINISTRADOR - ASIGNAR CURSO A GRADO
@@ -171,7 +173,11 @@ public class WebController {
 
         if(gc1 == null) {
             gradoCursoRepo.save(gc);
-            return "redirect:/gradoCurso";
+            model.addAttribute("curso", cursoRepo.findAll());
+            model.addAttribute("grado", gradoRepo.findAll());
+            model.addAttribute("gc", new GradoCurso());
+            model.addAttribute("mensaje", "Grado y curso asignado exitosamente!");
+            return "AdminGradoCurso";
         } else {
             model.addAttribute("error", "Ya existe este curso para ese grado");
             model.addAttribute("curso", cursoRepo.findAll());
@@ -277,6 +283,11 @@ public class WebController {
       public String contacto() {
           return "contacto1";
     }
+
+    @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
+    public String paginaperfil() {
+        return "paginaperfil";
+  } 
      
    
     @RequestMapping(value = "/403", method = RequestMethod.GET)
