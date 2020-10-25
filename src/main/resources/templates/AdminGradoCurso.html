@@ -9,7 +9,7 @@
 
 <body>
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container cont">
             <form th:object="${gc}" th:action="@{/gradoCurso}" method="POST">
                 <div th:object="${grado}" class="grado">
                     <label> Escoja el grado: </label>
@@ -36,8 +36,9 @@
                         <option th:value= "false">False</option>
                     </select>
                 </div>
+                <p th:text="${mensaje}"style="color:blue;margin:10px 0px;"></p>
                 <p th:text="${error}"style="color:red;margin:10px 0px;"></p>
-                <input type="submit" value="Asignar">
+                <input type="submit" class="btnCrear" value="Asignar">
             </form> 
         </div>
     
