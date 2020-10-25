@@ -9,8 +9,9 @@
 
 <body>
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container cont">
             <form th:object="${curso}" th:action="@{/prueba}" method="POST">
+                
                 <div>
                     <label class="etiq"> Nombre del curso: </label><input class="in" th:field="*{name}" type="text" id="curso">
                     <label class="etiq"> Area del curso: </label><input class="in area" th:field="*{area}" type="text">
@@ -37,7 +38,8 @@
                             });
                     </script>
                 <div>
-                    <input class="btnCrear" type="submit" value="Crear curso">
+                    <p th:text="${mensaje}"style="color:blue;margin:10px 0px;"></p>
+                    <input class="btnCrear" type="submit" value="CREAR CURSO">
                 </div>
             </form> 
         </div>
