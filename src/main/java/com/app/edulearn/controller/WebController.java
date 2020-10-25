@@ -277,6 +277,11 @@ public class WebController {
       public String contacto() {
           return "contacto1";
     }
+
+    @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
+    public String paginaperfil() {
+        return "paginaperfil";
+  } 
      
    
     @RequestMapping(value = "/403", method = RequestMethod.GET)
