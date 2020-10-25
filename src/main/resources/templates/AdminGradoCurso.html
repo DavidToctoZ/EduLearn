@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutAdmin}">
+<head>
+    <title>P&aacute;gina de administrador</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+            <form th:object="${gc}" th:action="@{/gradoCurso}" method="POST">
+                <div th:object="${grado}" class="grado">
+                    <label> Escoja el grado: </label>
+                    <select th:field="${gc.grado}">
+                        <option th:each="grado:${grado}" th:value="${grado.gradoId}"
+                            th:text="${grado.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <div th:object="${curso}" class="curso">
+                    <label> Escoja el curso: </label>
+                    <select th:field="${gc.curso}">
+                        <option th:each="curso:${curso}" th:value="${curso.cursoId}"
+                            th:text="${curso.name}">
+                        </option>
+                    </select>
+                </div>
+                
+                <div class="habil">
+                    <label> Habilitado: </label>
+                    <select th:field="${gc.habilitado}">
+                        <option th:value="true">True</option>
+                        <option th:value= "false">False</option>
+                    </select>
+                </div>
+                <p th:text="${error}"style="color:red;margin:10px 0px;"></p>
+                <input type="submit" value="Asignar">
+            </form> 
+        </div>
+    
+    </div>
+</body>
+</html>

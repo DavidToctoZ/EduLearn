@@ -115,6 +115,68 @@ span.label-mhover{
     font-size: 21px;
     overflow: hidden;
 }
+
+.container {
+    width: 500px;
+    border: 2px solid black;
+    padding-top: 6px;
+    padding-bottom: 12px;
+}
+
+.container .etiq {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.container .in {
+    margin-bottom: 8px;
+}
+
+.container .area{
+    margin-bottom: 25px;
+}
+
+.container .iconos {
+    display: inline-block;
+}
+
+.container .iconos .lab {
+    padding-left: 25px;
+    padding-right: 18px;
+    text-indent: -12px;
+}
+
+.container .iconos .inp {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -20px;
+    *overflow: hidden;
+}
+
+.container .btnCrear {
+    margin-top: 10px;
+}
+
+/*ASIGNAR CSS*/
+
+.container .grado {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.container .curso {
+    margin-bottom: 10px;
+}
+
+.container .habil {
+    margin-bottom: 10px;
+}
+
 .content-page-container{
     height: 100%;
     position: absolute;

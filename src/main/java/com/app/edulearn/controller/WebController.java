@@ -11,11 +11,14 @@ import com.app.edulearn.model.AppUser;
 import com.app.edulearn.model.Contenido;
 import com.app.edulearn.model.Curso;
 import com.app.edulearn.model.Grado;
+import com.app.edulearn.model.GradoCurso;
+import com.app.edulearn.model.Icono;
 import com.app.edulearn.model.Tema;
 import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.CursoRepo;
 import com.app.edulearn.repository.GradoCursoRepo;
 import com.app.edulearn.repository.GradoRepo;
+import com.app.edulearn.repository.IconoRepo;
 import com.app.edulearn.repository.TemaRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
@@ -50,6 +53,9 @@ public class WebController {
 
     @Autowired
     CursoRepo cursoRepo;
+
+    @Autowired
+    IconoRepo iconoRepo;
 
     @Autowired
     CursoService cursoService;
@@ -118,14 +124,65 @@ public class WebController {
     //CAMBIAR A /grados
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados(Model model) {
+        
         model.addAttribute("grados", gradoRepo.findAll());
         return "PaginaGrados";
      }
 
-     @RequestMapping(value = "/prueba", method = RequestMethod.GET)
-    public String prueba() {
+    //PAGINA DE ADMINISTRADOR - CREAR CURSO
+    @RequestMapping(value = "/prueba", method = RequestMethod.GET)
+    public String prueba(Model model) {
+
+        model.addAttribute("curso", new Curso());
+        model.addAttribute("iconos", iconoRepo.findAll());
         return "PaginaAdmin";
      }
+
+    @RequestMapping(value = "/prueba", method = RequestMethod.POST)
+    public String crearCurso(@ModelAttribute Curso curso, @ModelAttribute Icono icono, ModelMap model) throws Exception {
+
+        model.addAttribute("curso", curso);
+        model.addAttribute("iconos", icono);
+
+        cursoRepo.save(curso);
+
+        return "redirect:/prueba";
+    }
+
+    //PAGINA DE ADMINISTRADOR - ASIGNAR CURSO A GRADO
+    @RequestMapping(value = "/gradoCurso", method = RequestMethod.GET)
+    public String inicioAsig(Model model) {
+
+        model.addAttribute("curso", cursoRepo.findAll());
+        model.addAttribute("grado", gradoRepo.findAll());
+        model.addAttribute("gc", new GradoCurso());
+
+        return "AdminGradoCurso";
+    }
+    
+    @RequestMapping(value = "/gradoCurso", method = RequestMethod.POST)
+    public String finAsig(@ModelAttribute Grado grado, @ModelAttribute Curso curso, @ModelAttribute GradoCurso gc, ModelMap model) throws Exception {
+
+        model.addAttribute("gc", gc);
+        model.addAttribute("curso", curso);
+        model.addAttribute("grado", grado);
+
+        GradoCurso gc1 = gradoCursoRepo.findByCursoAndGrado(curso, grado);
+
+        if(gc1 == null) {
+            gradoCursoRepo.save(gc);
+            return "redirect:/gradoCurso";
+        } else {
+            model.addAttribute("error", "Ya existe este curso para ese grado");
+            model.addAttribute("curso", cursoRepo.findAll());
+            model.addAttribute("grado", gradoRepo.findAll());
+            model.addAttribute("gc", new GradoCurso());
+            return "AdminGradoCurso";
+        }
+        
+    }
+    
+
 
     @RequestMapping(value = "/cursos")
     public String listaCursos(@RequestParam String buscarGrado, Model model) {
