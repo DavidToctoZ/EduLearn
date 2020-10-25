@@ -297,4 +297,29 @@ public class WebController {
  
         return "403Page";
     }
+
+    //Crear tema
+    @RequestMapping(value ="/creartema", method = RequestMethod.GET)
+    public String creartema(Model model) {
+        model.addAttribute("tema", new Tema());
+        
+        return "AdminCrearTema";
+    } 
+
+    @RequestMapping(value = "/creartema", method = RequestMethod.POST)
+    public String crearCurso(@ModelAttribute Tema tema, ModelMap model) throws Exception {
+        model.addAttribute("tema", tema);
+        temaRepo.save(tema);
+        
+        return "redirect:/creartema";
+    }
 }
+
+
+
+
+
+
+
+
+

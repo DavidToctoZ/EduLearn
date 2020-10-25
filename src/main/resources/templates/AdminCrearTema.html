@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutAdmin}">
+<head>
+    <title>P&aacute;gina de administrador</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+            <form th:object="${tema}" th:action="@{/creartema}" method="POST">
+                <div>
+                    <label class="etiq"> Titulo del tema: </label><input class="in" th:field="*{nombre}" type="text" id="tema">
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                    <input class="btnCrear" type="submit" value="Crear tema">
+                </div>
+            </form> 
+        </div>
+    
+    </div>
+</body>
+</html>
