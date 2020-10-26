@@ -280,7 +280,8 @@ public class WebController {
     }
 
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
-      public String contacto() {
+      public String contacto(Model model) {
+        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
           return "contacto1";
     }
 
@@ -293,7 +294,7 @@ public class WebController {
 
         //Fin Codigo Menu
         return "paginaperfil";
-  } 
+    } 
      
    
     @RequestMapping(value = "/403", method = RequestMethod.GET)
