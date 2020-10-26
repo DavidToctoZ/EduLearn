@@ -2,18 +2,10 @@ package com.app.edulearn.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-<<<<<<< HEAD
-
 
 import java.security.Principal;
 import java.util.List;
 
-
-=======
-import java.security.Principal;
-import java.util.List;
-
->>>>>>> b5fac618a707c2f00087e07a880413f0cd27c146
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
@@ -30,11 +22,8 @@ import com.app.edulearn.repository.GradoCursoRepo;
 import com.app.edulearn.repository.GradoRepo;
 import com.app.edulearn.repository.IconoRepo;
 import com.app.edulearn.repository.TemaRepo;
-<<<<<<< HEAD
-import com.app.edulearn.repository.contactoRepo;
-=======
 import com.app.edulearn.repository.UserRepo;
->>>>>>> e4e01945af78fc246602456cc461d5ea5ec8e262
+import com.app.edulearn.repository.contactoRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
 import com.app.edulearn.services.UserRoleService;
@@ -353,7 +342,6 @@ public class WebController {
  
         return "403Page";
     }
-<<<<<<< HEAD
 
     //Crear tema
     @RequestMapping(value ="/creartema", method = RequestMethod.GET)
@@ -375,6 +363,4 @@ public class WebController {
         return "AdminCrearTema";
     }   
 
-=======
->>>>>>> b5fac618a707c2f00087e07a880413f0cd27c146
 }
