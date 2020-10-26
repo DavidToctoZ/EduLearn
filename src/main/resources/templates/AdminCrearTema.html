@@ -12,13 +12,14 @@
             <form th:object="${tema}" th:action="@{/creartema}" method="POST">
                 <div>
                     <label class="etiq"> Titulo del tema: </label><input class="in" th:field="*{nombre}" type="text" id="tema">
+                    <label class="etiq"> Imagen: </label><input class="in" th:file="*{imagen}" type="file" id="imagen">
                 </div>
 
                 <div>
                 </div>
 
                 <div>
-                    <input class="btnCrear" type="submit" value="Crear tema">
+                    <input class="btnCrear" type="submit" value="CREAR TEMA">
                 </div>
             </form> 
         </div>
