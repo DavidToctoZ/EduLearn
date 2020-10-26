@@ -2,12 +2,18 @@ package com.app.edulearn.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+<<<<<<< HEAD
 
 
 import java.security.Principal;
 import java.util.List;
 
 
+=======
+import java.security.Principal;
+import java.util.List;
+
+>>>>>>> b5fac618a707c2f00087e07a880413f0cd27c146
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
@@ -23,6 +29,7 @@ import com.app.edulearn.repository.GradoCursoRepo;
 import com.app.edulearn.repository.GradoRepo;
 import com.app.edulearn.repository.IconoRepo;
 import com.app.edulearn.repository.TemaRepo;
+import com.app.edulearn.repository.UserRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
 import com.app.edulearn.services.UserRoleService;
@@ -74,6 +81,9 @@ public class WebController {
 
     @Autowired
     ContenidoRepo contenidoRepo;
+
+    @Autowired
+    UserRepo userRepo;
     //ACTIVAR 
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -123,6 +133,12 @@ public class WebController {
         
     }
 
+    //Eliminar usuario
+    @RequestMapping(value="/eliminarusuario", method = RequestMethod.GET)
+    public String eliminarUsuario(@RequestParam String email){
+        userRepo.deleteByEmail(email);
+        return "login";
+    }
 
     //CAMBIAR A /grados
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
@@ -277,7 +293,11 @@ public class WebController {
         return "PaginaTemasCurso";
         
     }
-
+    @RequestMapping(value = "/c")
+    public String p()
+    {
+        return "Aritmetica/ari_multiplicacion5";
+    }
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
       public String contacto(Model model) {
         model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
@@ -285,13 +305,7 @@ public class WebController {
     }
 
     @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
-    public String paginaperfil(Model model) {
-
-        //Codigo Necesario Para menu
-        
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-
-        //Fin Codigo Menu
+    public String paginaperfil() {
         return "paginaperfil";
     } 
      
@@ -314,6 +328,7 @@ public class WebController {
  
         return "403Page";
     }
+<<<<<<< HEAD
 
     //Crear tema
     @RequestMapping(value ="/creartema", method = RequestMethod.GET)
@@ -335,13 +350,6 @@ public class WebController {
         return "AdminCrearTema";
     }   
 
+=======
+>>>>>>> b5fac618a707c2f00087e07a880413f0cd27c146
 }
-
-
-
-
-
-
-
-
-
