@@ -138,6 +138,7 @@ span.label-mhover{
     border-radius: 5px;
     border: 1px #E1E1E1;
     font-family: 'Barlow Condensed', sans-serif;
+    text-align: center;
 }
 
 .container .area{
@@ -184,6 +185,41 @@ span.label-mhover{
     
     background-color:  #359dc7;
 }
+
+.cont .linea {
+    color: black;
+    border: 0.1px solid black;
+}
+
+.cont1 {
+    width: 700px;
+}
+
+.cont1 .div1 {
+    margin-top: 15px;
+}
+
+.cont1 .div1 .etiq1 {
+    margin-right: 8px;
+}
+
+.cont1 .div1 .input1{
+    border-radius: 5px;
+    border: 1px #E1E1E1;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-align: center;
+}
+
+.cont1 .div2 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.cont1 .div3 .input3 {
+    text-align: center;
+    margin: auto;
+}
+
 
 /*ASIGNAR CSS*/
 

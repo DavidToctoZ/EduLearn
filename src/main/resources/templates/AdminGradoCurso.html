@@ -9,6 +9,9 @@
 
 <body>
     <div layout:fragment="content">
+        <div class="page-header">
+            <h1 class="all-tittles" style="font-size: 30px;">> Asignar el grado y el curso: </h1>
+        </div>
         <div class="container cont">
             <form th:object="${gc}" th:action="@{/gradoCurso}" method="POST">
                 <div th:object="${grado}" class="grado">
