@@ -19,13 +19,15 @@
                 </div>
             </div>
     
-            <h1 align="center">Contacto</h1>
-            <form class='contacto'>
-                <div><label>Ingrese su nombre:</label><input type='text' value=''></div>
-                <div><label>Ingrese su e-mail:</label><input type='text' value=''></div>
-                <div><label>Asunto:</label><input type='text' value=''></div>
-                <div><label>Mensaje:</label><textarea rows='6'></textarea></div>
-                <div align="center"><input type='submit' value='Enviar Mensaje'></div>
+            <h1 align="center">Cont&aacute;ctenos</h1>
+            <form th.action="@{/contacto}" th:object="${contacto}" class='contacto' method="POST">
+                <div><label>Ingrese su nombre:</label><input th:field="*{contNombre}" type='text' value=''></div>
+                <div><label>Ingrese su e-mail:</label><input th:field="*{contEmail}" type='text' value=''></div>
+                <div><label>Asunto:</label><input th:field="*{contAsunto}" type='text' value=''></div>
+                <div><label>Mensaje:</label><textarea th:field="*{contMensaje}" rows='6'></textarea></div>
+                <div align="center">
+                    <p th:text="${mensaje}"style="color:blue;margin:10px 0px;"></p>
+                    <input type='submit' value='Enviar Mensaje'></div>
             </form>
     
         </div>
