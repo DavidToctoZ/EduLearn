@@ -322,22 +322,6 @@ public class WebController {
         return "AdminCrearTema";
     } 
 
-    @RequestMapping(value = "/creartema", method = RequestMethod.POST)
-    public String crearCurso(@ModelAttribute Tema tema, ModelMap model) throws Exception {
-        model.addAttribute("tema", tema);
-
-
-        if (){
-            Path direccion =  Paths.get("scr//main//resources//static/images");
-            String rutaAbsoluta= direccion.toFile().getAbsolutePath();
-        }
-        
-
-        model.addAttribute("mensaje", "!Tema creado exitosamente!");
-        temaRepo.save(tema);
-        
-        return "redirect:/creartema";
-    }
 }
 
 
