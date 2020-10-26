@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>P&aacute;gina de administrador</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="./css/rich/richtext.min.css">
+    <script src="./js/rich/jquery.richtext.min.js"></script> 
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="page-header">
+          <h1 class="all-tittles" style="font-size: 30px;">> Crear el contenido: </h1>
+        </div>
+    </div>
+
+    <textarea id="contenido"></textarea> 
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#contenido").richText();
+        });
+    </script>
+
+
+</div>
+</body>
+</html>

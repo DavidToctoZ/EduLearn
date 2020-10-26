@@ -226,7 +226,11 @@ public class WebController {
         
     }
     
-
+    @RequestMapping(value="/crearCont", method = RequestMethod.GET)
+    public String llamarCont(){
+        
+        return "AdminCrearContenido";
+    }
 
     @RequestMapping(value = "/cursos")
     public String listaCursos(@RequestParam String buscarGrado, Model model) {
@@ -329,6 +333,7 @@ public class WebController {
       public String contacto(Model model) {
         menuCurso = false;
         funcionLayout(model, menuCurso);
+        model.addAttribute("contacto", new Contacto());
         return "contacto1";
     }
 
