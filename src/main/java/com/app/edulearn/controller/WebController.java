@@ -3,12 +3,11 @@ package com.app.edulearn.controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.security.Principal;
 import java.util.List;
 
-import javax.imageio.stream.ImageInputStream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
@@ -324,6 +323,17 @@ public class WebController {
         
         return "AdminCrearTema";
     } 
+
+    @RequestMapping(value ="/creartema",method=RequestMethod.POST)
+    public String crearTema(@ModelAttribute Tema tema,ModelMap model) throws Exception {
+        
+        model.addAttribute("tema", tema);
+        
+        model.addAttribute("mensaje", "Tema creado exitosamente!");
+        temaRepo.save(tema);
+
+        return "AdminCrearTema";
+    }   
 
 }
 
