@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             }
         }
         
-        UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), appUser.getEncryptedPassword(), grantList);
+        UserDetails userDetails = (UserDetails) new User(appUser.getEmail(), appUser.getEncryptedPassword(), grantList);
         
         return userDetails;
     }

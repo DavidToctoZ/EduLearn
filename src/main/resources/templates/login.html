@@ -24,6 +24,7 @@
 				<div th:if="${#request.getParameter('error') == 'true'}"style="color:red;margin:10px 0px;">Fallo de inicio de sesión!!!
 				</span></div>
 				<div class="i"></div>
+				<script th:if="${usuarioEliminado == true}">alert("Usuario eliminado con exito")</script>
 		 		<div class="input-div one">
            		   <div class="i">
            		   		<i class="fas fa-user"></i>

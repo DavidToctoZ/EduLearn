@@ -2,18 +2,9 @@ package com.app.edulearn.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-<<<<<<< HEAD
-
-
 import java.security.Principal;
 import java.util.List;
 
-
-=======
-import java.security.Principal;
-import java.util.List;
-
->>>>>>> b5fac618a707c2f00087e07a880413f0cd27c146
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
@@ -30,6 +21,7 @@ import com.app.edulearn.repository.GradoRepo;
 import com.app.edulearn.repository.IconoRepo;
 import com.app.edulearn.repository.TemaRepo;
 import com.app.edulearn.repository.UserRepo;
+import com.app.edulearn.repository.UserRoleRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
 import com.app.edulearn.services.UserRoleService;
@@ -38,6 +30,7 @@ import com.app.edulearn.utils.EncryptedPasswordUtils;
 import com.app.edulearn.utils.WebUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 
@@ -62,6 +55,9 @@ public class WebController {
     GradoRepo gradoRepo;
 
     @Autowired
+    UserRoleRepo userRoleRepo;
+
+    @Autowired
     CursoRepo cursoRepo;
 
     @Autowired
@@ -84,21 +80,32 @@ public class WebController {
 
     @Autowired
     UserRepo userRepo;
+
+    
+    String nombreUsuarioActivo;
+    boolean menuCurso;
+    boolean eliminado;
     //ACTIVAR 
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String login() {
-        
+    public String login(Model model) {
+        if(eliminado == true){
+            model.addAttribute("usuarioEliminado", eliminado);
+        }
         return "login";
      }
      
      @RequestMapping("/default")
-    public String defaultAfterLogin(HttpServletRequest request) {
+    public String defaultAfterLogin(HttpServletRequest request, Model model) {
+        
         if (request.isUserInRole("ROLE_ADMIN")) {
-            //TOMAR EN CUENTA - PARA NOMBRE DE USUARIO
-            System.out.println(request.getUserPrincipal().getName());
+            
             return "redirect:/prueba";
         }
+        AppUser usuarioActivo = userRepo.findByEmail(request.getUserPrincipal().getName());
+        nombreUsuarioActivo = usuarioActivo.getUserName() + " " + usuarioActivo.getFullname();
+
+        
         return "redirect:/grados";
     }
 
@@ -113,7 +120,7 @@ public class WebController {
     public String registrarUsuario(@ModelAttribute AppUser user, ModelMap model) throws Exception {
         model.addAttribute("userForm", user);
         
-        System.out.println(user.getEmail());
+        
         user.setEnabled(true);
 
         user.setEncryptedPassword(EncryptedPasswordUtils.encryptePassword(user.getEncryptedPassword()));
@@ -123,7 +130,7 @@ public class WebController {
         if(isCreated)
         {
             userRoleService.addUserRole(user); 
-            return "redirect:/default";  
+            return "redirect:/";  
         }
         else{
             model.addAttribute("userForm", new AppUser());
@@ -134,17 +141,22 @@ public class WebController {
     }
 
     //Eliminar usuario
-    @RequestMapping(value="/eliminarusuario", method = RequestMethod.GET)
-    public String eliminarUsuario(@RequestParam String email){
-        userRepo.deleteByEmail(email);
-        return "login";
+    @RequestMapping(value="/eliminarUsuario")
+    public String eliminarUsuario(@RequestParam String buscarEmail, Model model){
+        System.out.println(buscarEmail);
+        AppUser ap = userRepo.findByEmail(buscarEmail);
+        userRoleRepo.deleteByAppUser(ap);
+        userRepo.deleteByEmail(buscarEmail);
+        eliminado = true;
+        
+        return "redirect:/";
     }
 
     //CAMBIAR A /grados
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados(Model model) {
-        
-        model.addAttribute("grados", gradoRepo.findAll());
+        menuCurso = false;
+        funcionLayout(model, menuCurso);
         return "PaginaGrados";
      }
 
@@ -211,25 +223,26 @@ public class WebController {
 
     @RequestMapping(value = "/cursos")
     public String listaCursos(@RequestParam String buscarGrado, Model model) {
-        
+        boolean menuCurso = true;
+        funcionLayout(model, menuCurso);
+
         List<Curso> cursos = cursoService.encontrarCursosHabilitados(buscarGrado);
         List<Curso> cursosProx = cursoService.encontrarCursosDeshabilitados(buscarGrado);
         String titulo = "Cursos de " + buscarGrado;
         String gradoSub = "> Cursos de " +buscarGrado +  " disponibles:";
         String nomGrado = buscarGrado;
 
-        boolean menuCurso = true;
+        
         String tituloMenu = "Curso de " + buscarGrado;
 
         model.addAttribute("tituloMenu", tituloMenu);
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-        model.addAttribute("menuCurso", menuCurso);
+        
         model.addAttribute("titulo", titulo);
         model.addAttribute("gradoSub", gradoSub);
         model.addAttribute("cursosProximos", cursosProx);
         model.addAttribute("cursos", cursos);
         model.addAttribute("nombreGrado", nomGrado);
-        
+
         if(cursos == null && cursosProx == null){
             return "cursos/CursosGradoVacio";
         }
@@ -251,61 +264,71 @@ public class WebController {
     
     @RequestMapping(value = "/tema")
     public String pagTema(@RequestParam String buscarGrado, @RequestParam Long buscarCurso, Model model){
+        menuCurso = true;
+        funcionLayout(model, menuCurso);
+
         Grado g = gradoRepo.findByName(buscarGrado);
         Curso c = cursoRepo.findByCursoId(buscarCurso);
         List<Tema> temas = temaService.encontrarTemas(buscarGrado, buscarCurso);
         String titulo = "Curso de "+g.getName() + ": " + c.getName();
-        boolean menuCurso = true;
 
+        
         String tituloMenu = "Curso de " + g.getName();
+
         model.addAttribute("tituloMenu", tituloMenu);
         model.addAttribute("nombreGrado", g.getName());
-        model.addAttribute("menuCurso", menuCurso);
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
+       
+        
         model.addAttribute("cursos", cursoService.encontrarCursosHabilitados(g.getName()));
         model.addAttribute("buscarGrado", buscarGrado);
         model.addAttribute("titulo", titulo);
         model.addAttribute("nombreCurso", c.getName());
         model.addAttribute("listaTemas", temas);
+
+        
+
         return "PaginaTema";
         
     }
 
     @RequestMapping(value = "/contenido")
     public String pagContenido(@RequestParam Long buscarTema, @RequestParam String buscarGrado,Model model){
-        
+        menuCurso = true;
+        funcionLayout(model, menuCurso);
+
         Grado g = gradoRepo.findByName(buscarGrado);
         String tituloMenu = "Curso de " + g.getName();
 
         model.addAttribute("tituloMenu", tituloMenu);
-       
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
+        
+        
         model.addAttribute("cursos", cursoService.encontrarCursosHabilitados(buscarGrado));
         model.addAttribute("nombreGrado", g.getName());
         Tema t = temaRepo.findByTemaId(buscarTema);
-        System.out.println(t.getNombre());
+        
          
         List<Contenido> c = contenidoRepo.findByTemaOrderByOrdenMostrar(t);
-        boolean menuCurso = true;
-        model.addAttribute("menuCurso", menuCurso);
+        
         model.addAttribute("listaContenido", c);
         model.addAttribute("temaNombre", t.getNombre());
+
+        
+
         return "PaginaTemasCurso";
         
     }
-    @RequestMapping(value = "/c")
-    public String p()
-    {
-        return "Aritmetica/ari_multiplicacion5";
-    }
+    
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
       public String contacto(Model model) {
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-          return "contacto1";
+        menuCurso = false;
+        funcionLayout(model, menuCurso);
+        return "contacto1";
     }
 
     @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
-    public String paginaperfil() {
+    public String paginaperfil(Model model) {
+        menuCurso = false;
+        funcionLayout(model, menuCurso);
         return "paginaperfil";
     } 
      
@@ -328,28 +351,14 @@ public class WebController {
  
         return "403Page";
     }
-<<<<<<< HEAD
-
-    //Crear tema
-    @RequestMapping(value ="/creartema", method = RequestMethod.GET)
-    public String creartema(Model model) {
-        model.addAttribute("tema", new Tema());
+    //Funcion q agregara parametros especifios para el layout
+    public void funcionLayout(Model model, boolean menuCurso){
+        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
+        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+        if(menuCurso== true ){
+            model.addAttribute("menuCurso", menuCurso);
+        }
         
-        
-        return "AdminCrearTema";
-    } 
+    }
 
-    @RequestMapping(value ="/creartema",method=RequestMethod.POST)
-    public String crearTema(@ModelAttribute Tema tema,ModelMap model) throws Exception {
-        
-        model.addAttribute("tema", tema);
-        
-        model.addAttribute("mensaje", "Tema creado exitosamente!");
-        temaRepo.save(tema);
-
-        return "AdminCrearTema";
-    }   
-
-=======
->>>>>>> b5fac618a707c2f00087e07a880413f0cd27c146
 }

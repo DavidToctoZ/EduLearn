@@ -8,8 +8,10 @@
 <body>
 
 <div layout:fragment="content">
-    <input type="button" value="Eliminar Usuarios" th:href="@{/eliminarusuario()"}>
-
+    
+    <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
+        <input type="submit" value="Eliminar Usuario"/>
+    </form>
 </div>
 </body>
 </html>
