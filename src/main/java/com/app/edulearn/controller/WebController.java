@@ -290,14 +290,15 @@ public class WebController {
         return "Aritmetica/ari_multiplicacion5";
     }
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
-      public String contacto() {
+      public String contacto(Model model) {
+        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
           return "contacto1";
     }
 
     @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
     public String paginaperfil() {
         return "paginaperfil";
-  } 
+    } 
      
    
     @RequestMapping(value = "/403", method = RequestMethod.GET)
