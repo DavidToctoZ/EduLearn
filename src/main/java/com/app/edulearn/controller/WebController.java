@@ -278,18 +278,20 @@ public class WebController {
         return "PaginaTemasCurso";
         
     }
-    @RequestMapping(value = "/c")
-    public String p()
-    {
-        return "Aritmetica/ari_multiplicacion5";
-    }
+
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
       public String contacto() {
           return "contacto1";
     }
 
     @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
-    public String paginaperfil() {
+    public String paginaperfil(Model model) {
+
+        //Codigo Necesario Para menu
+        
+        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
+
+        //Fin Codigo Menu
         return "paginaperfil";
   } 
      
