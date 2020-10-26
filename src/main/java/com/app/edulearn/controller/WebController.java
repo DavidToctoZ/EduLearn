@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
+import com.app.edulearn.model.Contacto;
 import com.app.edulearn.model.Contenido;
 import com.app.edulearn.model.Curso;
 import com.app.edulearn.model.Grado;
@@ -22,6 +23,7 @@ import com.app.edulearn.repository.IconoRepo;
 import com.app.edulearn.repository.TemaRepo;
 import com.app.edulearn.repository.UserRepo;
 import com.app.edulearn.repository.UserRoleRepo;
+import com.app.edulearn.repository.contactoRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
 import com.app.edulearn.services.UserRoleService;
@@ -73,6 +75,9 @@ public class WebController {
     TemaRepo temaRepo;
 
     @Autowired
+    contactoRepo contRepo;
+
+    @Autowired
     TemaService temaService;
 
     @Autowired
@@ -91,6 +96,7 @@ public class WebController {
     public String login(Model model) {
         if(eliminado == true){
             model.addAttribute("usuarioEliminado", eliminado);
+            eliminado = false;
         }
         return "login";
      }
@@ -176,8 +182,9 @@ public class WebController {
         model.addAttribute("iconos", icono);
         model.addAttribute("iconos", iconoRepo.findAll());
 
-        model.addAttribute("mensaje", "Curso creado exitosamente!");
         cursoRepo.save(curso);
+        model.addAttribute("mensaje", "Curso creado exitosamente!");
+        model.addAttribute("curso", new Curso());
 
         return "PaginaAdmin";
     }
@@ -323,6 +330,20 @@ public class WebController {
         menuCurso = false;
         funcionLayout(model, menuCurso);
         return "contacto1";
+    }
+
+    @RequestMapping(value = "/contacto", method = RequestMethod.POST)
+    public String enviarContacto(@ModelAttribute Contacto contacto, ModelMap model) throws Exception { 
+
+        model.addAttribute("contacto", contacto);
+        model.addAttribute("grados", gradoRepo.findAll());
+
+        contRepo.save(contacto);
+        model.addAttribute("mensaje", "Gracias por contactarnos!");
+        model.addAttribute("contacto", new Contacto());
+
+        return "contacto1";
+
     }
 
     @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
