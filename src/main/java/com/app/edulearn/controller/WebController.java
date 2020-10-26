@@ -387,4 +387,26 @@ public class WebController {
         
     }
 
+    //Crear curso
+    @RequestMapping(value = "/creartema", method = RequestMethod.GET)
+    public String creartema(Model model) {
+
+        model.addAttribute("tema", new Tema());
+        
+        return "AdminCrearTema";
+    }
+
+    @RequestMapping(value = "/creartema", method = RequestMethod.POST)
+    public String crearCurso(@ModelAttribute Tema tema, ModelMap model) throws Exception {
+
+        model.addAttribute("tema", tema);
+        
+
+        temaRepo.save(tema);
+        model.addAttribute("mensaje", "Curso creado exitosamente!");
+        model.addAttribute("tema", new Tema());
+
+        return "AdminCrearTema";
+    }
+
 }
