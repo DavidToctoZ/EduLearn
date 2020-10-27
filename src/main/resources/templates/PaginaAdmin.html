@@ -17,8 +17,10 @@
                 
                 <div>
                     <label class="etiq"> Nombre del curso: </label><input class="in" th:field="*{name}" type="text" id="curso">
+                    <hr class="linea">
                     <label class="etiq"> Area del curso: </label><input class="in area" th:field="*{area}" type="text">
                 </div>
+                <hr class="linea">
                 <div th:each="icono:${iconos}" class="iconos">
                     <input class="iconos inp" type="checkbox" th:field="*{imagen}"  name="icon" th:value="${icono.nombre}">
                     <label class="iconos lab" for="icon"><i th:class="${icono.nombre}" style='font-size:43px'></i></label>
