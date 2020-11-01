@@ -16,9 +16,9 @@
             <form th:object="${curso}" th:action="@{/prueba}" method="POST">
                 
                 <div>
-                    <label class="etiq"> Nombre del curso: </label><input class="in" th:field="*{name}" type="text" id="curso">
+                    <label class="etiq"> Nombre del curso: </label><input class="in" th:field="*{name}" type="text" id="curso" required>
                     <hr class="linea">
-                    <label class="etiq"> Area del curso: </label><input class="in area" th:field="*{area}" type="text">
+                    <label class="etiq"> Area del curso: </label><input class="in area" th:field="*{area}" type="text" required>
                 </div>
                 <hr class="linea">
                 <div th:each="icono:${iconos}" class="iconos">
