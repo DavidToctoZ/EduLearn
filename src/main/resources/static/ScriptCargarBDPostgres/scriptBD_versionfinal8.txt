@@ -1,0 +1,615 @@
+--drop table public.contenido cascade;
+--drop table public.curso cascade;
+--drop table public.grado cascade;
+--drop table public.grado_curso cascade;
+--drop table public.iconos;
+--drop table public.persistent_logins;
+--drop table public.role cascade;
+--drop table public.role_user;
+--drop table public.tema cascade;
+--drop table public.user_edu_learn;
+--drop table public.contacto;
+--drop table public.dinamica;
+
+---------------------CREACIÓN DE LA TABLA USUARIO EDU LEARN-----------------------------
+
+create table public.user_edu_learn(
+	id serial PRIMARY KEY,
+	name character varying,
+	fullname character varying,
+	email character varying,
+	encrypt_password character varying,
+	enabled boolean
+);
+
+INSERT INTO public.user_edu_learn(
+	id, name, fullname, email, encrypt_password, enabled)
+	VALUES (1, 'admin','adminEdu', 'admin@gmail.com', '$2a$10$uBD8tgTxrCoqt5uMXr8QWuToqVOqYFamXTAcy7GQqY5i4oaBOOG5K', true);
+
+
+---------------------CREACIÓN DE LA TABLA ROL-----------------------------
+create table public.role(
+	id serial PRIMARY KEY,
+	name character varying
+);
+
+INSERT INTO public.role(
+id, name) values(1, 'ROLE_ADMIN');
+INSERT INTO public.role(
+id, name) values(2, 'ROLE_USER');
+
+---------------------CREACIÓN DE LA TABLA ROL USUARIO-----------------------------
+
+create table public.role_user(
+	id serial PRIMARY KEY,
+	user_id INT,
+	role_id INT,
+	constraint user_id_c
+		foreign key(user_id)
+			references public.user_edu_learn(id),
+	constraint role_id_c
+		foreign key(role_id)
+			references public.role(id)
+);
+
+
+INSERT INTO public.role_user(
+	id, user_id, role_id)
+	VALUES (1, 1, 1);
+
+---------------------CREACIÓN DE LA TABLA PERSISTENT LOGINS-----------------------------
+
+create table public.persistent_logins(
+	username character varying,
+	series character varying,
+	token character varying,
+	last_used date
+);
+
+
+
+---------------------CREACIÓN DE LA TABLA ICONOS-----------------------------
+
+create table public.iconos(
+	id serial PRIMARY KEY,
+	nombre character varying
+);
+
+INSERT INTO public.iconos(
+	nombre)
+	VALUES ('fa fa-calculator');
+INSERT INTO public.iconos(
+	nombre)
+	VALUES ('fas fa-square-root-alt');
+INSERT INTO public.iconos(
+	nombre)
+	VALUES ('fas fa-globe-americas');
+INSERT INTO public.iconos(
+	nombre)
+	VALUES ('fas fa-infinity');
+INSERT INTO public.iconos(
+	nombre)
+	VALUES ('fas fa-user-friends');
+
+
+---------------------CREACIÓN DE LA TABLA GRADO-----------------------------
+create table public.grado(
+	id serial PRIMARY KEY,
+	nombre character varying,
+	imagen character varying
+);
+
+INSERT INTO public.grado(
+	nombre, imagen)
+	VALUES ('1er grado', 'zmdi zmdi-n-1-square');
+INSERT INTO public.grado(
+	nombre, imagen)
+	VALUES ('2do grado', 'zmdi zmdi-n-2-square');
+INSERT INTO public.grado(
+	nombre, imagen)
+	VALUES ('3er grado', 'zmdi zmdi-n-3-square');
+INSERT INTO public.grado(
+	nombre, imagen)
+	VALUES ('4to grado', 'zmdi zmdi-n-4-square');
+INSERT INTO public.grado(
+	nombre, imagen)
+	VALUES ('5to grado', 'zmdi zmdi-n-5-square');
+INSERT INTO public.grado(
+	nombre, imagen)
+	VALUES ('6to grado', 'zmdi zmdi-n-6-square');
+
+
+---------------------CREACIÓN DE LA TABLA CURSO-----------------------------
+
+
+create table public.curso(
+	id serial PRIMARY KEY,
+	nombre character varying,
+	imagen character varying,
+	area character varying
+);
+
+INSERT INTO public.curso(
+	nombre, imagen, area)
+	VALUES ('Aritmética', 'fa fa-calculator','Matemática');
+	
+INSERT INTO public.curso(
+	nombre, imagen, area)
+	VALUES ('Álgebra', 'fas fa-square-root-alt','Matemática');
+
+INSERT INTO public.curso(
+	nombre, imagen, area)
+	VALUES ('Geografía', 'fas fa-globe-americas','Ciencias Sociales');
+    
+INSERT INTO public.curso(
+	nombre, imagen, area)
+	VALUES ('Geometría', 'fas fa-infinity','Matemática');
+    
+INSERT INTO public.curso(
+	nombre, imagen, area)
+	VALUES ('Inglés', 'fas fa-user-friends','Lenguaje Internacional');
+
+
+---------------------CREACIÓN DE LA TABLA GRADO-CURSO-----------------------------
+
+create table public.grado_curso(
+	id serial PRIMARY KEY,
+	habilitado boolean,
+	curso_id INT,
+	grado_id INT,
+	constraint curso_id_c
+		foreign key(curso_id)
+			references public.curso(id),
+	constraint grado_id_c
+		foreign key(grado_id)
+			references public.grado(id)
+);
+
+
+INSERT INTO public.grado_curso(
+	habilitado, curso_id, grado_id)
+	VALUES (true, 1, 5);
+	
+INSERT INTO public.grado_curso(
+	habilitado, curso_id, grado_id)
+	VALUES (true, 2, 5);
+	
+INSERT INTO public.grado_curso(
+	habilitado, curso_id, grado_id)
+	VALUES (false, 3, 5);
+
+INSERT INTO public.grado_curso(
+	habilitado, curso_id, grado_id)
+	VALUES (true, 4, 5);
+	
+INSERT INTO public.grado_curso(
+	habilitado, curso_id, grado_id)
+	VALUES (false, 5, 5);
+
+
+---------------------CREACIÓN DE LA TABLA TEMA-----------------------------
+
+create table public.tema(
+	id serial PRIMARY KEY,
+	nombre character varying,
+	imagen character varying,
+	grado_curso_id INT,
+	constraint grado_curso_id_c
+		foreign key(grado_curso_id)
+			references public.grado_curso(id)
+);
+
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Teoría de exponentes: Exponente natural', './images/exponente.jpg', 2);
+	
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Teoría básica: Valor numérico', './images/valornum.jpg', 2);
+	
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Teoría de exponente cero y uno', './images/expunocero.jpg', 2);
+
+INSERT INTO public.tema(
+        nombre, imagen, grado_curso_id)
+        VALUES ('Teoría de exponentes:Operaciones', './images/exponente1.jpg',2);
+
+INSERT INTO public.tema(
+        nombre, imagen, grado_curso_id)
+        VALUES ('Multiplicación y división de bases iguales', './images/muldiv.jpg',2);
+
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Números primos y compuestos', './images/ari_primosCompuestos5.jpg', 1);
+	
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Números decimales: tipos', './images/ari5_decimales.jpg', 1);
+	
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Sustracción', './images/ari_sustraccion5.jpg', 1);
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Adición', './images/ari_adicion5.jpg', 1);
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Multiplicación', './images/ari_multiplicacion5.jpg', 1);
+
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Ángulos:Definición y clases', './images/geo_angulo5.jpg', 4);
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Elementos de la geometría', './images/geo_elementos5.jpg', 4);
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Plano cartesiano', './images/geo_plano5.jpg', 4);
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Punto medio', './images/geo_puntomedio5.jpg', 4);
+
+INSERT INTO public.tema(
+	nombre, imagen, grado_curso_id)
+	VALUES ('Segmentos', './images/geo_segmento5.jpg', 4);
+
+
+---------------------CREACIÓN DE LA TABLA CONTENIDO-----------------------------
+
+create table public.contenido(
+	id serial PRIMARY KEY,
+	orden_mostrar int,
+	subtitulo character varying,
+	imagen character varying,
+	texto character varying,
+	tema_id INT,
+	constraint tema_id_c
+		foreign key(tema_id)
+			references public.tema(id)
+);
+
+---------------------------ARITMETICA-------------------------------
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Adición de números naturales','null','<li>
+                                Es una operación que consiste en reunir dos cantidades llamadas sumando, en una sola cantidad denominada suma total.
+                            </li>
+                            <li>
+                                Es más fácil realizar la adición de varios números de manera vertical.
+                            </li>
+                            <li>
+                                Los números naturales son todos los números positivos, incluido el cero.
+                            </li>', 9);
+							
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplo de forma Horizontal','./images/adiccion5_1.jpg',NULL, 9);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Ejemplo de forma Vertical','./images/adiccion5_2.jpg',NULL, 9);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Multiplicación de naturales','./images/multiplicacion5_1.jpg','<li>
+                                Es una operación de adició;n, pero abreviada, en la que todos los sumados son iguales.
+                            </li>
+                            <li>
+                                Los términos de la multiplicación son:
+                                <ul>
+                                    <li>Multiplicando</li>
+                                    <li>Multiplicador</li>
+                                    <li>Producto</li>
+                                </ul>
+                            </li>
+                            <h4><strong>Observación:</strong></h4>
+                            <p>Al multiplicando y al multiplicador también se les denomina factores.</p>', 10);
+							
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+	VALUES ( 1, 'Representación literal de un número', './images/numdecimal5_1.jpg', 'Para que un número esté correctamente representado, debe cumplir las siguientes condiciones:
+                            <ul>
+                                <li>Cada cifra desconocida debe ser representada por una letra, de preferencia minúscula.</li>
+                                <li>Las letras y números (representación alfanumérica) deben unirse por la parte superior mediante una línea horizontal.</li>
+                                <li>Cualquier signo de colección o agrupación, como los paréntesis, representan a una cifra o dígito.</li>
+                            </ul>', 7);
+							
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Número Capicúa','./images/numdecimal5_2.jpg','<li>Es aquel número que leído de izquierda a derecha o viceversa, no altera su valor. Otra forma de reconocer un número capicúa, es que sus cifras de extremo a extremo son iguales, hasta llegar a su centro.
+</li>',7);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Descomposición polinómica de un número','./images/numdecimal5_3.jpg','<li>
+                                Es la representación de un número como la suma de los valores relativos de sus cifras.
+                            </li>', 7);
+							
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Números primos','./images/primos5_1.jpg','<li>Un número <strong>A</strong> es <strong>primo</strong> si solo tiene como divisores el <strong>1</strong> y <strong>a él mismo</strong>.</li>
+                            <li>Para saber si un número es primo, hallamos sus divisores y si únicamente tiene dos divisores, el 1 y a sí mismo, entonces dicho número es primo.</li>
+                            <li>Los primeros n&uacute;meros primos son: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 y 97.</li>'
+	   , 6);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Números compuestos','./images/primos5_2.jpg','<li>
+                                Un número es compuesto cuando no es primo, es decir, cuando tiene más de dos divisores.
+                            </li>'
+	   , 6);
+						
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, '¿Cómo averiguar si un número es primo?','./images/primos5_3.jpg','<li>
+                                Para averiguar si un número es primo o compuesto, se divide por la serie de n&uacute;meros primos 2, 3, 5, 7, 11, ... hasta llegar a una división cuyo cociente sea igual o menor que el divisor. 
+                            </li>
+                            <li>
+                                Si todas las divisiones tienen el resto distinto de cero, el número propuesto es un número primo.
+                            </li>
+
+                                Ejemplo: Vamos a ver si el número 101 es un número primo.
+                                <ul>
+                                    <li>101 no es divisible por 2.</li>
+                                    <li>101 no es divisible por 3.</li>
+                                    <li>101 no es divisible por 5.</li>
+                                    <li><strong>Si dividimos el número 101 por 7:</strong></li>
+                                </ul>'
+	   , 6);
+	   
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Sustracción de números naturales','./images/sustraccion5_1.jpg','<li>Es una operación inversa a 
+	   la adición, de modo que, dados dos números uno llamado minuendo y otro sustraendo, obtendremos un resultado al que se le denomina diferencia.</li>'
+	   , 8);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Términos de la sustracción','./images/sustraccion5_2.jpg','Los términos de una sustracción son:
+                            <ul>
+                                <li>Minuendo</li>
+                                <li>Sustraendo</li>
+                                <li>Diferencia</li>
+                            </ul>'
+	   , 8);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Relación entre la suma y la diferencia de dos números ','./images/sustraccion5_3.jpg',
+	   NULL
+	   , 8);
+
+
+---------------------------GEOMETRIA-------------------------------
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Definición','./images/angulo5_1.jpg','<p>Figura geométrica formada por dos rayos (en la figura rayo A y rayo B) que tienen el mismo origen, llamado vértice 
+                            (en la figura vértice O)</p>', 11);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplo de forma horizontal','./images/angulo5_2.jpg','<p>Los ángulos se clasifican en las siguientes clases:</p>
+                          <ul>
+                            <li>Ángulo recto, mide 90°</li>
+                            <li>Ángulo  agudo, menores que 90°</li>
+                            <li>Ángulo  rectos, mayores que 90°</li>
+                          </ul>', 11);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Punto','./images/punto.jpg',
+	   '<p>La marca de un lápiz, lapicero o una tiza nos 
+	   dan la idea de punto. Se nombra con una letra mayúscula.</p>'
+	   , 12);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Recta y Semirrecta','./images/semirrectas.jpg',
+	   '<li>
+        Recta: Es una sucesión de infinitos puntos en una misma dirección. Se nombra con una letra minúscula o dos letras mayúsculas
+        </li>
+         <li>
+         Semirrecta: Sobre una recta se toma un punto A, este punto divide a la recta en dos partes, cada parte se llama semirrecta y no se considera al punto A. Este se llama origen o frontera.
+         </li>'
+	   , 12);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Segmento','./images/segmentos.jpg',
+	   '<p>Es una parte de la recta que tiene por extremos a dos puntos. 
+	   Su medida se expresa en unidades de longitud.</p>'
+	   , 12);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(4, 'Plano','./images/plano.jpg',
+	   '<p>La superficie de una pizarra, del piso, de una mesa, estas superficies nos dan la idea de un plano. Un plano no tiene límites ni espesor. 
+	   Se le nombra con una letra mayúscula.</p>'
+	   , 12);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(5, 'Rayo','./images/rayo.jpg',
+	   '<p>Sobre una recta se toma un punto A, este divide a la recta en dos partes, cada parte se le llama rayo y se considera el punto A. 
+	   El punto A se llama origen.</p>'
+	   , 12);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Definición','./images/planoC.jpg',
+	   '<p>Cuando se intersectan dos rectas numéricas
+                                perpendicularmente (formando un ángulo de
+                                90º), determinan en el plano un sistema de
+                                coordenadas llamado "Plano Cartesiano". Este tiene cuatro cuadrantes.</p>'
+	   , 13);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Definición','./images/puntoMedio.jpg',
+	   '<p>Es el punto que se encuentra en el medio entre dos puntos ubicados en una recta.</p>'
+	   , 14);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Definición','./images/segmentos.jpg',
+	   '<p>El segmento es una porción de recta limitada</p>'
+	   , 15);
+
+---------------------------ALGEBRA-------------------------------
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Exponente cero y uno','null',
+	   '<li>
+                            Exponente cero:Todo numero natural u operacion elevado a un exponente cero es igual a la unidad.
+                          </li>
+                          <li>
+                            Exponente uno:Todo numero natural elevado al exponente uno es igual al mismo numero.
+                          </li>'
+	   , 3);
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplo de exponente cero','./images/expocerouno.jpg',
+	   NULL
+	   , 3);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Ejemplo de exponente uno','./images/expouno.jpg',
+	   NULL
+	   , 3);
+	   
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Exponente natural','null',
+	   '<li>
+                            Dada una cantidad elevada a un exponente "n" mayor que 1, equivale a multiplicar "n" veces dicha cantidad.
+                          </li>'
+	   , 1);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplos','./images/expnatural.jpg',
+	   NULL
+	   , 1);
+	   
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Operaciones','null',
+	   '<li>
+                            A continuacion se monstraran los siguientes ejercicios para reforzar estos temas con teoria de exponentes:
+                          </li>'
+	   , 4);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplo','./images/operacion1.jpg',
+	   NULL
+	   , 4);
+	   
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Multipliación y division de bases iguales',
+	   'null',
+	   '<li>
+                            Multiplicación de bases iguales:Los exponentes de las mismas bases se suman
+                          </li>
+                          <li>
+                            División de bases iguales:Los exponentes de las mismas bases se restan.
+                          </li>'
+	   , 5);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplo 1',
+	   './images/multibaseigual.jpg',
+	   NULL
+	   , 5);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Ejemplo 2',
+	   './images/divbaseigual.jpg',
+	   NULL
+	   , 5);
+	   
+
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(1, 'Valor numérico',
+	   'null',
+	   '<li>
+                            Es el resultado final que se obtiene al sustituir los valores de todas las incógnitas que aparecen en la expresión que nos interesa evaluar y de realizar todas las operaciones indicadas respetando el orden indicado por los signos de agrupación.
+                          </li>'
+	   , 2);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(2, 'Ejemplo 1',
+	   './images/valornum1.jpg',
+	   NULL
+	   , 2);
+	   
+INSERT INTO public.contenido(
+	orden_mostrar, subtitulo, imagen, texto, tema_id)
+values(3, 'Ejemplo 2',
+	   './images/valornum2.jpg',
+	   NULL
+	   , 2);
+	   
+---------------------CREACIÓN DE LA TABLA CONTACTO-----------------------------
+
+create table public.contacto(
+	id serial PRIMARY KEY,
+	nombre character varying,
+	email character varying,
+	asunto character varying,
+	mensaje character varying
+);
+
+
+---------------------CREACIÓN DE LA TABLA DINAMICA-----------------------------
+
+create table public.dinamica(
+       id serial PRIMARY KEY,
+       orden_mostrar int,
+       titulo character varying,
+       imagen character varying,
+       dinamica character varying,
+       tema_id int,
+       constraint tema_id_c
+		foreign key(tema_id)
+			references public.tema(id)
+);
+
+
+select * from contacto;
+select * from contenido;
+select * from curso;
+select * from dinamica;
+select * from grado;
+select * from grado_curso;
+select * from iconos;
+select * from persistent_logins;
+select * from role;
+select * from role_user;
+select * from tema;
+select * from user_edu_learn;
+       
