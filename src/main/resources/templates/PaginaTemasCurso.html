@@ -26,7 +26,7 @@
                               Contenido
                           </div>
 
-                          <div class="contenidotema">
+                          <div class="contenidotema" th:if="${contenido.imagen != 'null' }" >
                             <img th:src="${contenido.imagen}" align="center" width="400" height="200">
                         </div>
                         </div>

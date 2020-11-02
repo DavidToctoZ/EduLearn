@@ -409,4 +409,14 @@ public class WebController {
         return "AdminCrearTema";
     }
 
+    //CREAR CONTENIDO
+    @RequestMapping(value="/crearContenido", method = RequestMethod.GET)
+    public String crearContenido(Model model) {
+
+        model.addAttribute("contenido", new Contenido());
+
+        return "AdminCrearContenido";
+    }
+    
+
 }

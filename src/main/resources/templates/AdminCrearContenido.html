@@ -16,21 +16,24 @@
         <h1 class="all-tittles" style="font-size: 30px;">> Crear el contenido: </h1>
     </div>
     <div class="container cont cont1">
-        <form>
+        <form th:object="${contenido}" th:action="@{/crearContenido}" method="POST">
+            
             <div class="div1">
                 <label class="etiq1">Coloque el subt&iacute;tulo: </label>
-                <input class="input1" type="text">
+                <input class="input1" type="text" >
             </div>
             <hr class="linea">
+
             <div class="div2">
                 <label >Cree el contenido: </label>
                 <textarea id="contenido"></textarea> 
             </div>
             <hr class="linea">
+            
             <div class="div3">
                 <label>Cargue una imagen: </label>
                 <input class="input3" type="file">
-            </div>
+            </div> 
             <div class="div4">
                 <input class="btnCrear" type="submit" value="CREAR CONTENIDO">
             </div>
