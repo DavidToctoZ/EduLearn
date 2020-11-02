@@ -266,7 +266,7 @@ public class WebController {
         if(!cursos.isEmpty() && cursosProx.isEmpty()){
             
             
-            return "cursos/CursosGradoParciaDisp";
+            return "cursos/CursosGradoParcialDisp";
         }
        
         
