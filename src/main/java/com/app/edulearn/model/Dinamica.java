@@ -20,8 +20,8 @@ public class Dinamica {
     @Column(name = "orden_mostrar")
     private int ordenMostrar;
 
-    @Column(name = "subtitulo")
-    private String subtitulo;
+    @Column(name = "titulo")
+    private String titulo;
 
     @Column(name = "imagen")
     private String imagen;
@@ -30,8 +30,8 @@ public class Dinamica {
     private String texto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_contenido")
-    private Contenido contenido;    
+    @JoinColumn(name = "tema_id")
+    private Tema tema;    
 
     public Long getDinamicaId() {
         return dinamicaId;
@@ -50,11 +50,11 @@ public class Dinamica {
     }
 
     public String getSubtitulo() {
-        return subtitulo;
+        return titulo;
     }
 
-    public void setSubtitulo(String subtitulo) {
-        this.subtitulo = subtitulo;
+    public void setSubtitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getImagen() {
