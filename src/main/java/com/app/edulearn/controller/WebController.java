@@ -88,6 +88,10 @@ public class WebController {
 
     
     String nombreUsuarioActivo;
+    String nombre;
+    String apellido;
+    String email;
+
     boolean menuCurso;
     boolean eliminado;
     //ACTIVAR 
@@ -105,7 +109,10 @@ public class WebController {
         return "login";
      }
      
-     @RequestMapping("/default")
+
+    
+
+    @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request, Model model) {
         
         if (request.isUserInRole("ROLE_ADMIN")) {
@@ -115,6 +122,10 @@ public class WebController {
         AppUser usuarioActivo = userRepo.findByEmail(request.getUserPrincipal().getName());
         nombreUsuarioActivo = usuarioActivo.getUserName() + " " + usuarioActivo.getFullname();
 
+        nombre = usuarioActivo.getUserName();
+        
+        apellido = usuarioActivo.getFullname();
+        email = request.getUserPrincipal().getName();
         
         return "redirect:/grados";
     }
@@ -354,6 +365,12 @@ public class WebController {
     public String paginaperfil(Model model) {
         menuCurso = false;
         funcionLayout(model, menuCurso);
+        
+
+        model.addAttribute("nombre", nombre);
+        model.addAttribute("apellido", apellido);
+        model.addAttribute("email", email);
+
         return "paginaperfil";
     } 
      
