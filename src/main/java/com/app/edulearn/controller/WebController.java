@@ -2,9 +2,14 @@ package com.app.edulearn.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
@@ -43,6 +48,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -92,6 +98,9 @@ public class WebController {
     boolean eliminado;
     //ACTIVAR 
     
+    //---------------------------------------------------------------------------------------------------------
+    //INICIO DE SESIÓN
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login(Model model) {
         if(eliminado == true){
@@ -100,7 +109,9 @@ public class WebController {
         }
         return "login";
      }
-     
+    
+    //---------------------------------------------------------------------------------------------------------
+    //INICIO DE LA PÁGINA DE USUARIO
      @RequestMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request, Model model) {
         
@@ -114,6 +125,9 @@ public class WebController {
         
         return "redirect:/grados";
     }
+
+    //---------------------------------------------------------------------------------------------------------
+    //INICIO DEL REGISTRO
 
     @RequestMapping(value= "/registro", method = RequestMethod.GET)
     public String registro(Model model){
@@ -146,7 +160,10 @@ public class WebController {
         
     }
 
-    //Eliminar usuario
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE ELIMINAR USUARIO
+
     @RequestMapping(value="/eliminarUsuario")
     public String eliminarUsuario(@RequestParam String buscarEmail, Model model){
         System.out.println(buscarEmail);
@@ -158,7 +175,10 @@ public class WebController {
         return "redirect:/";
     }
 
-    //CAMBIAR A /grados
+     //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE GRADOS
+
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados(Model model) {
         menuCurso = false;
@@ -166,7 +186,9 @@ public class WebController {
         return "PaginaGrados";
      }
 
-    //PAGINA DE ADMINISTRADOR - CREAR CURSO
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE CREAR CURSO - ADMIN
     @RequestMapping(value = "/prueba", method = RequestMethod.GET)
     public String prueba(Model model) {
 
@@ -189,7 +211,10 @@ public class WebController {
         return "PaginaAdmin";
     }
 
-    //PAGINA DE ADMINISTRADOR - ASIGNAR CURSO A GRADO
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE ASIGNAR CURSO A GRADO - ADMIN
+
     @RequestMapping(value = "/gradoCurso", method = RequestMethod.GET)
     public String inicioAsig(Model model) {
 
@@ -226,12 +251,62 @@ public class WebController {
         
     }
     
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE CREAR CONTENIDO - ADMIN
     @RequestMapping(value="/crearCont", method = RequestMethod.GET)
-    public String llamarCont(){
+    public String colocarCont(Model model){
+        
+        model.addAttribute("contenido", new Contenido());
+        return "AdminCrearContenido";
+    }
+
+    @Autowired
+    ServletContext servletContext;
+
+    @RequestMapping(value="/crearCont", method = RequestMethod.POST)
+
+    public String guardarCont(@ModelAttribute Contenido contenido,
+    ModelMap model, @RequestParam("file") MultipartFile imagen){
+
+        if(!imagen.isEmpty()) {
+            Path directorioImagenes = Paths.get("src//main//resources//static/images");
+            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesImg = imagen.getBytes();
+                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                Files.write(rutaCompleta, bytesImg);
+
+                contenido.setImagen(imagen.getOriginalFilename());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }   
+        } else {
+            model.addAttribute("error", "Debe seleccionar una imagen");
+            model.addAttribute("contenido", new Contenido());
+        }
+
+        contenidoRepo.save(contenido);
+        model.addAttribute("mensaje", "Debe seleccionar una imagen");
+        model.addAttribute("contenido", new Contenido());
         
         return "AdminCrearContenido";
     }
 
+    //---------------------------------------------------------------------------------------------------------
+
+    //Funcion q agregara parametros especifios para el layout
+    public void funcionLayout(Model model, boolean menuCurso){
+        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
+        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+        if(menuCurso== true ){
+            model.addAttribute("menuCurso", menuCurso);
+        }
+        
+    }
+    
     @RequestMapping(value = "/cursos")
     public String listaCursos(@RequestParam String buscarGrado, Model model) {
         boolean menuCurso = true;
@@ -329,6 +404,9 @@ public class WebController {
         
     }
     
+    //---------------------------------------------------------------------------------------------------------
+    //INICIO DE CONTACTO
+
     @RequestMapping(value = "/contacto", method = RequestMethod.GET)
       public String contacto(Model model) {
         menuCurso = false;
@@ -351,6 +429,10 @@ public class WebController {
 
     }
 
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE PAGINA PERFIL
+
     @RequestMapping(value = "/paginaperfil", method = RequestMethod.GET)
     public String paginaperfil(Model model) {
         menuCurso = false;
@@ -358,6 +440,9 @@ public class WebController {
         return "paginaperfil";
     } 
      
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE PAGINA DE ERROR
    
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
@@ -377,17 +462,11 @@ public class WebController {
  
         return "403Page";
     }
-    //Funcion q agregara parametros especifios para el layout
-    public void funcionLayout(Model model, boolean menuCurso){
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
-        if(menuCurso== true ){
-            model.addAttribute("menuCurso", menuCurso);
-        }
-        
-    }
 
-    //Crear curso
+
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE CREAR TEMA - ADMIN
     @RequestMapping(value = "/creartema", method = RequestMethod.GET)
     public String creartema(Model model) {
 
@@ -409,14 +488,16 @@ public class WebController {
         return "AdminCrearTema";
     }
 
-    //CREAR CONTENIDO
-    @RequestMapping(value="/crearContenido", method = RequestMethod.GET)
+    //---------------------------------------------------------------------------------------------------------
+
+    //INICIO DE CREAR CONTENIDO
+    /*@RequestMapping(value="/crearContenido", method = RequestMethod.GET)
     public String crearContenido(Model model) {
 
         model.addAttribute("contenido", new Contenido());
 
         return "AdminCrearContenido";
-    }
+    }*/
     
 
 }

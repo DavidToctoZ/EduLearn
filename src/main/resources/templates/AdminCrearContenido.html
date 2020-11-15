@@ -16,25 +16,24 @@
         <h1 class="all-tittles" style="font-size: 30px;">> Crear el contenido: </h1>
     </div>
     <div class="container cont cont1">
-        <form th:object="${contenido}" th:action="@{/crearContenido}" method="POST">
+        <form th:object="${contenido}" th:action="@{/crearCont}" method="POST" enctype="multipart/form-data">
             
             <div class="div1">
-                <label class="etiq1">Coloque el subt&iacute;tulo: </label>
-                <input class="input1" type="text" >
+                <label  class="etiq1">Coloque el subt&iacute;tulo: </label><input th:field="*{subtitulo}" class="input1" type="text" >
             </div>
             <hr class="linea">
 
             <div class="div2">
-                <label >Cree el contenido: </label>
-                <textarea id="contenido"></textarea> 
+                <label >Cree el contenido: </label><textarea th:field="*{texto}" id="contenido"></textarea> 
             </div>
             <hr class="linea">
             
             <div class="div3">
-                <label>Cargue una imagen: </label>
-                <input class="input3" type="file">
+                <label>Cargue una imagen: </label><input name="file" class="input3" type="file">
             </div> 
             <div class="div4">
+                <p th:text="${mensaje}"style="color:blue;margin:10px 0px;"></p>
+                <p th:text="${error}"style="color:blue;margin:10px 0px;"></p>
                 <input class="btnCrear" type="submit" value="CREAR CONTENIDO">
             </div>
         </form>

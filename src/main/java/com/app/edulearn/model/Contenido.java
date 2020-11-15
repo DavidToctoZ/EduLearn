@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 @Table(name = "contenido")
@@ -58,14 +60,6 @@ public class Contenido {
         this.subtitulo = subtitulo;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
     public String getTexto() {
         return texto;
     }
@@ -74,6 +68,15 @@ public class Contenido {
         this.texto = texto;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    
 
 
 
