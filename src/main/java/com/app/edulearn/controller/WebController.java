@@ -97,6 +97,10 @@ public class WebController {
     boolean menuCurso;
     boolean eliminado;
     //ACTIVAR 
+
+    Long tmpGradoId;
+    Long tmpCursoId;
+    Long tmpTemaId;
     
     //---------------------------------------------------------------------------------------------------------
     //INICIO DE SESIÓN
@@ -166,7 +170,7 @@ public class WebController {
 
     @RequestMapping(value="/eliminarUsuario")
     public String eliminarUsuario(@RequestParam String buscarEmail, Model model){
-        System.out.println(buscarEmail);
+      
         AppUser ap = userRepo.findByEmail(buscarEmail);
         userRoleRepo.deleteByAppUser(ap);
         userRepo.deleteByEmail(buscarEmail);
@@ -185,25 +189,24 @@ public class WebController {
         funcionLayout(model, menuCurso);
         return "PaginaGrados";
      }
-
-    //---------------------------------------------------------------------------------------------------------
-
-    //INICIO DE CREAR CURSO - ADMIN
+     String seleccion;
+    //PAGINA DE ADMINISTRADOR - CREAR CURSO
     @RequestMapping(value = "/prueba", method = RequestMethod.GET)
     public String prueba(Model model) {
 
         model.addAttribute("curso", new Curso());
         model.addAttribute("iconos", iconoRepo.findAll());
+        model.addAttribute("seleccion", seleccion);
         return "PaginaAdmin";
      }
-
+    
     @RequestMapping(value = "/prueba", method = RequestMethod.POST)
     public String crearCurso(@ModelAttribute Curso curso, @ModelAttribute Icono icono, ModelMap model) throws Exception {
 
         model.addAttribute("curso", curso);
         model.addAttribute("iconos", icono);
         model.addAttribute("iconos", iconoRepo.findAll());
-
+        model.addAttribute("seleccion", seleccion);
         cursoRepo.save(curso);
         model.addAttribute("mensaje", "Curso creado exitosamente!");
         model.addAttribute("curso", new Curso());
@@ -296,16 +299,6 @@ public class WebController {
     }
 
     //---------------------------------------------------------------------------------------------------------
-
-    //Funcion q agregara parametros especifios para el layout
-    public void funcionLayout(Model model, boolean menuCurso){
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
-        if(menuCurso== true ){
-            model.addAttribute("menuCurso", menuCurso);
-        }
-        
-    }
     
     @RequestMapping(value = "/cursos")
     public String listaCursos(@RequestParam String buscarGrado, Model model) {
@@ -462,42 +455,163 @@ public class WebController {
  
         return "403Page";
     }
+    //Funcion q agregara parametros especifios para el layout
+    public void funcionLayout(Model model, boolean menuCurso){
+        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
+        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+        if(menuCurso== true ){
+            model.addAttribute("menuCurso", menuCurso);
+        }
+        
+    }
+    
+    @RequestMapping(value = "/seleccionarGrado")
+    public String seleccionarGrado(@RequestParam String sel, Model model){
+        seleccion = sel;
+        model.addAttribute("seleccion", seleccion);
+        model.addAttribute("gradoSel", new Grado());
+        model.addAttribute("grados", gradoRepo.findAll());
+        
+        return "AdminSeleccionarGrado";
+    }
+    
+    @RequestMapping(value = "/seleccionarCurso")
+    public String seleccionarCurso(@RequestParam Long gradoSel, Model model){
+        boolean hayCurso;
+        tmpGradoId = gradoSel;
+        Grado g = gradoRepo.findByGradoId(gradoSel);
 
+        List<Curso> cursos = cursoService.encontrarCursosHabilitados(g.getName());
+        
+        if(cursos==null){
+            hayCurso = false;
+            System.out.println("No hay cursos");
+        }
+        else if(cursos.size() == 0){
+            hayCurso = false;
+        }
+        else{
+            hayCurso = true; 
+            
+            System.out.println("Hay cursos");
+        }
+        model.addAttribute("nombreGrado", g.getName());
+        model.addAttribute("cursos", cursos);
+        model.addAttribute("hayCurso", hayCurso);
+        model.addAttribute("seleccion", seleccion);//Opvcion 1 = grado, opcion 2 = curso
+        
+        //model.addAttribute("gradoSel", )
+        
+        return "AdminSeleccionarCurso";
+    }
+    GradoCurso tmpGradoCurso;
 
-    //---------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "/redireccionCurso")
+    public String redireccionCurso(@RequestParam Long cursoSel){
+        
+        
+        tmpCursoId = cursoSel;
+        
+        Grado g = gradoRepo.findByGradoId(tmpGradoId);
+        Curso c = cursoRepo.findByCursoId(tmpCursoId);
+       
+        GradoCurso gc = gradoCursoRepo.findByCursoAndGrado(c,g);
+        
+        tmpGradoCurso = gc;
+        if(seleccion.equals("2")){
+            
+            return "redirect:/seleccionarTema";
+        }
+        return "redirect:/crearTema";
+    }
+    
+    @RequestMapping(value = "/seleccionarTema")
+    public String seleccionarTema(Model model){
+        boolean hayTema;
+        
+        
+        List<Tema> temas = temaRepo.findByGradoCurso(tmpGradoCurso);
+        if(temas==null){
+            hayTema = false;
+            
+        }
+        else{
+            hayTema = true; 
+        }
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
 
-    //INICIO DE CREAR TEMA - ADMIN
-    @RequestMapping(value = "/creartema", method = RequestMethod.GET)
-    public String creartema(Model model) {
+        model.addAttribute("temas", temas);
+        model.addAttribute("hayTema", hayTema);
+        model.addAttribute("seleccion", seleccion);//Opvcion 1 = grado, opcion 2 = curso
+
+        return "AdminSeleccionarTema";
+    }
+
+   
+    //Crear tema
+    @RequestMapping(value = "/crearTema", method = RequestMethod.GET)
+    public String obtenertema(Model model) {
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
 
         model.addAttribute("tema", new Tema());
         
         return "AdminCrearTema";
     }
 
-    @RequestMapping(value = "/creartema", method = RequestMethod.POST)
-    public String crearCurso(@ModelAttribute Tema tema, ModelMap model) throws Exception {
+    @RequestMapping(value = "/crearTema", method = RequestMethod.POST)
+    public String enviarTema(@ModelAttribute Tema tema, ModelMap model) throws Exception {
 
         model.addAttribute("tema", tema);
+        tema.setGradoCurso(tmpGradoCurso);
         
-
         temaRepo.save(tema);
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        
         model.addAttribute("mensaje", "Curso creado exitosamente!");
         model.addAttribute("tema", new Tema());
 
         return "AdminCrearTema";
     }
 
-    //---------------------------------------------------------------------------------------------------------
+    
+    @RequestMapping(value="/seleccionarContenido")
+    public String SeleccionarContenido(@RequestParam Long temaSel, Model model) {
+        tmpTemaId = temaSel;
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
+        model.addAttribute("contenido", new Contenido());
 
-    //INICIO DE CREAR CONTENIDO
-    /*@RequestMapping(value="/crearContenido", method = RequestMethod.GET)
+        return "AdminCrearContenido";
+    }
+
+
+    //CREAR CONTENIDO
+    @RequestMapping(value="/crearContenido", method = RequestMethod.GET)
+    public String obtenerContenido(Model model) {
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
+        
+        model.addAttribute("contenido", new Contenido());
+
+        return "AdminCrearContenido";
+    }
+
+    @RequestMapping(value="/crearContenido", method = RequestMethod.POST)
     public String crearContenido(Model model) {
+
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
 
         model.addAttribute("contenido", new Contenido());
 
         return "AdminCrearContenido";
-    }*/
+    }
     
 
 }
