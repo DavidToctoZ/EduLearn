@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GradoRepo extends JpaRepository<Grado, Long> {
     Grado findByName(String name);
-    
+    Grado findByGradoId(Long gradoId);
 }

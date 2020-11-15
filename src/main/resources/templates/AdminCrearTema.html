@@ -11,12 +11,14 @@
         <div class="page-header">
             <h1 class="all-tittles" style="font-size: 30px;">> Crear el tema: </h1>
         </div>
+        
         <div class="container cont">
-            <form th:object="${tema}" th:action="@{/creartema}" method="POST">
+            <form th:object="${tema}" th:action="@{/crearTema}" method="POST">
                 <div>
                     <label class="etiq"> T&iacute;tulo del tema: </label><input class="in" th:field="*{nombre}" type="text" id="tema">
                     <hr class="linea">
-                    <label class="etiq"> Imagen: </label><input class="in input3" th:file="*{imagen}" type="file" id="imagen">
+                    <label class="etiq"> Imagen: </label><input class="in" th:field="*{imagen}" type="text" id="tema">
+                    
                 </div>
 
                 <div>

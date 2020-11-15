@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutAdmin}">
+<head>
+    <title>P&aacute;gina de administrador</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="page-header" th:if="${seleccion == '1'}">
+            <h1 class="all-tittles" style="font-size: 30px;">> Crear tema: </h1>
+        </div>
+
+        <div class="page-header" th:if="${seleccion == '2'}">
+            <h1 class="all-tittles" style="font-size: 30px;">> Crear contenido: </h1>
+        </div>
+
+
+        <div class="container cont">
+            <h1>Seleccionar grado</h1>
+            <form th:action="@{/seleccionarCurso}" method="POST">
+
+                <select name="gradoSel" value="1">
+                    <option th:each="grado : ${grados}" th:value="${grado.gradoId}" th:text="${grado.name}"></option>
+                </select>
+                
+     
+                <input type="submit" class="btnCrear" value="Seleccionar">
+            </form>
+            
+
+        </div>
+    
+    </div>
+</body>
+</html>
