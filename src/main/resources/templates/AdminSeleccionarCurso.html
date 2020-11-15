@@ -19,8 +19,10 @@
         
         <div class="container cont">
             <h1>Seleccionar Curso</h1>
-            
+            <p>Grado: <span th:text="${nombreGrado}"></span></p>
+            <hr class="linea">
             <span th:if="${hayCurso == true}">
+                
                 <form th:action="@{/redireccionCurso}" method="POST">
                     <select name="cursoSel" >
                         <option th:each="curso : ${cursos}" th:value="${curso.cursoId}" th:text="${curso.name}"></option>

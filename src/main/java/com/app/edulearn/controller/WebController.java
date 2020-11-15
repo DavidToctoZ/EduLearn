@@ -403,7 +403,7 @@ public class WebController {
         Grado g = gradoRepo.findByGradoId(gradoSel);
 
         List<Curso> cursos = cursoService.encontrarCursosHabilitados(g.getName());
-
+        
         if(cursos==null){
             hayCurso = false;
             System.out.println("No hay cursos");
@@ -416,7 +416,7 @@ public class WebController {
             
             System.out.println("Hay cursos");
         }
-        
+        model.addAttribute("nombreGrado", g.getName());
         model.addAttribute("cursos", cursos);
         model.addAttribute("hayCurso", hayCurso);
         model.addAttribute("seleccion", seleccion);//Opvcion 1 = grado, opcion 2 = curso
@@ -459,6 +459,8 @@ public class WebController {
         else{
             hayTema = true; 
         }
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
 
         model.addAttribute("temas", temas);
         model.addAttribute("hayTema", hayTema);
@@ -471,7 +473,9 @@ public class WebController {
     //Crear tema
     @RequestMapping(value = "/crearTema", method = RequestMethod.GET)
     public String obtenertema(Model model) {
-        
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+
         model.addAttribute("tema", new Tema());
         
         return "AdminCrearTema";
@@ -484,6 +488,9 @@ public class WebController {
         tema.setGradoCurso(tmpGradoCurso);
         
         temaRepo.save(tema);
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        
         model.addAttribute("mensaje", "Curso creado exitosamente!");
         model.addAttribute("tema", new Tema());
 
@@ -494,7 +501,9 @@ public class WebController {
     @RequestMapping(value="/seleccionarContenido")
     public String SeleccionarContenido(@RequestParam Long temaSel, Model model) {
         tmpTemaId = temaSel;
-        
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
         model.addAttribute("contenido", new Contenido());
 
         return "AdminCrearContenido";
@@ -504,7 +513,10 @@ public class WebController {
     //CREAR CONTENIDO
     @RequestMapping(value="/crearContenido", method = RequestMethod.GET)
     public String obtenerContenido(Model model) {
-
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
+        
         model.addAttribute("contenido", new Contenido());
 
         return "AdminCrearContenido";
@@ -512,6 +524,10 @@ public class WebController {
 
     @RequestMapping(value="/crearContenido", method = RequestMethod.POST)
     public String crearContenido(Model model) {
+
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
+        model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
 
         model.addAttribute("contenido", new Contenido());
 

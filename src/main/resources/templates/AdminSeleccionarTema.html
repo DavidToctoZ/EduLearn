@@ -19,6 +19,11 @@
         <div class="container cont">
             <h1>Seleccionar Tema</h1>
             
+            <p>Grado: <span th:text="${nombreGrado}"></span></p>
+            <p>Curso: <span th:text="${nombreCurso}"></span></p>
+
+            <hr class="linea">
+
             <span th:if="${hayTema == true}">
                 <form th:action="@{/seleccionarContenido}" method="POST">
                     <select name="temaSel" >

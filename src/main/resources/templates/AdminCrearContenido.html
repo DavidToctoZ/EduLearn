@@ -16,6 +16,11 @@
         <h1 class="all-tittles" style="font-size: 30px;">> Crear el contenido: </h1>
     </div>
     <div class="container cont cont1">
+        <p>Grado: <span th:text="${nombreGrado}"></span></p>
+        <p>Curso: <span th:text="${nombreCurso}"></span></p>
+        <p>Tema: <span th:text="${nombreTema}"></span></p>
+        <hr class="linea">
+
         <form th:object="${contenido}" th:action="@{/crearContenido}" method="POST">
             
             <div class="div1">
