@@ -22,7 +22,7 @@
             <h1>Seleccionar grado</h1>
             <form th:action="@{/seleccionarCurso}" method="POST">
 
-                <select name="gradoSel" value="1">
+                <select name="gradoSel" required>
                     <option th:each="grado : ${grados}" th:value="${grado.gradoId}" th:text="${grado.name}"></option>
                 </select>
                 

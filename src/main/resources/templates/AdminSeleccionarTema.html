@@ -26,7 +26,7 @@
 
             <span th:if="${hayTema == true}">
                 <form th:action="@{/seleccionarContenido}" method="POST">
-                    <select name="temaSel" >
+                    <select name="temaSel" required>
                         <option th:each="tema : ${temas}" th:value="${tema.temaId}" th:text="${tema.nombre}"></option>
                     </select>
 

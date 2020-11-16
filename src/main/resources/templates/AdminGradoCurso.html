@@ -29,7 +29,7 @@
                     <label> Escoja el curso: </label>
                     <select th:field="${gc.curso}">
                         <option th:each="curso:${curso}" th:value="${curso.cursoId}"
-                            th:text="${curso.name}">
+                            th:text="${curso.name}" >
                         </option>
                     </select>
                 </div>

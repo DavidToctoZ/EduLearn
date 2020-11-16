@@ -180,7 +180,23 @@ span.label-mhover{
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
+.btnRet{
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: rgb(241, 240, 240);
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    border: none;
+    background-color: #389daa;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 30px;
+}
 .container .btnCrear:hover {
     
     background-color:  #359dc7;
