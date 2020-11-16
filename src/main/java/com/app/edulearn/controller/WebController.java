@@ -92,6 +92,9 @@ public class WebController {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    ServletContext servletContext;
+
     
     String nombreUsuarioActivo;
     boolean menuCurso;
@@ -189,6 +192,7 @@ public class WebController {
         funcionLayout(model, menuCurso);
         return "PaginaGrados";
      }
+
      String seleccion;
     //PAGINA DE ADMINISTRADOR - CREAR CURSO
     @RequestMapping(value = "/prueba", method = RequestMethod.GET)
@@ -255,48 +259,6 @@ public class WebController {
     }
     
     //---------------------------------------------------------------------------------------------------------
-
-    //INICIO DE CREAR CONTENIDO - ADMIN
-    @RequestMapping(value="/crearCont", method = RequestMethod.GET)
-    public String colocarCont(Model model){
-        
-        model.addAttribute("contenido", new Contenido());
-        return "AdminCrearContenido";
-    }
-
-    @Autowired
-    ServletContext servletContext;
-
-    @RequestMapping(value="/crearCont", method = RequestMethod.POST)
-
-    public String guardarCont(@ModelAttribute Contenido contenido,
-    ModelMap model, @RequestParam("file") MultipartFile imagen){
-
-        if(!imagen.isEmpty()) {
-            Path directorioImagenes = Paths.get("src//main//resources//static/images");
-            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-            try {
-                byte[] bytesImg = imagen.getBytes();
-                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
-                Files.write(rutaCompleta, bytesImg);
-
-                contenido.setImagen(imagen.getOriginalFilename());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }   
-        } else {
-            model.addAttribute("error", "Debe seleccionar una imagen");
-            model.addAttribute("contenido", new Contenido());
-        }
-
-        contenidoRepo.save(contenido);
-        model.addAttribute("mensaje", "Debe seleccionar una imagen");
-        model.addAttribute("contenido", new Contenido());
-        
-        return "AdminCrearContenido";
-    }
 
     //---------------------------------------------------------------------------------------------------------
     
@@ -561,16 +523,36 @@ public class WebController {
     }
 
     @RequestMapping(value = "/crearTema", method = RequestMethod.POST)
-    public String enviarTema(@ModelAttribute Tema tema, ModelMap model) throws Exception {
+    public String enviarTema(@ModelAttribute Tema tema, ModelMap model, 
+    @RequestParam("file1") MultipartFile imagen) throws Exception {
 
         model.addAttribute("tema", tema);
         tema.setGradoCurso(tmpGradoCurso);
+
+        if(!imagen.isEmpty()) {
+            Path directorioImagenes = Paths.get("src//main//resources//static/images");
+            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesImg = imagen.getBytes();
+                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                Files.write(rutaCompleta, bytesImg);
+
+                tema.setImagen(imagen.getOriginalFilename());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }   
+        } else {
+            model.addAttribute("error", "Debe seleccionar una imagen");
+            model.addAttribute("tema", new Tema());
+        }
         
         temaRepo.save(tema);
         model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
         model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
         
-        model.addAttribute("mensaje", "Curso creado exitosamente!");
+        model.addAttribute("mensaje", "Tema creado exitosamente!");
         model.addAttribute("tema", new Tema());
 
         return "AdminCrearTema";
@@ -589,7 +571,7 @@ public class WebController {
     }
 
 
-    //CREAR CONTENIDO
+    //INICIO DE CREAR CONTENIDO  - ADMIN
     @RequestMapping(value="/crearContenido", method = RequestMethod.GET)
     public String obtenerContenido(Model model) {
         model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
@@ -602,16 +584,40 @@ public class WebController {
     }
 
     @RequestMapping(value="/crearContenido", method = RequestMethod.POST)
-    public String crearContenido(Model model) {
+    public String crearContenido(@ModelAttribute Contenido contenido,
+    ModelMap model, @RequestParam("file") MultipartFile imagen) {
 
         model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpGradoId).getName());
         model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tmpCursoId).getName());
         model.addAttribute("nombreTema", temaRepo.findByTemaId(tmpTemaId).getNombre());
 
+        Tema tema = temaRepo.findByTemaId(tmpTemaId);
+        contenido.setTema(tema);
+
+        if(!imagen.isEmpty()) {
+            Path directorioImagenes = Paths.get("src//main//resources//static/images");
+            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesImg = imagen.getBytes();
+                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                Files.write(rutaCompleta, bytesImg);
+
+                contenido.setImagen(imagen.getOriginalFilename());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }   
+        } else {
+            model.addAttribute("error", "Debe seleccionar una imagen");
+            model.addAttribute("contenido", new Contenido());
+        }
+
+        contenidoRepo.save(contenido);
+        model.addAttribute("mensaje", "Contenido guardado!");
         model.addAttribute("contenido", new Contenido());
 
         return "AdminCrearContenido";
     }
-    
 
 }

@@ -16,11 +16,11 @@
             <p>Grado: <span th:text="${nombreGrado}"></span></p>
             <p>Curso: <span th:text="${nombreCurso}"></span></p>
             <hr class="linea">
-            <form th:object="${tema}" th:action="@{/crearTema}" method="POST">
+            <form th:object="${tema}" th:action="@{/crearTema}" method="POST" enctype="multipart/form-data">
                 <div>
                     <label class="etiq"> T&iacute;tulo del tema: </label><input class="in" th:field="*{nombre}" type="text" id="tema">
                     <hr class="linea">
-                    <label class="etiq"> Imagen: </label><input class="in" th:field="*{imagen}" type="text" id="tema">
+                    <label class="etiq"> Imagen: </label><input class="in" name="file1" type="file" id="tema">
                     
                 </div>
 
@@ -32,7 +32,7 @@
                 </div>
             </form>
             <div>
-                <p th:text="${mensaje}"></p>
+                <p th:text="${mensaje}" style="color:blue"></p>
             </div> 
         </div>
     

@@ -27,7 +27,7 @@
                           </div>
 
                           <div class="contenidotema" th:if="${contenido.imagen != 'null' }" >
-                            <img th:src="${contenido.imagen}" align="center" width="400" height="200">
+                            <img th:src="@{'/images/' + ${contenido.imagen}}" align="center" width="400" height="200">
                         </div>
                         </div>
                       </div>

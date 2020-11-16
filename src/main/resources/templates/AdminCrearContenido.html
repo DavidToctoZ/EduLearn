@@ -21,7 +21,7 @@
         <p>Tema: <span th:text="${nombreTema}"></span></p>
         <hr class="linea">
 
-        <form th:object="${contenido}" th:action="@{/crearContenido}" method="POST">
+        <form th:object="${contenido}" th:action="@{/crearContenido}" method="POST" enctype="multipart/form-data">
             
             <div class="div1">
                 <label  class="etiq1">Coloque el subt&iacute;tulo: </label><input th:field="*{subtitulo}" class="input1" type="text" >

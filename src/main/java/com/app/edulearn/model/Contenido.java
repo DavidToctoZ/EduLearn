@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Entity
@@ -74,6 +73,14 @@ public class Contenido {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Tema getTema() {
+        return tema;
+    }
+
+    public void setTema(Tema tema) {
+        this.tema = tema;
     }
 
     
