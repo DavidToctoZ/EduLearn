@@ -438,3 +438,8 @@ span.label-mhover{
     .form-container{ width: 370px; }
     .navbar-lateral{ display: inherit !important; }
 }
+
+.img-responsive {
+    width: 603px;
+    height: 347px;
+}

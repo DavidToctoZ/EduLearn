@@ -24,7 +24,7 @@
             <span th:if="${hayCurso == true}">
                 
                 <form th:action="@{/redireccionCurso}" method="POST">
-                    <select name="cursoSel" >
+                    <select name="cursoSel" value="1">
                         <option th:each="curso : ${cursos}" th:value="${curso.cursoId}" th:text="${curso.name}"></option>
                     </select>
 
