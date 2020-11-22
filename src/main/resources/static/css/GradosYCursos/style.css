@@ -455,7 +455,7 @@ span.label-mhover{
     .navbar-lateral{ display: inherit !important; }
 }
 
-.img-responsive {
-    width: 603px;
-    height: 347px;
+.img-responsive1 {
+    width: 400px;
+    height: 200px;
 }

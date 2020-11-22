@@ -21,7 +21,7 @@
                         <p align="center" th:text="${tema.nombre}"></p>
                       <div class="photo-wrapper">
                         <div class="photo" align="center" style="border: 3px solid black;">
-                          <a class="fancybox" th:href="@{/contenido(buscarTema=${tema.temaId}, buscarGrado=${buscarGrado})}"><img class="img-responsive" th:src="@{'/images/' + ${tema.imagen}}"></a>
+                          <a class="fancybox" th:href="@{/contenido(buscarTema=${tema.temaId}, buscarGrado=${buscarGrado})}"><img class="img-responsive1" th:src="@{'/images/' + ${tema.imagen}}"></a>
                         </div>
                         <div class="overlay"></div>
                       </div>

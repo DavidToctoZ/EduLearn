@@ -624,7 +624,9 @@ public class WebController {
                 e.printStackTrace();
             }   
         } else {
-            model.addAttribute("error", "Debe seleccionar una imagen");
+            contenido.setImagen("null");
+            contenidoRepo.save(contenido);
+            model.addAttribute("mensaje", "Contenido guardado!");
             model.addAttribute("contenido", new Contenido());
         }
 
