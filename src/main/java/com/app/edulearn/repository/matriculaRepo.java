@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface matriculaRepo extends JpaRepository<Matricula, Long>{
+public interface MatriculaRepo extends JpaRepository<Matricula, Long>{
     List<Matricula> findByAppUser(AppUser appUser);
     List<Matricula> findByAppUserAndGrado(AppUser appUser, Grado grado);
 

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -20,6 +21,7 @@ import com.app.edulearn.model.Grado;
 import com.app.edulearn.model.GradoCurso;
 import com.app.edulearn.model.Icono;
 import com.app.edulearn.model.Matricula;
+import com.app.edulearn.model.SeguimientoTema;
 import com.app.edulearn.model.Tema;
 import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.CursoRepo;
@@ -30,7 +32,8 @@ import com.app.edulearn.repository.TemaRepo;
 import com.app.edulearn.repository.UserRepo;
 import com.app.edulearn.repository.UserRoleRepo;
 import com.app.edulearn.repository.contactoRepo;
-import com.app.edulearn.repository.matriculaRepo;
+import com.app.edulearn.repository.MatriculaRepo;
+import com.app.edulearn.repository.SeguimientoTemaRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
 import com.app.edulearn.services.UserRoleService;
@@ -98,7 +101,10 @@ public class WebController {
     ServletContext servletContext;
 
     @Autowired
-    matriculaRepo matriculaRepo;
+    MatriculaRepo matriculaRepo;
+
+    @Autowired
+    SeguimientoTemaRepo seguimientoTemaRepo;
     
     String nombreUsuarioActivo;
     String nombre;
@@ -268,6 +274,8 @@ public class WebController {
     public void funcionLayout(Model model, boolean menuCurso){
         AppUser a = userRepo.findByEmail(email);
         List<Matricula> m = matriculaRepo.findByAppUser(a);
+    
+
         boolean eGrado = true;
         if(m.size()!=0){
             model.addAttribute("existeGrado", eGrado);
@@ -367,8 +375,11 @@ public class WebController {
         String titulo = "Cursos de " + buscarGrado;
         String gradoSub = "> Cursos de " +buscarGrado +  " disponibles:";
         String nomGrado = buscarGrado;
-
+        List<SeguimientoTema> sg = seguimientoTemaRepo.findByAppUser(userRepo.findByEmail(email));
         
+        
+
+
         String tituloMenu = "Curso de " + buscarGrado;
 
         model.addAttribute("tituloMenu", tituloMenu);
@@ -378,6 +389,8 @@ public class WebController {
         model.addAttribute("cursosProximos", cursosProx);
         model.addAttribute("cursos", cursos);
         model.addAttribute("nombreGrado", nomGrado);
+        
+
 
         if(cursos == null && cursosProx == null){
             return "cursos/CursosGradoVacio";
@@ -389,12 +402,48 @@ public class WebController {
             return "cursos/CursosGradoParciaProx";
         }
         if(!cursos.isEmpty() && cursosProx.isEmpty()){
+            for(Curso tmp : cursos){
+                
+                float cantTemasTotal = 0;
+                float cantTemasComp = 0;
+                for(SeguimientoTema tmpSg: sg){
+                    cantTemasTotal = cantTemasComp + 1;
+                    if(tmpSg.getTema().getGradoCurso().getCurso().getCursoId() == tmp.getCursoId() )
+                    {
+                        cantTemasComp = cantTemasComp + 1;
+                    }
+                }
+                float cal = (cantTemasComp/cantTemasTotal) * 100;
+                
+                DecimalFormat formato1 = new DecimalFormat("#.00");
+                System.out.println(cantTemasTotal); 
+                System.out.println(cantTemasComp);
+                tmp.setPorcentaje(cal);
+            }
+
             
-            
+
             return "cursos/CursosGradoParcialDisp";
         }
-       
         
+        for(Curso tmp : cursos){
+                
+            float cantTemasTotal = 0;
+            float cantTemasComp = 0;
+            for(SeguimientoTema tmpSg: sg){
+                cantTemasTotal = cantTemasComp + 1;
+                if(tmpSg.getTema().getGradoCurso().getCurso().getCursoId() == tmp.getCursoId() )
+                {
+                    cantTemasComp = cantTemasComp + 1;
+                }
+            }
+            float cal = (cantTemasComp/cantTemasTotal) * 100;
+          
+            System.out.println(cantTemasTotal); 
+            System.out.println(cantTemasComp);
+            tmp.setPorcentaje(cal);
+        }
+    
         return "cursos/CursosGradoTodo";
       }
     
@@ -406,9 +455,26 @@ public class WebController {
         Grado g = gradoRepo.findByName(buscarGrado);
         Curso c = cursoRepo.findByCursoId(buscarCurso);
         List<Tema> temas = temaService.encontrarTemas(buscarGrado, buscarCurso);
+        List<SeguimientoTema> sg = seguimientoTemaRepo.findByAppUser(userRepo.findByEmail(email));
+
         String titulo = "Curso de "+g.getName() + ": " + c.getName();
 
-        
+        for(Tema temp : temas){
+            for(SeguimientoTema tempSg : sg){
+                
+                if(temp.getTemaId() == tempSg.getTema().getTemaId()){
+                        temp.setEstado("Completado");
+                }
+                else{
+                    if(temp.getEstado() != "Completado"){
+                        temp.setEstado("No Completado");
+                    }
+                    
+                }
+
+            }
+        }
+       
         String tituloMenu = "Curso de " + g.getName();
 
         model.addAttribute("tituloMenu", tituloMenu);
@@ -419,13 +485,36 @@ public class WebController {
         model.addAttribute("buscarGrado", buscarGrado);
         model.addAttribute("titulo", titulo);
         model.addAttribute("nombreCurso", c.getName());
+
         model.addAttribute("listaTemas", temas);
 
+      
         
 
         return "PaginaTema";
         
     }
+
+    @RequestMapping(value = "/guardarFin")
+    public String guardarTema(@RequestParam Long buscarTema, Model model){
+        Tema t = temaRepo.findByTemaId(buscarTema);
+        AppUser a = userRepo.findByEmail(email);
+        SeguimientoTema st = new SeguimientoTema();
+        boolean tComp = true;
+        st.setAppUser(a);
+        st.setTema(t);
+        st.setCompletado(tComp);
+        if(seguimientoTemaRepo.findByTemaAndAppUser(t, a).size() == 0){
+            seguimientoTemaRepo.save(st);
+        }
+        
+        model.addAttribute("cursoId", t.getGradoCurso().getCurso().getCursoId());
+        model.addAttribute("nombreGrado", t.getGradoCurso().getGrado().getName());
+
+
+        return "PaginaTemaFinalizado";
+    }
+
 
     @RequestMapping(value = "/contenido")
     public String pagContenido(@RequestParam Long buscarTema, @RequestParam String buscarGrado,Model model){
@@ -447,13 +536,18 @@ public class WebController {
         
         model.addAttribute("listaContenido", c);
         model.addAttribute("temaNombre", t.getNombre());
-
+        model.addAttribute("temaId", t.getTemaId());
         
 
         return "PaginaTemasCurso";
         
     }
     
+
+
+
+
+
     //---------------------------------------------------------------------------------------------------------
     //INICIO DE CONTACTO
 

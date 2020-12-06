@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tema")
@@ -22,6 +23,10 @@ public class Tema {
 
     @Column(name = "imagen")
     private String imagen;
+
+    @Transient
+    private String estado;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grado_curso_id")
@@ -59,4 +64,13 @@ public class Tema {
         this.gradoCurso = gradoCurso;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+  
 }   
