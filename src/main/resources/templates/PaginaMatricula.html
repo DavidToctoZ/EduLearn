@@ -3,22 +3,22 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>P&aacute;gina de grados</title>
+    <title>P&aacute;gina de matricula</title>
 </head>
 <body>
 
 <div layout:fragment="content">
     <div class="container">
         <div class="page-header">
-          <h1 class="all-tittles" style="font-size: 30px;">> Seleccione el grado que desee: </h1>
+          <h1 class="all-tittles" style="font-size: 30px;">> Seleccione el grado en donde desea inscribirse: </h1>
         </div>
     </div>
     <section class="full-reset text-center" style="padding: 40px 0;">
         
-        <article th:each="m : ${grados}" class="tile">
-            <div class="tile-icon full-reset"><a th:href="@{/cursos(buscarGrado=${m.grado.name})}"><i th:class="${m.grado.imagen}"></i></a></div>
+        <article th:each="grado : ${gradosT}" class="tile">
+            <div class="tile-icon full-reset"><a th:href="@{/matriculaGrado(buscarGrado=${grado.name})}"><i th:class="${grado.imagen}"></i></a></div>
             <div class="tile-name all-tittles">Seleccione: </div>
-            <div class="tile-num full-reset" th:text="${m.grado.name}"></div>
+            <div class="tile-num full-reset" th:text="${grado.name}"></div>
 
         </article>
     </section>

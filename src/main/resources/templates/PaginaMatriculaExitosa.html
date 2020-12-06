@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>P&aacute;gina de matricula</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    
+
+    <div> Matricula exitosa en el grado <span th:text="${gradoMatriculado}"></span></div>
+    <a th:href="@{/cursos(buscarGrado=${gradoMatriculado})}"> Presione aqui para continuar</a>
+</div>
+</body>
+</html>

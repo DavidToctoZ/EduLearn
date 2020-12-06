@@ -1,8 +1,7 @@
 package com.app.edulearn.services;
 
 import com.app.edulearn.model.*;
-
-
+import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.RoleRepo;
 import com.app.edulearn.repository.UserRoleRepo;
 
@@ -16,12 +15,13 @@ public class UserRoleService {
     
     @Autowired
     UserRoleRepo userRoleRepo;
-    
+
 
     public void  addUserRole(AppUser user){
 
         AppRole appRole =roleRepo.findByName("ROLE_USER");
         UserRole userRole = new UserRole();
+
         userRole.setAppRole(appRole);
         userRole.setAppUser(user);
 

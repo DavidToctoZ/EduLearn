@@ -19,6 +19,7 @@ import com.app.edulearn.model.Curso;
 import com.app.edulearn.model.Grado;
 import com.app.edulearn.model.GradoCurso;
 import com.app.edulearn.model.Icono;
+import com.app.edulearn.model.Matricula;
 import com.app.edulearn.model.Tema;
 import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.CursoRepo;
@@ -29,6 +30,7 @@ import com.app.edulearn.repository.TemaRepo;
 import com.app.edulearn.repository.UserRepo;
 import com.app.edulearn.repository.UserRoleRepo;
 import com.app.edulearn.repository.contactoRepo;
+import com.app.edulearn.repository.matriculaRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
 import com.app.edulearn.services.UserRoleService;
@@ -95,6 +97,8 @@ public class WebController {
     @Autowired
     ServletContext servletContext;
 
+    @Autowired
+    matriculaRepo matriculaRepo;
     
     String nombreUsuarioActivo;
     String nombre;
@@ -125,8 +129,7 @@ public class WebController {
     
 
     @RequestMapping("/default")
-    public String defaultAfterLogin(HttpServletRequest request, Model model) {
-        
+    public String defaultAfterLogin(HttpServletRequest request, Model model) {     
         if (request.isUserInRole("ROLE_ADMIN")) {
             
             return "redirect:/prueba";
@@ -139,8 +142,57 @@ public class WebController {
         apellido = usuarioActivo.getFullname();
         email = request.getUserPrincipal().getName();
         
+        List<Matricula> gradosMatriculados = matriculaRepo.findByAppUser(usuarioActivo);
+
+        if(gradosMatriculados.size() == 0){
+            return "redirect:/matricula";
+        }
+        
         return "redirect:/grados";
     }
+
+    @RequestMapping("/matricula")
+    public String pagMatricula(Model model){
+
+        menuCurso = false;
+        AppUser a = userRepo.findByEmail(email);
+        List<Matricula> m = matriculaRepo.findByAppUser(a);
+        model.addAttribute("grados", m);
+
+        model.addAttribute("gradosT", gradoRepo.findAll());//Para el menu layout
+        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+
+        if(menuCurso== true ){
+            model.addAttribute("menuCurso", menuCurso);
+        }
+        
+        return "paginaMatricula";
+    }
+
+    
+    @RequestMapping("/matriculaGrado")
+    public String seleccionGrado(@RequestParam String buscarGrado, Model model){
+        Grado g = gradoRepo.findByName(buscarGrado);
+        
+        AppUser a = userRepo.findByEmail(email);
+
+        if(matriculaRepo.findByAppUserAndGrado(a, g).size() == 0)
+        {
+            Matricula s = new Matricula();
+        
+
+            s.setAppUser(a);
+            s.setGrado(g);
+            matriculaRepo.save(s);
+            model.addAttribute("gradoMatriculado", g.getName());
+    
+    
+            return "PaginaMatriculaExitosa";
+        }
+
+        return "PaginaMatriculaFallida";
+    }
+
 
     //---------------------------------------------------------------------------------------------------------
     //INICIO DEL REGISTRO
@@ -197,10 +249,44 @@ public class WebController {
 
     @RequestMapping(value = "/grados", method = RequestMethod.GET)
     public String listaGrados(Model model) {
-        menuCurso = false;
+        AppUser a = userRepo.findByEmail(email);
+
+        List<Matricula> m = matriculaRepo.findByAppUser(a);
+
+        if(m.size() == 0){
+            model.addAttribute("noGrados", "No se encuentra matriculado en ningun curso");
+            return "PaginaMatricula";
+        }
+
         funcionLayout(model, menuCurso);
+
         return "PaginaGrados";
+
      }
+
+    //Funcion q agregara parametros especifios para el layout
+    public void funcionLayout(Model model, boolean menuCurso){
+        AppUser a = userRepo.findByEmail(email);
+        List<Matricula> m = matriculaRepo.findByAppUser(a);
+        boolean eGrado = true;
+        if(m.size()!=0){
+            model.addAttribute("existeGrado", eGrado);
+            model.addAttribute("grados", m);//Para el menu layout
+           
+        }
+        else{
+            eGrado = false;
+            model.addAttribute("existeCurso", eGrado);
+        }
+       
+        
+        
+        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+        if(menuCurso== true ){
+            model.addAttribute("menuCurso", menuCurso);
+        }
+        
+    }
 
      String seleccion;
     //PAGINA DE ADMINISTRADOR - CREAR CURSO
@@ -432,15 +518,7 @@ public class WebController {
  
         return "403Page";
     }
-    //Funcion q agregara parametros especifios para el layout
-    public void funcionLayout(Model model, boolean menuCurso){
-        model.addAttribute("grados", gradoRepo.findAll());//Para el menu layout
-        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
-        if(menuCurso== true ){
-            model.addAttribute("menuCurso", menuCurso);
-        }
-        
-    }
+
     
     @RequestMapping(value = "/seleccionarGrado")
     public String seleccionarGrado(@RequestParam String sel, Model model){

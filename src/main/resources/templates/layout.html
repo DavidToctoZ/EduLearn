@@ -40,14 +40,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             </div>
             <div class="full-reset nav-lateral-list-menu">
                 <ul class="list-unstyled">
-                    <li><a href="/grados"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
+                    <li><a href="/grados"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li><!-- Lista de grados en los que el usuario esta matriculado -->
+
+                    <li><a href="/matricula"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inscribirse en grado</a></li>
+
                     <li><a href="/paginaperfil"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Mi Perfil </a></li>
-                    <li>
+
+                    <li th:if="${existeGrado == true}">
                         <div class="dropdown-menu-button"><i class="zmdi zmdi-view-list-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Lista de grados <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw"></i></div>
                         <ul class="list-unstyled">
-                            <li th:each="grado : ${grados}"><a th:href="@{/cursos(buscarGrado=${grado.name})}" th:text="${grado.name}"><i th:class="${grado.imagen}"></i></a></li>     
+                            <li th:each="m : ${grados}"><a th:href="@{/cursos(buscarGrado=${m.grado.name})}" th:text="${m.grado.name}"><i th:class="${m.grado.imagen}"></i></a></li>     
                         </ul>
                     </li>
+
                     <li><a href="#"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Sobre nosotros </a></li>
                     <li><a href="/contacto"><i class='zmdi zmdi-phone zmdi-hc-fw'></i>&nbsp;&nbsp; Cont&aacute;ctenos </a></li>
                     <li th:if="${menuCurso == true}">
