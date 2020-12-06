@@ -24,13 +24,15 @@
             <label class="etiq1"> Correo:    </label> <span th:text=  "${email}" ></span>
         </div> 
 
-        <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
-            <input type="submit" class="btnCrear" value="Eliminar Usuario"/>
-        </form>
-        
-        <a th:href="@{/editar/} + ${userId}" class="btnCrear">Actualizar datos</a>
-
     </div>
+    <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
+        <input type="submit" value="Eliminar Usuario"/>
+    </form>
+
+    
+    <form class="button" th:action="@{/irActualizarUsuario}" method="POST">
+        <input type="submit" value="Actualizar Usuario"/>
+    </form>
 
 </div>
 </body>

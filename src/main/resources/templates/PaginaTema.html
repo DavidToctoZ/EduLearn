@@ -13,18 +13,20 @@
         <section class="wrapper site-min-height">
             <h3><i class="fa fa-angle-right"></i> Seleccione unos de los temas de <span th:text="${nombreCurso}"></span> </h3>
             <hr>
-
+          
             <div class="row mt">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc" th:each="tema : ${listaTemas}">
                   <div class="project-wrapper">
                     <div class="project" >
-                        <p align="center" th:text="${tema.nombre}"></p>
+                      <p align="center" th:text="${tema.nombre}"></p>
                       <div class="photo-wrapper">
                         <div class="photo" align="center" style="border: 3px solid black;">
                           <a class="fancybox" th:href="@{/contenido(buscarTema=${tema.temaId}, buscarGrado=${buscarGrado})}"><img class="img-responsive1" th:src="@{'/images/' + ${tema.imagen}}"></a>
                         </div>
+                        <div>Estado: <span th:text="${tema.estado}"> </span> </div>
                         <div class="overlay"></div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>

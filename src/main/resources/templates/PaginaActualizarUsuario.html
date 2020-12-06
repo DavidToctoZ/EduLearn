@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Actualizar Mi Perfil</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    
+    <h1>Actualizar Mi perfil</h1>
+ 
+    <form class="button" th:action="@{/actualizarUsuario}" th:object="${userForm}" method="POST">
+        <div class="input-div pass">
+            <div class="div">
+                 <p>Nombre: </p> <input type="text" class="input" th:field="*{userName}" th:value="${nombre}">
+         </div>
+        </div>
+
+        <div class="input-div pass">
+            <div class="div">
+                <p>Apellido:</p> <input type="text" class="input" th:field="*{fullname}" th:value="${apellido}">
+         </div>
+        </div>
+
+        <div class="input-div pass">
+            <div class="div">
+                <p>Correo: </p> <input type="email" class="input" th:field="*{email}" th:value="${correo}">
+         </div>
+        </div>
+        
+        
+      
+        
+        
+        <input type="submit" value="Actualizar Usuario"/>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>P&aacute;gina de matricula</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    
+
+    <div> Termino el tema: <span th:text="${nombreTema}"></span></div>
+    <a th:href="@{/tema(buscarGrado=${nombreGrado}, buscarCurso=${cursoId})}"> Presione aqui para continuar</a>
+
+    
+</div>
+</body>
+</html>
