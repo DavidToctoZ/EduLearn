@@ -13,6 +13,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
+import com.app.edulearn.model.ComentCurso;
+import com.app.edulearn.model.Comentario;
 import com.app.edulearn.model.Contacto;
 import com.app.edulearn.model.Contenido;
 import com.app.edulearn.model.Curso;
@@ -20,6 +22,8 @@ import com.app.edulearn.model.Grado;
 import com.app.edulearn.model.GradoCurso;
 import com.app.edulearn.model.Icono;
 import com.app.edulearn.model.Tema;
+import com.app.edulearn.repository.ComentCursoRepo;
+import com.app.edulearn.repository.ComentRepo;
 import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.CursoRepo;
 import com.app.edulearn.repository.GradoCursoRepo;
@@ -31,6 +35,7 @@ import com.app.edulearn.repository.UserRoleRepo;
 import com.app.edulearn.repository.contactoRepo;
 import com.app.edulearn.services.CursoService;
 import com.app.edulearn.services.TemaService;
+import com.app.edulearn.services.UserDetailsServiceImpl;
 import com.app.edulearn.services.UserRoleService;
 import com.app.edulearn.services.UserService;
 import com.app.edulearn.utils.EncryptedPasswordUtils;
@@ -44,7 +49,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,6 +99,15 @@ public class WebController {
     @Autowired
     ServletContext servletContext;
 
+    @Autowired
+    ComentRepo comentRepo;
+
+    @Autowired
+    ComentCursoRepo comentCursoRepo;
+
+    @Autowired
+    UserDetailsServiceImpl userDetailsServiceImpl;
+
     
     String nombreUsuarioActivo;
     String nombre;
@@ -108,6 +121,8 @@ public class WebController {
     Long tmpGradoId;
     Long tmpCursoId;
     Long tmpTemaId;
+    Long tmpComentGradoId;
+    Long tempComentCursoId;
     
     //---------------------------------------------------------------------------------------------------------
     //INICIO DE SESIÓN
@@ -636,5 +651,92 @@ public class WebController {
 
         return "AdminCrearContenido";
     }
+
+    //INICIO DE COMENTARIO  - USUARIO
+
+    @RequestMapping(value="/comentGrado")
+    public String SelectComentGrado(Model model) {
+
+        model.addAttribute("ComentGradoSel", new Grado());
+        model.addAttribute("grado", gradoRepo.findAll());
+        
+        return "PaginaComentGrado";
+    }
+
+    
+    Grado g;
+    boolean hayCurso;
+
+    @RequestMapping(value = "/SelectComentCurso")
+    public String SelectComentCurso(@RequestParam Long ComentGradoSel, Model model) {
+        
+        tmpComentGradoId = ComentGradoSel;
+        g = gradoRepo.findByGradoId(ComentGradoSel);
+
+        List<Curso> cursos = cursoService.encontrarCursosHabilitados(g.getName());
+
+        if(cursos==null){
+            hayCurso = false;
+            System.out.println("No hay cursos");
+        }
+        else if(cursos.size() == 0){
+            hayCurso = false;
+        }
+        else{
+            hayCurso = true; 
+            
+            System.out.println("Hay cursos");
+        }
+
+        model.addAttribute("cursos", cursos);
+        model.addAttribute("nombreGrado", g.getName());
+        model.addAttribute("hayCurso", hayCurso);
+
+        return "PaginaComentCurso";
+    }
+
+
+    @RequestMapping(value = "/redireccionComent")
+    public String redireccionarComent(@RequestParam Long comentCursoSelId){
+        tempComentCursoId = comentCursoSelId;
+
+        return "redirect:/envioComentario";
+    }
+
+
+
+    @RequestMapping(value = "/envioComentario", method = RequestMethod.GET)
+    public String realizarComentario(@ModelAttribute Comentario comentario, Model model) {
+
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpComentGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tempComentCursoId).getName());
+        model.addAttribute("comentario", new Comentario());
+        model.addAttribute("hayCurso", hayCurso);
+
+        return "PaginaComentario";
+    }
+
+    @RequestMapping(value = "/envioComentario", method = RequestMethod.POST)
+    public String enviarComentario(HttpServletRequest request, @ModelAttribute Comentario comentario, 
+    @ModelAttribute ComentCurso comentCurso, ModelMap model) throws Exception{
+
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpComentGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tempComentCursoId).getName());
+
+        AppUser user = userRepo.findByEmail(request.getUserPrincipal().getName());
+
+        comentario.setUsuario(user);
+        comentRepo.save(comentario);
+
+        Grado g = gradoRepo.findByGradoId(tmpComentGradoId);
+        Curso c = cursoRepo.findByCursoId(tempComentCursoId);
+
+        comentCurso.setGrado(g);
+        comentCurso.setCurso(c);
+        comentCurso.setComentario(comentario);
+        comentCursoRepo.save(comentCurso);
+
+        return "redirect:/comentGrado";
+    } 
 
 }

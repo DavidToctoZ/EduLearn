@@ -68,5 +68,4 @@ public class Contacto {
         this.contMensaje = contMensaje;
     }
 
-    
 }

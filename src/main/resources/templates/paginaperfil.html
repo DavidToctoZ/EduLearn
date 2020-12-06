@@ -8,15 +8,30 @@
 <body>
 
 <div layout:fragment="content">
-    
-    <h1>Mi perfil</h1>
-    <p>Nombre: <span th:text="${nombre}"></span></p>
-    <p>Apellido: <span th:text="${apellido}"></span></p>
-    <p>Correo: <span th:text="${email}"></span></p>
 
-    <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
-        <input type="submit" value="Eliminar Usuario"/>
-    </form>
+    <div class="page-header">
+        <h1 class="all-tittles" style="font-size: 30px;">MI PERFIL </h1>
+    </div>
+
+    <div class="container cont cont1">
+        <div class="div1">
+            <label class="etiq1"> Nombre: </label><span th:text="${nombre}" ></span>
+        </div>
+        <div class="div2">
+            <label class="etiq1"> Apellido:    </label> <span th:text=  "${apellido}" ></span>
+        </div>
+        <div class="div3">
+            <label class="etiq1"> Correo:    </label> <span th:text=  "${email}" ></span>
+        </div> 
+
+        <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
+            <input type="submit" class="btnCrear" value="Eliminar Usuario"/>
+        </form>
+        
+        <a th:href="@{/editar/} + ${userId}" class="btnCrear">Actualizar datos</a>
+
+    </div>
+
 </div>
 </body>
 </html>
