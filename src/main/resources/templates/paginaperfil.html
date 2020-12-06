@@ -9,30 +9,32 @@
 
 <div layout:fragment="content">
 
-    <div class="page-header">
+    <div class="page-header enca1">
         <h1 class="all-tittles" style="font-size: 30px;">MI PERFIL </h1>
     </div>
 
     <div class="container cont cont1">
-        <div class="div1">
+        <div class="div1 perfil">
             <label class="etiq1"> Nombre: </label><span th:text="${nombre}" ></span>
         </div>
-        <div class="div2">
+        <div class="div2 perfil">
             <label class="etiq1"> Apellido:    </label> <span th:text=  "${apellido}" ></span>
         </div>
-        <div class="div3">
+        <div class="div3 perfil">
             <label class="etiq1"> Correo:    </label> <span th:text=  "${email}" ></span>
         </div> 
 
-    </div>
-    <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
-        <input type="submit" value="Eliminar Usuario"/>
-    </form>
-
+        <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
+            <input class="btnPerfil2" type="submit" value="Eliminar Usuario"/>
+        </form>
     
-    <form class="button" th:action="@{/irActualizarUsuario}" method="POST">
-        <input type="submit" value="Actualizar Usuario"/>
-    </form>
+        
+        <form class="button" th:action="@{/irActualizarUsuario}" method="POST">
+            <input class="btnPerfil1" type="submit" value="Actualizar Usuario"/>
+        </form>
+
+    </div>
+    
 
 </div>
 </body>

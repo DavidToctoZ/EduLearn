@@ -603,6 +603,7 @@ public class WebController {
 
         nombreUsuarioActivo = usuario.getUserName() + " " + usuario.getFullname();
         model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+        model.addAttribute("mensaje", "Sus datos han sido actualizados!");
         
         funcionLayout(model, menuCurso);
 

@@ -23,7 +23,7 @@
                         <div class="photo" align="center" style="border: 3px solid black;">
                           <a class="fancybox" th:href="@{/contenido(buscarTema=${tema.temaId}, buscarGrado=${buscarGrado})}"><img class="img-responsive1" th:src="@{'/images/' + ${tema.imagen}}"></a>
                         </div>
-                        <div>Estado: <span th:text="${tema.estado}"> </span> </div>
+                        <div class="estado">Estado: <span th:text="${tema.estado}"> </span> </div>
                         <div class="overlay"></div>
                       </div>
                       

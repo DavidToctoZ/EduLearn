@@ -9,9 +9,12 @@
 
 <div layout:fragment="content">
     
+    <div class="container cont cont1">
+        <div class="matri"> Matrícula exitosa en el grado <span th:text="${gradoMatriculado}"></span></div>
+        <a class="btn1" th:href="@{/cursos(buscarGrado=${gradoMatriculado})}"> Presione aqui para continuar</a>
+    </div>
 
-    <div> Matricula exitosa en el grado <span th:text="${gradoMatriculado}"></span></div>
-    <a th:href="@{/cursos(buscarGrado=${gradoMatriculado})}"> Presione aqui para continuar</a>
+    
 </div>
 </body>
 </html>

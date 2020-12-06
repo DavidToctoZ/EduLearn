@@ -9,9 +9,11 @@
 
 <div layout:fragment="content">
     
-
-    <div> Ya se encuentra inscrito en el curso seleccionado </div>
-    <a th:href="@{/cursos(buscarGrado=${gradoMatriculado})}"> Presione aqui para ir</a>
+    <div class="container cont cont1">
+        <div class="matri"> Ya se encuentra inscrito en el curso seleccionado </div>
+        <a class="btn1" th:href="@{/cursos(buscarGrado=${gradoMatriculado})}"> Presione aqui para ir</a>
+    </div>
+    
 </div>
 </body>
 </html>
