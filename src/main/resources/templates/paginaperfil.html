@@ -17,6 +17,12 @@
     <form class="button" th:action="@{/eliminarUsuario(buscarEmail=${#request.getUserPrincipal().getName()})}" method="POST">
         <input type="submit" value="Eliminar Usuario"/>
     </form>
+
+    
+    <form class="button" th:action="@{/irActualizarUsuario}" method="POST">
+        <input type="submit" value="Actualizar Usuario"/>
+    </form>
+
 </div>
 </body>
 </html>
