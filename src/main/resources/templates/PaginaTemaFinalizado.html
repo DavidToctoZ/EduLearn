@@ -9,9 +9,11 @@
 
 <div layout:fragment="content">
     
-
-    <div> Termino el tema: <span th:text="${nombreTema}"></span></div>
-    <a th:href="@{/tema(buscarGrado=${nombreGrado}, buscarCurso=${cursoId})}"> Presione aqui para continuar</a>
+    <div class="container cont cont1">
+        <div class="matri"> Terminó el tema <span th:text="${nombreTema}"></span></div>
+        <a class="btn1" th:href="@{/tema(buscarGrado=${nombreGrado}, buscarCurso=${cursoId})}"> Presione aqui para continuar</a>
+    </div>
+    
 
     
 </div>

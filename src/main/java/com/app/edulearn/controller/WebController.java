@@ -13,6 +13,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.edulearn.model.AppUser;
+import com.app.edulearn.model.ComentCurso;
+import com.app.edulearn.model.Comentario;
 import com.app.edulearn.model.Contacto;
 import com.app.edulearn.model.Contenido;
 import com.app.edulearn.model.Curso;
@@ -23,6 +25,8 @@ import com.app.edulearn.model.Matricula;
 import com.app.edulearn.model.SeguimientoCurso;
 import com.app.edulearn.model.SeguimientoTema;
 import com.app.edulearn.model.Tema;
+import com.app.edulearn.repository.ComentCursoRepo;
+import com.app.edulearn.repository.ComentRepo;
 import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.CursoRepo;
 import com.app.edulearn.repository.GradoCursoRepo;
@@ -50,7 +54,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -102,6 +105,12 @@ public class WebController {
     ServletContext servletContext;
 
     @Autowired
+    ComentRepo comentRepo;
+
+    @Autowired
+    ComentCursoRepo comentCursoRepo;
+
+    @Autowired
     MatriculaRepo matriculaRepo;
 
     @Autowired
@@ -122,6 +131,8 @@ public class WebController {
     Long tmpGradoId;
     Long tmpCursoId;
     Long tmpTemaId;
+    Long tmpComentGradoId;
+    Long tempComentCursoId;
     
 
     float cantTemasTotal = 0;
@@ -209,9 +220,9 @@ public class WebController {
         model.addAttribute("gradosT", gradoRepo.findAll());//Para el menu layout
         model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
 
-        if(menuCurso== true ){
-            model.addAttribute("menuCurso", menuCurso);
-        }
+        
+        model.addAttribute("menuCurso", menuCurso);
+        
         
         return "paginaMatricula";
     }
@@ -259,7 +270,7 @@ public class WebController {
         
         
         user.setEnabled(true);
-
+       
         user.setEncryptedPassword(EncryptedPasswordUtils.encryptePassword(user.getEncryptedPassword()));
         
         boolean isCreated = userService.addUser(user);
@@ -301,18 +312,18 @@ public class WebController {
         AppUser a = userRepo.findByEmail(email);
 
         List<Matricula> m = matriculaRepo.findByAppUser(a);
-        
+        menuCurso = false;
         if(m.size() == 0){
-            menuCurso = false;
+            
 
             model.addAttribute("grados", m);
     
             model.addAttribute("gradosT", gradoRepo.findAll());//Para el menu layout
             model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
     
-            if(menuCurso== true ){
-                model.addAttribute("menuCurso", menuCurso);
-            }
+            
+            model.addAttribute("menuCurso", menuCurso);
+            
             return "PaginaMatricula";
         }
         funcionLayout(model, menuCurso);
@@ -439,20 +450,7 @@ public class WebController {
         String titulo = "Cursos de " + buscarGrado;
         String gradoSub = "> Cursos de " +buscarGrado +  " disponibles:";
         String nomGrado = buscarGrado;
-        List<SeguimientoCurso> sc = seguimientoCursoRepo.findByAppUser(userRepo.findByEmail(email));
-        
-        for(SeguimientoCurso tmp : sc){
-            
-            for(Curso tmpc : cursos){
-                if(tmpc.getCursoId() == tmp.getGradoCurso().getCurso().getCursoId()){
-            
-                    float p = ((float)tmp.getTotalTemasCompletado()/(float)tmp.getTotalTemas())*100;
-                    tmpc.setPorcentaje(p);
-                }
-
-
-            }
-        }
+      
         
         String tituloMenu = "Curso de " + buscarGrado;
 
@@ -461,7 +459,7 @@ public class WebController {
         model.addAttribute("titulo", titulo);
         model.addAttribute("gradoSub", gradoSub);
         model.addAttribute("cursosProximos", cursosProx);
-        model.addAttribute("cursos", cursos);
+        
         model.addAttribute("nombreGrado", nomGrado);
         
         
@@ -476,14 +474,40 @@ public class WebController {
             return "cursos/CursosGradoParciaProx";
         }
         if(!cursos.isEmpty() && cursosProx.isEmpty()){
+            List<SeguimientoCurso> sc = seguimientoCursoRepo.findByAppUser(userRepo.findByEmail(email));
         
+            for(SeguimientoCurso tmp : sc){
+                
+                for(Curso tmpc : cursos){
+                    if(tmpc.getCursoId() == tmp.getGradoCurso().getCurso().getCursoId()){
+                
+                        float p = ((float)tmp.getTotalTemasCompletado()/(float)tmp.getTotalTemas())*100;
+                        tmpc.setPorcentaje(p);
+                    }
+    
+    
+                }
+            }
             
-
+            model.addAttribute("cursos", cursos);
             return "cursos/CursosGradoParcialDisp";
         }
         
+        List<SeguimientoCurso> sc = seguimientoCursoRepo.findByAppUser(userRepo.findByEmail(email));
         
+        for(SeguimientoCurso tmp : sc){
+            
+            for(Curso tmpc : cursos){
+                if(tmpc.getCursoId() == tmp.getGradoCurso().getCurso().getCursoId()){
+            
+                    float p = ((float)tmp.getTotalTemasCompletado()/(float)tmp.getTotalTemas())*100;
+                    tmpc.setPorcentaje(p);
+                }
 
+
+            }
+        }
+        model.addAttribute("cursos", cursos);
         return "cursos/CursosGradoTodo";
       }
     
@@ -536,6 +560,59 @@ public class WebController {
         
     }
 
+    @RequestMapping(value = "/irActualizarUsuario")
+    public String irActualizarUsuario(Model model){
+        menuCurso = false;
+        funcionLayout(model, menuCurso);
+        AppUser user = userRepo.findByEmail(email);
+        model.addAttribute("nombre", user.getFullname());
+        model.addAttribute("apellido", user.getEmail());
+        model.addAttribute("email",user.getEmail() );
+
+        model.addAttribute("userForm", user);
+        return "PaginaActualizarUsuario";
+    }
+
+    @RequestMapping(value= "/actualizarUsuario", method = RequestMethod.GET)
+    public String cActualizarUsuario(Model model){
+        model.addAttribute("userForm", new AppUser());
+        AppUser user = userRepo.findByEmail(email);
+        model.addAttribute("nombre", user.getFullname());
+        model.addAttribute("apellido", user.getEmail());
+        model.addAttribute("email",user.getEmail() );
+
+        model.addAttribute("userForm", user);
+        return "PaginaActualizarUsuario";
+    }
+    
+    @RequestMapping(value = "/actualizarUsuario", method = RequestMethod.POST)
+    public String actualizarUsuario(@ModelAttribute AppUser user, Model model){
+        //AppUser user = userRepo.findByEmail(email);
+        model.addAttribute("userForm", user);
+        menuCurso = false;
+        System.out.println(user.getFullname());
+
+        AppUser usuario = userRepo.findByEmail(email);
+        usuario.setFullname(user.getFullname());
+        usuario.setUserName(user.getUserName());
+        usuario.setEmail(user.getEmail());
+        userRepo.save(usuario);
+        model.addAttribute("nombre", usuario.getFullname());
+        model.addAttribute("apellido", usuario.getEmail());
+        model.addAttribute("email",usuario.getEmail() );
+
+        nombreUsuarioActivo = usuario.getUserName() + " " + usuario.getFullname();
+        model.addAttribute("nombreUsuarioActivo", nombreUsuarioActivo);//Mostrar usuario Activo
+        model.addAttribute("mensaje", "Sus datos han sido actualizados!");
+        
+        funcionLayout(model, menuCurso);
+
+
+
+        return "PaginaActualizarUsuario";
+    }
+
+
     @RequestMapping(value = "/guardarFin")
     public String guardarTema(@RequestParam Long buscarTema, Model model){
         Tema t = temaRepo.findByTemaId(buscarTema);
@@ -554,7 +631,7 @@ public class WebController {
                     {
                         
                         tmp.setTotalTemasCompletado(tmp.getTotalTemasCompletado()+1);
-                        System.out.println(tmp.getGradoCurso().getCurso().getName());
+                        
                         seguimientoCursoRepo.save(tmp);
                         
                         
@@ -886,5 +963,92 @@ public class WebController {
 
         return "AdminCrearContenido";
     }
+
+    //INICIO DE COMENTARIO  - USUARIO
+
+    @RequestMapping(value="/comentGrado")
+    public String SelectComentGrado(Model model) {
+
+        model.addAttribute("ComentGradoSel", new Grado());
+        model.addAttribute("grado", gradoRepo.findAll());
+        
+        return "PaginaComentGrado";
+    }
+
+    
+    Grado g;
+    boolean hayCurso;
+
+    @RequestMapping(value = "/SelectComentCurso")
+    public String SelectComentCurso(@RequestParam Long ComentGradoSel, Model model) {
+        
+        tmpComentGradoId = ComentGradoSel;
+        g = gradoRepo.findByGradoId(ComentGradoSel);
+
+        List<Curso> cursos = cursoService.encontrarCursosHabilitados(g.getName());
+
+        if(cursos==null){
+            hayCurso = false;
+            System.out.println("No hay cursos");
+        }
+        else if(cursos.size() == 0){
+            hayCurso = false;
+        }
+        else{
+            hayCurso = true; 
+            
+            System.out.println("Hay cursos");
+        }
+
+        model.addAttribute("cursos", cursos);
+        model.addAttribute("nombreGrado", g.getName());
+        model.addAttribute("hayCurso", hayCurso);
+
+        return "PaginaComentCurso";
+    }
+
+
+    @RequestMapping(value = "/redireccionComent")
+    public String redireccionarComent(@RequestParam Long comentCursoSelId){
+        tempComentCursoId = comentCursoSelId;
+
+        return "redirect:/envioComentario";
+    }
+
+
+
+    @RequestMapping(value = "/envioComentario", method = RequestMethod.GET)
+    public String realizarComentario(@ModelAttribute Comentario comentario, Model model) {
+
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpComentGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tempComentCursoId).getName());
+        model.addAttribute("comentario", new Comentario());
+        model.addAttribute("hayCurso", hayCurso);
+
+        return "PaginaComentario";
+    }
+
+    @RequestMapping(value = "/envioComentario", method = RequestMethod.POST)
+    public String enviarComentario(HttpServletRequest request, @ModelAttribute Comentario comentario, 
+    @ModelAttribute ComentCurso comentCurso, ModelMap model) throws Exception{
+
+        model.addAttribute("nombreGrado", gradoRepo.findByGradoId(tmpComentGradoId).getName());
+        model.addAttribute("nombreCurso", cursoRepo.findByCursoId(tempComentCursoId).getName());
+
+        AppUser user = userRepo.findByEmail(request.getUserPrincipal().getName());
+
+        comentario.setUsuario(user);
+        comentRepo.save(comentario);
+
+        Grado g = gradoRepo.findByGradoId(tmpComentGradoId);
+        Curso c = cursoRepo.findByCursoId(tempComentCursoId);
+
+        comentCurso.setGrado(g);
+        comentCurso.setCurso(c);
+        comentCurso.setComentario(comentario);
+        comentCursoRepo.save(comentCurso);
+
+        return "redirect:/comentGrado";
+    } 
 
 }

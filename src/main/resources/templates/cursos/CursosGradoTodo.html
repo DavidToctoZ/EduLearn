@@ -20,7 +20,7 @@
             <div class="tile-icon full-reset"><a th:href="@{/tema(buscarGrado=${nombreGrado}, buscarCurso=${curso.cursoId})}"><i th:class="${curso.imagen}" style='font-size:43px'></i></div></a>
             <a th:href="@{/tema(buscarGrado=${nombreGrado}, buscarCurso=${curso.cursoId})}" style="color:#333333;"><div class="tile-name all-tittles" th:text="${curso.area}"></div>
             <div class="tile-num full-reset" style="text-transform: capitalize;" th:text="${curso.name}"></div></a>
-            <div>Curso al <span th:text="${#numbers.formatDecimal(curso.porcentaje, 0, 2)}"></span>%</div>
+            <div class="porcent">Curso al <span th:text="${#numbers.formatDecimal(curso.porcentaje, 0, 2)}"></span>%</div>
         </article>
     </section>
 

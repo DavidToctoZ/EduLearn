@@ -1,7 +1,6 @@
 package com.app.edulearn.services;
 
 import com.app.edulearn.model.*;
-import com.app.edulearn.repository.ContenidoRepo;
 import com.app.edulearn.repository.RoleRepo;
 import com.app.edulearn.repository.UserRoleRepo;
 
