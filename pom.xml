@@ -12,12 +12,19 @@
 	<artifactId>edulearn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>edulearn</name>
+	 <url>https://github.com/DavidToctoZ/EduLearn</url>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>
 		
 	</properties>
+	<distributionManagement>
+	  <site>
+	    <id>github</id>
+	    <url>scm:git:git@github.com:DavidToctoZ/EduLearn</url>
+	  </site>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
