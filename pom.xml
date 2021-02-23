@@ -19,6 +19,12 @@
 		<java.version>11</java.version>
 		
 	</properties>
+	<distributionManagement>
+	  <site>
+	    <id>github</id>
+	    <url>scm:git:git@github.com:DavidToctoZ/EduLearn</url>
+	  </site>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
