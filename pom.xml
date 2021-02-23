@@ -12,6 +12,7 @@
 	<artifactId>edulearn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>edulearn</name>
+	 <url>https://github.com/DavidToctoZ/EduLearn</url>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
